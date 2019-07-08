@@ -27,12 +27,18 @@ SECRET_KEY = '1bjb+q*)dcd6-lwml5nn-n2v&b655^6sc@3#nqt*sg*dbjmo+0'
 DEBUG = True
 STATE = 'DEV' # or ACC or PROD
 
+# mail
+from .email import EMAIL_USE_TLS, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_SSL
+EMAIL_USE_TLS = EMAIL_USE_TLS
+EMAIL_USE_SSL = EMAIL_USE_SSL
+EMAIL_HOST = EMAIL_HOST
+EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+EMAIL_PORT = EMAIL_PORT
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,7 +54,6 @@ INSTALLED_APPS = [
     'hijack_admin',
     'bootstrap4',
     'customuser',
-    'foo',
 ]
 
 MIDDLEWARE = [
@@ -149,7 +154,7 @@ if DEBUG:
         return True
 
     DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_CALLBACK': 'django_test.settings.show_toolbar',
+        'SHOW_TOOLBAR_CALLBACK': 'lg.settings.show_toolbar',
     }
 
 BOOTSTRAP4 = {

@@ -61,7 +61,7 @@ urlpatterns = [
 
     path('', home, name='home'),
     path('test/', test, name='test'),
-    path('foo/', include('foo.urls', namespace='foo')),
+    path('customuser/', include('customuser.urls', namespace='customuser')),
     path('lang/', set_language, name='lang'),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),

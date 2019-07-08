@@ -4,19 +4,9 @@
 <div class="text-center"><h1>models</h1></div>
 
 <div class="card">
-{% for key, list in apps.items %}
-	<div class="card-header">
-		<h5>{{key}}</h5>
-	</div>
-	<div class="card-body">
-		<table class="table table-striped">
-			<tbody>
-	{% for model in list %}
-		<tr><td><a href= '{{model.get_list_url}}'}>{{model|verbose_name}}</a></td></tr>
-	{% endfor %}
-		  </tbody>
-		</table>
-	</div>
-{% endfor %}
+<a class="nav-link"  href="{% url 'login' %}?next=/"><span class="fa fa-sign-out"></span>Login</a>
+</div>
+<div class="card">
+<a class="nav-link"  href="{% url 'customuser:customuser_add' %}"><span class="fa fa-sign-out"></span>Creation</a>
 </div>
 {% endblock content %}
