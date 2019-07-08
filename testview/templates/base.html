@@ -1,0 +1,61 @@
+{% load bootstrap4 static django_bootstrap_breadcrumbs %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		{% bootstrap_css %}
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="{% static 'select2/css/bootstrap-select.css' %}" />
+		<style>
+			body {
+				padding-top: 3.5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<a class="navbar-brand" href="/">Demo</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="%">link 1</a>
+					</li>
+				</ul>
+				<ul class="navbar-nav navbar-right">
+					{% if user.is_authenticated %}
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="fa fa-user"></span> {{user.first_name}} {{user.last_name}} 
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="/update/"><span class="fa fa-cog"></span>Change Profile</a>
+								<a class="dropdown-item" href="{% url 'password_change' %}?next=/"><span class="fa fa-cog"></span>Password change</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="{% url 'logout' %}?next=/"><span class="fa fa-sign-out"></span>Log out</a>
+							</div>
+						</li>
+					{% else %}
+					<li class="nav-item">
+						<a class="nav-link"  href="{% url 'login' %}?next=/"><span class="fa fa-sign-out"></span>Login</a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
+		</nav>
+		 <div class="container">
+		 	{% bootstrap_messages %}
+		{% block breadcrumbs %}
+			{% render_breadcrumbs %}
+		{% endblock %}
+			{% block content %}{% endblock content %}
+		</div>
+		{% bootstrap_javascript jquery='full' %}
+		<script type="text/javascript" src="{% static 'select2/js/bootstrap-select.js' %}"></script>
+		<script>
+			$(document).ready(function(){$('select').selectpicker();});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center"><h1>Models</h1></div>
+<div class="text-right"><a href="{{ model.add_url }}" class="btn btn-primary"><span class="fa fa-plus"></span> Add</a></div>
+<p></p>
+<table class="table table-striped">
+<thead>
+    <tr><td>Name</td><td>Detail</td><td>delete</td></tr>
+ </thead>
+ <tbody>
+{% for obj in object_list %}
+    <tr><td><a href="{{obj.get_absolute_url}}">{{ obj.name }}</a></td>
+    	<td><a href="{{obj.get_detail_url}}">detail</a></td>
+    	<td><a href="{{obj.get_delete_url}}">delete</a></td>
+    </tr>
+{% empty %}
+    <tr><td>No objects yet.</td><td></td><td></td></tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock content %}
