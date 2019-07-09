@@ -9,13 +9,14 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView, D
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth import login
 from django.http import HttpResponse
 from captcha.fields import CaptchaField
+import smtplib
+
 
 
 class CustomUserForm(ModelForm):
@@ -78,16 +79,20 @@ class CustomUserCreateForm(ModelForm):
         mail_subject = 'Activate your account.'
         message = render_to_string('acc_active_email.html', {
             'user': user,
-            'domain': '127.0.0.1:8000', # current_site.domain,
+            'domain': 'mylieutenantguillaume.com', # current_site.domain,
             'uid':urlsafe_base64_encode(force_bytes(user.pk)),
             'token':account_activation_token.make_token(user),
         })
+
+        from lg.email import EMAIL_USE_TLS, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_SSL
+        s = smtplib.SMTP()
+        s.connect( EMAIL_HOST, EMAIL_PORT)
+        s.starttls()
+        s.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
         to_email = self.cleaned_data.get('email')
-        print(message)
-        email = EmailMessage(
-                    mail_subject, message, to=[to_email]
-        )
-        email.send()
+        msg = "From: no_reply@mylieutenantguillaume.com\nTo: %s\nSubject: %s\n\nTest_mail" % (to_email, mail_subject)
+        s.sendmail('no_reply@mylieutenantguillaume.com', 'rvilain@skynet.be', msg)
+        s.close()
 
 
 class CustomUserCreateView(SuccessMessageMixin, CreateView):

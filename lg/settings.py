@@ -35,6 +35,8 @@ EMAIL_HOST = EMAIL_HOST
 EMAIL_HOST_USER = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 EMAIL_PORT = EMAIL_PORT
+EMAIL_BACKEND = "anymail.backends.amazon_ses.EmailBackend"
+AWS_DEFAULT_REGION="eu-west-1"
 
 ALLOWED_HOSTS = ['*']
 
@@ -54,6 +56,8 @@ INSTALLED_APPS = [
     'hijack_admin',
     'bootstrap4',
     'customuser',
+    'captcha',
+    "anymail",
 ]
 
 MIDDLEWARE = [

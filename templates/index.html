@@ -2,11 +2,12 @@
 {% load bootstrap4 static i18n hijack_tags common_tags %}
 {% block content %}
 <div class="text-center"><h1>models</h1></div>
-
-<div class="card">
-<a class="nav-link"  href="{% url 'login' %}?next=/"><span class="fa fa-sign-out"></span>Login</a>
-</div>
-<div class="card">
-<a class="nav-link"  href="{% url 'customuser:customuser_add' %}"><span class="fa fa-sign-out"></span>Creation</a>
+<div class="row">
+	<div class="card">
+	<a class="nav-link"  href="{% url 'login' %}?next=/"><span class="fa fa-sign-out"></span>Login</a>
+	</div>
+	<div class="card">
+	<a class="nav-link"  href="{% url 'customuser:customuser_add' %}"><span class="fa fa-sign-out"></span>Creation</a>
+	</div>
 </div>
 {% endblock content %}
