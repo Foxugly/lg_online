@@ -11,3 +11,4 @@ redis>=2.10.3
 pip>=9.0.1
 django-celery==3.3.0
 selenium
+django-simple-captcha
