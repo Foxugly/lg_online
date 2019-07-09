@@ -15,6 +15,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth import login
 from django.http import HttpResponse
+from captcha.fields import CaptchaField
 
 
 class CustomUserForm(ModelForm):
@@ -54,6 +55,7 @@ class CustomUserCreateForm(ModelForm):
     model = CustomUser
     password = forms.CharField(widget=forms.PasswordInput)
     repeat_password = forms.CharField(widget=forms.PasswordInput)
+    captcha = CaptchaField()
 
     class Meta:
         model = CustomUser
