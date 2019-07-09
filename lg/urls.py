@@ -64,6 +64,7 @@ urlpatterns = [
     path('customuser/', include('customuser.urls', namespace='customuser')),
     path('lang/', set_language, name='lang'),
     path('admin/', admin.site.urls),
+    path('captcha/', include('captcha.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/update/', check_lang(CustomUserUpdateView.as_view()), name='update_user'),
     path('hijack/', include('hijack.urls', namespace='hijack')),
