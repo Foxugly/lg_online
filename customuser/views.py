@@ -90,8 +90,8 @@ class CustomUserCreateForm(ModelForm):
         s.starttls()
         s.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
         to_email = self.cleaned_data.get('email')
-        msg = "From: no_reply@mylieutenantguillaume.com\nTo: %s\nSubject: %s\n\nTest_mail" % (to_email, mail_subject)
-        s.sendmail('no_reply@mylieutenantguillaume.com', 'rvilain@skynet.be', msg)
+        msg = "From: no_reply@mylieutenantguillaume.com\nTo: %s\nSubject: %s\n\n%s" % (to_email, mail_subject, message)
+        s.sendmail('no_reply@mylieutenantguillaume.com', 'no_reply@mylieutenantguillaume.com', msg)
         s.close()
 
 
