@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load bootstrap4 static i18n hijack_tags common_tags %}
 {% block content %}
-{% if user.is_authenticated %}
+{% if not user.is_authenticated %}
 <div class="row">
 	<div class="col-sm-5">
 		<div class="card text-center">
