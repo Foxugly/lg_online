@@ -1,6 +1,14 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import ModelForm
 from customuser.models import CustomUser
+from captcha.fields import CaptchaField
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from .tokens import account_activation_token
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_text
+from django.utils.translation import gettext_lazy as _
+from django import forms
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -13,3 +21,62 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = '__all__'
+
+
+class CustomUserForm(ModelForm):
+    model = CustomUser
+    def __init__(self, *args, **kwargs):
+        super(CustomUserForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.fields['email'].widget.attrs['readonly'] = True
+            self.fields['email'].widget.attrs['disabled'] = 'disabled'
+            self.fields['enterprise_number'].widget.attrs['readonly'] = True
+            self.fields['enterprise_number'].widget.attrs['disabled'] = 'disabled'
+
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'first_name', 'last_name', 'language', 'enterprise_number']
+
+
+class CustomUserCreateForm(ModelForm):
+    model = CustomUser
+    password = forms.CharField(widget=forms.PasswordInput)
+    repeat_password = forms.CharField(widget=forms.PasswordInput)
+    captcha = CaptchaField()
+
+    class Meta:
+        model = CustomUser
+        fields = [
+            'email',
+            'first_name',
+            'last_name',
+            'enterprise_number',
+            'password',
+        ]
+
+    def is_valid(self):
+        valid = super(CustomUserCreateForm, self).is_valid()
+        if not valid:
+            return valid
+        user = self.save(commit=False)
+        user.is_active = False
+        user.save()
+        # current_site = Site.objects.get_current()
+        subject = _('Activate your account.')
+        msg_html = render_to_string('acc_active_email.html', {
+            'user': user,
+            'domain': 'mylieutenantguillaume.com', # current_site.domain,
+            'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+            'token':account_activation_token.make_token(user),
+        })
+        msg_txt = render_to_string('acc_active_email.txt', {
+            'user': user,
+            'domain': 'mylieutenantguillaume.com', # current_site.domain,
+            'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+            'token':account_activation_token.make_token(user),
+        })
+        to = self.cleaned_data.get('email')
+        from_email = "no_reply@mylieutenantguillaume.com"
+        reply_to = "info@lieutenantguillaume.com"
+        send_mail_smtp(subject, from_email, to, reply_to, msg_text, msg_html)
