@@ -4,10 +4,10 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-def send_mail_smtp(subject, from, to, reply_to, text, html)
+def send_mail_smtp(subject, from_email, to, reply_to, text, html):
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
-    msg['From'] = from
+    msg['From'] = from_email
     msg['To'] = to
     if reply_to :
         msg.add_header('reply-to', reply_to)
@@ -18,5 +18,5 @@ def send_mail_smtp(subject, from, to, reply_to, text, html)
     s.connect( EMAIL_HOST, EMAIL_PORT)
     s.starttls()
     s.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
-    s.sendmail(from, to, msg.as_string())
+    s.sendmail(from_email, to, msg.to_string())
     s.quit()

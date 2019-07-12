@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.translation import gettext_lazy as _
 from django import forms
+from tools.mail import send_mail_smtp
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -79,4 +80,4 @@ class CustomUserCreateForm(ModelForm):
         to = self.cleaned_data.get('email')
         from_email = "no_reply@mylieutenantguillaume.com"
         reply_to = "info@lieutenantguillaume.com"
-        send_mail_smtp(subject, from_email, to, reply_to, msg_text, msg_html)
+        send_mail_smtp(subject, from_email, to, reply_to, msg_txt, msg_html)

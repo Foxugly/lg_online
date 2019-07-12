@@ -128,9 +128,9 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'), ]
 
 STATIC_URL = '/static/'
 # ACTIVE TO PROD / COMMENT TO TEST
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # COMMENT TO PROD / ACTIVE TO TEST
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 HIJACK_LOGIN_REDIRECT_URL = '/'
 HIJACK_LOGOUT_REDIRECT_URL = '/'
