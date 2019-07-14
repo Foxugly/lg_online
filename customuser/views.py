@@ -10,6 +10,9 @@ from django.contrib.auth import login
 from django.http import HttpResponse
 from django.contrib import messages
 from .forms import CustomUserCreateForm, CustomUserForm
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
+from .tokens import account_activation_token
 
 
 def activate(request, uidb64, token):
@@ -21,7 +24,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        # login(request, user)
         # return redirect('home')
         messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
         return render(request, "index.html")
@@ -31,10 +34,25 @@ def activate(request, uidb64, token):
 
 
 class CustomUserCreateView(SuccessMessageMixin, CreateView):
+    model = CustomUser
     form_class = CustomUserCreateForm
     template_name = 'update.html'
     success_url = reverse_lazy('home')
     success_message = _('We just send you an email for validation.')
+
+    def __init__(self, *args, **kwargs):
+        if self.model:
+            self.app_name = self.model._meta.app_label
+            self.model_name = self.model._meta.model_name
+            self.success_url = reverse_lazy('home')
+        super(CustomUserCreateView, self).__init__(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomUserCreateView, self).get_context_data(**kwargs)
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(cleaned_data)
 
 
 class CustomUserUpdateView(SuccessMessageMixin, UpdateView):

@@ -1,14 +1,7 @@
 {% autoescape off %}
-<html>
-<head></head>
-<body>
 Hi {{ user.first_name }},
-Please click <a href="http://{{ domain }}{% url 'customuser:activate' uidb64=uid token=token %}">here</a> to confirm your registration.<br><br>
-If the link doesn't work, could copy the link above and paste it in your favorite browser.<br><br>
+Please click on the link to confirm your registration.
 http://{{ domain }}{% url 'customuser:activate' uidb64=uid token=token %}
-<br><br>
-Regards<br><br>
+Regards,
 The LieutenantGuillaume Team
-</body>
-</html>
 {% endautoescape %}

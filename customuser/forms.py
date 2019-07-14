@@ -64,20 +64,21 @@ class CustomUserCreateForm(ModelForm):
         user.is_active = False
         user.save()
         # current_site = Site.objects.get_current()
-        subject = _('Activate your account.')
+        subject = _('[mylieutenantguillaume] activation for your account')
         msg_html = render_to_string('acc_active_email.html', {
             'user': user,
-            'domain': 'mylieutenantguillaume.com', # current_site.domain,
+            'domain': 'www.mylieutenantguillaume.com', # current_site.domain,
             'uid':urlsafe_base64_encode(force_bytes(user.pk)),
             'token':account_activation_token.make_token(user),
         })
         msg_txt = render_to_string('acc_active_email.txt', {
             'user': user,
-            'domain': 'mylieutenantguillaume.com', # current_site.domain,
+            'domain': 'www.mylieutenantguillaume.com', # current_site.domain,
             'uid':urlsafe_base64_encode(force_bytes(user.pk)),
             'token':account_activation_token.make_token(user),
         })
         to = self.cleaned_data.get('email')
         from_email = "no_reply@mylieutenantguillaume.com"
         reply_to = "info@lieutenantguillaume.com"
-        send_mail_smtp(subject, from_email, to, reply_to, msg_txt, msg_html)
+        send_mail_smtp(str(subject), from_email, to, reply_to, msg_txt, msg_html)
+        return valid
