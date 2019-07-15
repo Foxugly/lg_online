@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from customuser.models import CustomUser
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
