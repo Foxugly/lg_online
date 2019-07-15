@@ -48,7 +48,7 @@ class CustomUserCreateForm(ModelForm):
     class Meta:
         model = CustomUser
         fields = [
-            'email', 'first_name', 'last_name', 'password', 'language']
+            'email', 'first_name', 'last_name', 'language', 'password']
 
     def is_valid(self):
         valid = super(CustomUserCreateForm, self).is_valid()
