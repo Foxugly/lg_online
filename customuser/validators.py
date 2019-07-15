@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 import re
 
 
-def validate_enterprise_numberl(value):
+def validate_enterprise_number(value):
     reg = re.compile("[A-Za-z]")
     reg_ok = re.compile("[0-9 -.]{9,12}")
     if len(re.findall(reg, value)):
