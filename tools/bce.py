@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 import requests
 import time
 from bs4 import BeautifulSoup
@@ -14,7 +14,7 @@ def parse(value):
     value = re.compile(r'<[^>]+>').sub('', value)
     return value.lstrip().rstrip()
 
-def bce(nbce):
+def get_data_from_bce(nbce):
     nbce = nbce.replace('.','').replace(' ','').replace('-','')
     out = {}
     url = 'https://kbopub.economie.fgov.be/kbopub/zoeknummerform.html?nummer=%s&actionLu=Recherche&lang=fr' % nbce

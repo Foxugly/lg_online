@@ -13,3 +13,5 @@ django-celery==3.3.0
 selenium
 django-simple-captcha
 django-anymail[amazon_ses]
+beautifulsoup4>=4.6.0
+requests>=2.22.0

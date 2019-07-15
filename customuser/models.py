@@ -3,7 +3,7 @@ from tools.generic_class import GenericClass
 from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-
+from .validators import validate_enterprise_number
 
 class CustomUserManager(BaseUserManager):
 
@@ -26,7 +26,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    enterprise_number = models.CharField(_("Enterprise Number"), max_length=12, null=True)
+    enterprise_number = models.CharField(_("Enterprise Number"), max_length=12, null=True, validators= [validate_enterprise_number])
     enterprise_status = models.CharField(_("Enterprise Status"), max_length=12, blank=True)
     legal_situation = models.CharField(_("Legal Situation"), max_length=50, blank=True)
     start_date = models.DateField(_("Start date"), blank=True, null=True)
