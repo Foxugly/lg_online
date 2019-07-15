@@ -10,12 +10,14 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.translation import gettext_lazy as _
 from django import forms
 from tools.mail import send_mail_smtp
+from django.contrib.auth import authenticate
 
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ("email",)
+
 
 
 class CustomUserChangeForm(UserChangeForm):

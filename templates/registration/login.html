@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-
 {% if form.errors %}
 <div class="alert alert-danger" role="alert">{% trans "Your username and password didn't match. Please try again" %}.</div>
   <p></p>
@@ -26,7 +25,7 @@
     <div class="input-group-prepend">
 		    <span class="input-group-text"><span class="fa fa-user"></span></span>
 		 </div>
-		<input name="{{form.email.name}}" class="form-control" placeholder="email" type="text">
+		<input name="{{form.username.name}}" class="form-control" placeholder="email" type="text">
 	</div> <!-- input-group.// -->
 </div> <!-- form-group// -->
 

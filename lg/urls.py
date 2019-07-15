@@ -24,7 +24,7 @@ from django.http import HttpResponseRedirect
 from django.utils import translation
 from django import http
 import json
-from customuser.views import CustomUserUpdateView
+from customuser.views import CustomUserUpdateView, CustomUserLoginView
 from customuser.decorators import check_lang
 
 
@@ -66,6 +66,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('captcha/', include('captcha.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/login/', CustomUserLoginView.as_view(), name='login'),
     path('accounts/update/', check_lang(CustomUserUpdateView.as_view()), name='update_user'),
     path('hijack/', include('hijack.urls', namespace='hijack')),
 ]

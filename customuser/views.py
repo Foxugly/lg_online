@@ -7,6 +7,7 @@ from .models import CustomUser
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import login
+from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
 from django.contrib import messages
 from .forms import CustomUserCreateForm, CustomUserForm, CustomUserDataForm
@@ -14,6 +15,7 @@ from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from .tokens import account_activation_token
 from tools.bce import get_data_from_bce
+from django.contrib.auth.forms import AuthenticationForm
 
 
 def activate(request, uidb64, token):
@@ -57,6 +59,13 @@ def activate(request, uidb64, token):
         #return render(request, "index.html")
 
 
+class CustomUserLoginView(LoginView):
+    model = CustomUser
+    form_class = AuthenticationForm
+    template_name = 'registration/login.html'
+    success_url = reverse_lazy('home')
+
+
 class CustomUserCreateView(SuccessMessageMixin, CreateView):
     model = CustomUser
     form_class = CustomUserCreateForm
@@ -73,6 +82,7 @@ class CustomUserCreateView(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CustomUserCreateView, self).get_context_data(**kwargs)
+        context.update({'title': "New User"})
         return context
 
     def get_success_message(self, cleaned_data):
@@ -82,7 +92,7 @@ class CustomUserCreateView(SuccessMessageMixin, CreateView):
 class CustomUserUpdateView(SuccessMessageMixin, UpdateView):
     model = CustomUser
     form_class = CustomUserForm
-    template_name = 'update_profile.html'
+    template_name = 'update.html'
     success_url = reverse_lazy('update_user')
     success_message = _('Changes saved.')
 
@@ -92,6 +102,7 @@ class CustomUserUpdateView(SuccessMessageMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['model'] = self.model
+        context.update({'title': "Update User"})
         return context
 
 
@@ -108,4 +119,5 @@ class CustomUserUpdataDataView(SuccessMessageMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['model'] = self.model
+        context.update({'title': "Update data"})
         return context

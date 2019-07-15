@@ -14,7 +14,7 @@
 					    <div class="input-group-prepend">
 							    <span class="input-group-text"><span class="fa fa-user"></span></span>
 							 </div>
-							<input name="{{form.email.name}}" class="form-control" placeholder="email" type="text">
+							<input name="username" class="form-control" placeholder="email" type="text">
 						</div> <!-- input-group.// -->
 					</div> <!-- form-group// -->
 
@@ -23,12 +23,12 @@
 					    <div class="input-group-prepend">
 							    <span class="input-group-text"><span class="fa fa-lock"></span></span>
 							 </div>
-						    <input name="{{form.password.name}}" class="form-control" placeholder="******" type="password">
+						    <input name="password" class="form-control" placeholder="******" type="password">
 						</div> <!-- input-group.// -->
 					</div> <!-- form-group// -->
 					<div class="form-group text-center">
 						<input type="submit" class="btn btn-primary btn-block" value="login" />
-					  <input type="hidden" name="next" value="{{ next }}" />
+					  <input type="hidden" name="next" value="/" />
 					</div> <!-- form-group// -->
 					<p class="text-center"><a href="{% url 'password_reset' %}" class="btn">{% trans "Forgot password" %}?</a></p>
 				</form>

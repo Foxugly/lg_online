@@ -1,18 +1,26 @@
 {% extends "base.html" %}
 {% load bootstrap4 i18n %}
 {% block content %}
-<fieldset>
-<form method="post" role="form">
-    {% csrf_token %}
-    {% bootstrap_form form layout='horizontal' %}
-    <div class="form-group row">
-        <div class="col-md-3"></div>
-        <div class="col-md-9">
-            {% buttons %}
-                <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-            {% endbuttons %}
-        </div>
+<div class="row justify-content-around">
+    <div class="card col-md-10">
+        <article class="card-body">
+            <h4 class="card-title text-center mb-4 mt-1">{{title}}</h4>
+            <hr>
+            <p class="text-success text-center"></p>
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form layout='horizontal' %}
+                <div class="form-group row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9">
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+                        {% endbuttons %}
+                    </div>
+                </div>
+            </form>
+        </article>
     </div>
-</form>
-</fieldset>
-{% endblock content %}
+</div>
+
+{% endblock %}
