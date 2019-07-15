@@ -29,7 +29,7 @@ def activate(request, uidb64, token):
             for key, value in data.items():
                 if key =='statut': 
                     user.enterprise_status = value
-                elif key == 'situation_juridique'
+                elif key == 'situation_juridique':
                     user.legal_situation = value
                 elif key == 'date_debut': 
                     user.start_date = value
