@@ -88,7 +88,7 @@ class CustomUserCreateForm(ModelForm):
 class CustomUserDataForm(ModelForm):
     model = CustomUser
     def __init__(self, *args, **kwargs):
-        super(CustomUserForm, self).__init__(*args, **kwargs)
+        super(CustomUserDataForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['enterprise_number'].widget.attrs['readonly'] = True
