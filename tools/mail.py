@@ -6,11 +6,11 @@ from email.message import EmailMessage
 
 
 def send_mail_smtp(subject, from_email, to, reply_to, text, html):
-    print(subject)
-    print(from_email)
-    print(to)
-    print(text)
-    print(html)
+    #print(subject)
+    #print(from_email)
+    #print(to)
+    #print(text)
+    #print(html)
     # msg = MIMEMultipart('alternative')
     msg = EmailMessage()
     msg['Subject'] = subject
