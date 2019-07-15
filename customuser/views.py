@@ -10,11 +10,10 @@ from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
 from django.contrib import messages
-from .forms import CustomUserCreateForm, CustomUserForm, CustomUserDataForm
+from .forms import CustomUserCreateForm, CustomUserForm
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from .tokens import account_activation_token
-from tools.bce import get_data_from_bce
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -26,29 +25,6 @@ def activate(request, uidb64, token):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
-        data = get_data_from_bce(user.enterprise_number)
-        if len(data):
-            for key, value in data.items():
-                if key =='statut': 
-                    user.enterprise_status = value
-                elif key == 'situation_juridique':
-                    user.legal_situation = value
-                elif key == 'date_debut': 
-                    user.start_date = value
-                elif key == 'denomination': 
-                    user.enterprise_name = value
-                elif key == 'adresse': 
-                    user.social_address_street = value
-                elif key == 'adresse_num': 
-                    user.social_address_number = value
-                elif key == 'adresse_cp': 
-                    user.social_address_zip = value
-                elif key == 'adresse_ville': 
-                    user.social_address_city = value
-                elif key == 'forme_legale': 
-                    user.legal_form = value
-                elif key == 'date_fin_annee_comptable':
-                    user.end_fiscal_date = value
         user.save()
         messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
         return redirect('home')
@@ -63,7 +39,7 @@ class CustomUserLoginView(LoginView):
     model = CustomUser
     form_class = AuthenticationForm
     template_name = 'registration/login.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('company:company_list')
 
 
 class CustomUserCreateView(SuccessMessageMixin, CreateView):
@@ -103,21 +79,4 @@ class CustomUserUpdateView(SuccessMessageMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['model'] = self.model
         context.update({'title': "Update User"})
-        return context
-
-
-class CustomUserUpdataDataView(SuccessMessageMixin, UpdateView):
-    model = CustomUser
-    form_class = CustomUserDataForm
-    template_name = 'update.html'
-    success_url = reverse_lazy('customuser:update_data')
-    success_message = _('Changes saved.')
-
-    def get_object(self):
-        return self.request.user
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['model'] = self.model
-        context.update({'title': "Update data"})
         return context

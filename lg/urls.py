@@ -19,7 +19,7 @@ from django.urls import path, include, reverse
 from django.conf.urls.static import static
 from django.conf import settings
 from django.apps import apps
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.utils import translation
 from django import http
@@ -31,16 +31,10 @@ from customuser.decorators import check_lang
 @check_lang
 def home(request):
     c = {}
-    available_apps = {}
-    for app in apps.get_models():
-        if not app.__module__.startswith("django"):
-            a = app.__module__.split('.models')[0]
-            if a in available_apps:
-                available_apps[a].append(app)
-            else:
-                available_apps[a] = [app]
-    c['apps'] = available_apps
-    return render(request, "index.html", c)
+    if request.user.is_authenticated:
+        return redirect('company:company_list')
+    else:
+        return render(request, "index.html", c)
 
 
 def test(request):
@@ -62,6 +56,7 @@ urlpatterns = [
     path('', home, name='home'),
     path('test/', test, name='test'),
     path('customuser/', include('customuser.urls', namespace='customuser')),
+    path('company/', include('company.urls', namespace='company')),
     path('lang/', set_language, name='lang'),
     path('admin/', admin.site.urls),
     path('captcha/', include('captcha.urls')),

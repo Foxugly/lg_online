@@ -33,13 +33,10 @@ class CustomUserForm(ModelForm):
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['email'].widget.attrs['readonly'] = True
-            self.fields['email'].widget.attrs['disabled'] = 'disabled'
-            self.fields['enterprise_number'].widget.attrs['readonly'] = True
-            self.fields['enterprise_number'].widget.attrs['disabled'] = 'disabled'
 
     class Meta:
         model = CustomUser
-        fields = ['email', 'first_name', 'last_name', 'language', 'enterprise_number']
+        fields = ['email', 'first_name', 'last_name', 'language']
 
 
 class CustomUserCreateForm(ModelForm):
@@ -51,13 +48,7 @@ class CustomUserCreateForm(ModelForm):
     class Meta:
         model = CustomUser
         fields = [
-            'email',
-            'first_name',
-            'last_name',
-            'enterprise_number',
-            'password',
-        ]
-        help_texts = {'enterprise_number': "don't need 'BE'. Ex : 0123.456.789",}
+            'email', 'first_name', 'last_name', 'password', 'language']
 
     def is_valid(self):
         valid = super(CustomUserCreateForm, self).is_valid()
@@ -85,17 +76,3 @@ class CustomUserCreateForm(ModelForm):
         reply_to = "info@lieutenantguillaume.com"
         send_mail_smtp(str(subject), from_email, to, reply_to, msg_txt, msg_html)
         return valid
-
-
-class CustomUserDataForm(ModelForm):
-    model = CustomUser
-    def __init__(self, *args, **kwargs):
-        super(CustomUserDataForm, self).__init__(*args, **kwargs)
-        instance = getattr(self, 'instance', None)
-        if instance and instance.pk:
-            self.fields['enterprise_number'].widget.attrs['readonly'] = True
-            self.fields['enterprise_number'].widget.attrs['disabled'] = 'disabled'
-
-    class Meta:
-        model = CustomUser
-        fields = ['enterprise_number', 'enterprise_status' ,'legal_situation', 'start_date', 'enterprise_name', 'social_address_street', 'social_address_number', 'social_address_zip', 'social_address_city', 'social_address_country', 'legal_form', 'end_fiscal_date']
