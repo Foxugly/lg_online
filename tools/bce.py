@@ -37,7 +37,8 @@ def get_data_from_bce(nbce):
                 date = datetime.date(int(s[2]), int(mois[s[1]]),int(s[0]))
                 out['date_debut'] = date
             elif "Dénomination" in field:
-                value = value.split('Dén')[0]
+                value = value.split('Dénomination')[0]
+                value = value.split('Depuis le')[0]
                 out['denomination'] = parse(value)
             elif "Adresse du siège" in field:
                 adr = value.split('<br>')[0].split('\n')
@@ -51,6 +52,8 @@ def get_data_from_bce(nbce):
                     out['adresse_ville'] = parse(res[1])
             elif "Forme" in field:
                 value = value.split('Depuis')[0]
+                out['forme_legale'] = parse(value)
+            elif "Type d'entité" in field:
                 out['forme_legale'] = parse(value)
             elif "Gérant" in field or "Administrateur" in field :
                 print(parse(field))
