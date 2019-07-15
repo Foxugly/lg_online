@@ -39,16 +39,15 @@ class CustomUserForm(ModelForm):
         fields = ['email', 'first_name', 'last_name', 'language']
 
 
-class CustomUserCreateForm(ModelForm):
+class CustomUserCreateForm(UserCreationForm):
     model = CustomUser
-    password = forms.CharField(widget=forms.PasswordInput)
-    repeat_password = forms.CharField(widget=forms.PasswordInput)
+    #password = forms.CharField(widget=forms.PasswordInput)
+    #repeat_password = forms.CharField(widget=forms.PasswordInput)
     captcha = CaptchaField()
 
     class Meta:
         model = CustomUser
-        fields = [
-            'email', 'first_name', 'last_name', 'language', 'password']
+        fields = ['email', 'first_name', 'last_name', 'language',]
 
     def is_valid(self):
         valid = super(CustomUserCreateForm, self).is_valid()
