@@ -15,7 +15,6 @@ class ContactListView(GenericListView):
 
 class ContactUpdateView(GenericUpdateView):
     model = Contact
-    fields = None
 
 
 class ContactDetailView(GenericDetailView):

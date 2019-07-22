@@ -3,17 +3,17 @@ from customuser.models import CustomUser
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.forms import ModelForm
-from .models import CustomUser
+from customuser.models import CustomUser
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
 from django.contrib import messages
-from .forms import CustomUserCreateForm, CustomUserForm
+from customuser.forms import CustomUserCreateForm, CustomUserForm
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
-from .tokens import account_activation_token
+from customuser.tokens import account_activation_token
 from django.contrib.auth.forms import AuthenticationForm
 
 

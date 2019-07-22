@@ -1,7 +1,6 @@
 from tools.generic_class import GenericClass
 from django.db import models
 from django.utils.translation import gettext as _
-from .validators import validate_enterprise_number
 from vies.models import VATINField
 from vies.validators import VATINValidator
 

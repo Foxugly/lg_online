@@ -4,7 +4,7 @@ from customuser.models import CustomUser
 from captcha.fields import CaptchaField
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from .tokens import account_activation_token
+from customuser.tokens import account_activation_token
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.translation import gettext_lazy as _
