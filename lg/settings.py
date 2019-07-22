@@ -24,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1bjb+q*)dcd6-lwml5nn-n2v&b655^6sc@3#nqt*sg*dbjmo+0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-STATE = 'DEV' # or ACC or PROD
+DEBUG = False
+STATE = 'PROD' # or ACC or PROD
 
 ALLOWED_HOSTS = ['*']
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'captcha',
     'localflavor',
+    'phonenumber_field',
     'customuser',
     'company',
     'contact',
