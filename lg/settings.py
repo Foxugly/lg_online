@@ -44,10 +44,11 @@ INSTALLED_APPS = [
     'compat',
     'hijack_admin',
     'bootstrap4',
-    'customuser',
     'captcha',
-    #"anymail",
+    'localflavor',
+    'customuser',
     'company',
+    'contact',
 ]
 
 MIDDLEWARE = [
@@ -129,10 +130,16 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'), ]
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# ACTIVE TO PROD / COMMENT TO TEST
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# COMMENT TO PROD / ACTIVE TO TEST
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+MEDIA_URL = '/media/'
+IDCARD_URL = 'media/id_card/'
+# IDCARD_ROOT = os.path.join(BASE_DIR, 'id_card')
+
+if STATE == "PROD":
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+
 
 HIJACK_LOGIN_REDIRECT_URL = '/'
 HIJACK_LOGOUT_REDIRECT_URL = '/'

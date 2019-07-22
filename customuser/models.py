@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager, Permission
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from company.models import Company
+from phonenumber_field.modelfields import PhoneNumberField
+from contact.models import Contact
 
 
 class CustomUserManager(BaseUserManager):
@@ -28,7 +30,10 @@ class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
     language = models.CharField(_("language"), max_length=8, choices=settings.LANGUAGES, default=1)
-    companies = models.ManyToManyField(Company, blank=True, verbose_name=_("companies"))  
+    companies = models.ManyToManyField(Company, blank=True, verbose_name=_("companies"))
+    telephone = PhoneNumberField(_("Phone number"), blank=True)
+    id_card = models.FileField(upload_to=settings.IDCARD_URL, blank=True)
+    contact = models.ForeignKey(Contact, blank=True, null=True, on_delete='cascade')
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'

@@ -36,7 +36,7 @@ class CustomUserForm(ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['email', 'first_name', 'last_name', 'language']
+        fields = ['email', 'first_name', 'last_name', 'telephone', 'id_card', 'language']
 
 
 class CustomUserCreateForm(UserCreationForm):

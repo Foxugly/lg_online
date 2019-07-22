@@ -26,6 +26,8 @@ from django import http
 import json
 from customuser.views import CustomUserUpdateView, CustomUserLoginView
 from customuser.decorators import check_lang
+from django.http import JsonResponse
+from tools.mail import send_mail_smtp
 
 
 @check_lang
@@ -51,10 +53,22 @@ def set_language(request):
     else:
         return reverse('home')
 
+
+def sendmail(request):
+    if request.is_ajax():
+        subject = request.GET.get('subject', None)
+        content = request.GET.get('content', None)
+        send_mail_smtp(subject, request.user.email, request.user.contact.email, None, content, None)
+        data = {}
+        data['result'] = True
+        return JsonResponse(data)
+
+
 urlpatterns = [
 
     path('', home, name='home'),
     path('test/', test, name='test'),
+    path('sendmail/', sendmail, name='sendmail'),
     path('customuser/', include('customuser.urls', namespace='customuser')),
     path('company/', include('company.urls', namespace='company')),
     path('lang/', set_language, name='lang'),
@@ -67,6 +81,7 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar

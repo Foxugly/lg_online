@@ -15,3 +15,7 @@ django-simple-captcha
 django-anymail[amazon_ses]
 beautifulsoup4>=4.6.0
 requests>=2.22.0
+django-localflavor
+django-vies
+django-phonenumber-field
+phonenumbers

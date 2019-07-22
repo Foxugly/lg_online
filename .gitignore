@@ -1,1 +1,5 @@
 lg/credential_email.py
+media/id_card/*
+company/migrations/*
+contact/migrations/*
+customuser/migrations/*

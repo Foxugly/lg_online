@@ -6,7 +6,7 @@
 		{% bootstrap_css %}
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="{% static 'select2/css/bootstrap-select.css' %}" />
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/b-1.5.4/datatables.min.css"/>
+		<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/b-1.5.4/datatables.min.css"/>-->
     <link rel="stylesheet" type="text/css" href='{% static "bootstrap4-datetimepicker-master/build/css/bootstrap-datetimepicker.min.css" %}' />
 		<link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
@@ -28,6 +28,9 @@
 					</li>-->
 				</ul>
 				<ul class="navbar-nav navbar-right">
+					<li class="nav-item">
+						<a href="#" class="nav-link" data-toggle="modal" data-target="#contactUsModalCenter" title="contact us"><span class="fa fa-envelope-o"></span></a>
+					</li>
 					<li>
 						{% get_current_language as LANGUAGE_CODE %}
 							{% get_available_languages as LANGUAGES %}
@@ -66,19 +69,88 @@
 			{% block breadcrumbs %}
 			    {% render_breadcrumbs %}
 			{% endblock %}
-			{% bootstrap_messages %}
+			<div id="messages">
+			{% for message in messages %}
+			    <div class="{{ message|bootstrap_message_classes }} alert-dismissable fade show" role="alert">
+			        <button type="button" class="close" data-dismiss="alert" aria-label="{% trans 'close' %}">&#215;</button>
+			        {% if 'safe' in message.tags %}
+			            {{ message|safe }}
+			        {% else %}
+			            {{ message }}
+			        {% endif %}
+			    </div>
+			</div>
+			{% endfor %}
 			{% block content %}{% endblock content %}
 		</div>
+
+        <div class="modal fade" id="contactUsModalCenter" tabindex="-1" role="dialog" aria-labelledby="contacUsCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="ContactUsLongTitle">{% trans 'Contact us' %}</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <form id= "contactUsForm" name="contactUsForm" class="form-horizontal">
+		        	{% csrf_token %}
+						<div class="form-group row">
+						  <label class="col-md-3 control-label" for="mail_subject">{% trans 'Subject' %}</label>  
+						  <div class="col-md-9"> 
+						  <input id="mail_subject" name="mail_subject" type="text" class="form-control input-md">
+						</div>
+						</div>
+						<!-- Textarea -->
+						<div class="form-group row">
+						  <label class="col-md-3 control-label" for="mail_content">{% trans 'Content' %}</label>
+						  <div class="col-md-9">                     
+						    <textarea class="form-control" id="mail_content" name="mail_content"></textarea>
+						  </div>
+						</div>
+				</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Close' %}</button>
+		        <button type="button" id="btn_send_message" class="btn btn-primary">{% trans 'Send message' %}</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
 		{% bootstrap_javascript jquery='full' %}
 		 <script type="text/javascript" src="{% static 'bootbox/bootbox.min.js' %}"></script>
     <script type="text/javascript" src="//momentjs.com/downloads/moment-with-locales.js"></script>
     <script type="text/javascript" src="{% static 'select2/js/bootstrap-select.js' %}"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/b-1.5.4/datatables.min.js"></script>
+    <!--<script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/b-1.5.4/datatables.min.js"></script>-->
     <script type="text/javascript" src='{% static "bootstrap4-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js" %}'></script>
 
   <script>
 
     $(document).ready(function(){
+    	$('#btn_send_message').on('click', function (e) {
+    		var subject = $('#mail_subject').val();
+    		var content = $('#mail_content').val();
+    		$.ajax({
+	        url: '{% url "sendmail" %}',
+	        data: {
+	          'subject': subject,
+	          'content': content
+	        },
+	        dataType: 'json',
+	        success: function (data) {
+	          if (data.result) {
+	          	$('#mail_subject').val('');
+	      $('#mail_content').val('');
+	      $('#contactUsModalCenter').modal('hide');
+          $('#messages').append('<div id="msg_sendmail" class="safe alert alert-success alert-dismissable fade show" role="alert">{% trans "Email sent !" %}</div>' );
+          $('#msg_sendmail').delay(3000).fadeOut("slow");
+	          }
+	        }
+	      });
+    	});
 
         $('.confirmation').on('click', function (e) {
             e.preventDefault();
@@ -106,7 +178,7 @@
       $('select').selectpicker();
 
 
-      $('#table_datatable').DataTable({
+      /*$('#table_datatable').DataTable({
           'dom': "<'row mt-2'<'col-sm-5 col-md-5'f><'col-sm-4 col-md-4'l> <'col-sm-3 col-md-3 text-right'B>>" +
               "<'row'<'col-sm-12'tr>>" +
               "<'row mb-5'<'col-sm-7 col-md-7'p><'col-sm-5 col-md-5'i>>" ,
@@ -123,7 +195,8 @@
               {% if LANGUAGE_CODE == "nl" %} "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Dutch.json" {% endif %}
               {% if LANGUAGE_CODE == "en" %} "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/English.json" {% endif %}
           },   
-      }); // end datatable
+      }); */
+      // end datatable
 
       {% for key, value in add_class_to_fields.items %}
         {% if value == "datetime" %}
