@@ -8,8 +8,8 @@ from hijack_admin.admin import HijackUserAdminMixin
 
 
 class CustomUserAdmin(UserAdmin, HijackUserAdminMixin):
-    #form = CustomUserChangeForm
-    #add_form = CustomUserCreationForm
+    # form = CustomUserChangeForm
+    # add_form = CustomUserCreationForm
     list_display = ('email', 'first_name', 'last_name', 'is_active', 'is_superuser', 'hijack_field', )
     list_filter = ('is_staff', 'is_superuser', 'is_active', )
     fieldsets = (

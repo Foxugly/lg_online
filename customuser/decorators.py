@@ -1,6 +1,7 @@
 from django.utils import translation
 from django.conf import settings
 
+
 def check_lang(function):
     def wrap(request, *args, **kwargs):
         if request.user.is_authenticated:

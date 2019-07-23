@@ -1,7 +1,6 @@
 from tools.generic_class import GenericClass
 from django.db import models
 from django.utils.translation import gettext as _
-from vies.models import VATINField
 from vies.validators import VATINValidator
 
 
@@ -9,7 +8,8 @@ from vies.validators import VATINValidator
 class Company(GenericClass):
     enterprise_name = models.CharField(_("Enterprise Name"), max_length=255, blank=True)
     iban = models.CharField(_("IBAN"), max_length=20, blank=True, null=True, )
-    enterprise_number = models.CharField(_("Enterprise Number"), max_length=30,null=True, validators=[VATINValidator(verify=True, validate=True)])
+    #enterprise_number = models.CharField(_("Enterprise Number"), max_length=30,null=True)
+    enterprise_number = models.CharField(_("Enterprise Number"), max_length=30, null=True, validators=[VATINValidator(verify=True, validate=True)])
     enterprise_status = models.CharField(_("Enterprise Status"), max_length=12, blank=True)
     legal_situation = models.CharField(_("Legal Situation"), max_length=50, blank=True)
     start_date = models.DateField(_("Start date"), blank=True, null=True)

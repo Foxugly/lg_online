@@ -25,7 +25,7 @@ SECRET_KEY = '1bjb+q*)dcd6-lwml5nn-n2v&b655^6sc@3#nqt*sg*dbjmo+0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-STATE = 'PROD' # or ACC or PROD
+STATE = 'PROD' # DEV or ACC or PROD
 
 ALLOWED_HOSTS = ['*']
 
@@ -135,7 +135,7 @@ MEDIA_URL = '/media/'
 IDCARD_URL = 'media/id_card/'
 # IDCARD_ROOT = os.path.join(BASE_DIR, 'id_card')
 
-if STATE == "PROD":
+if STATE == 'PROD':
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 else:

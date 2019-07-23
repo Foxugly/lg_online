@@ -15,35 +15,34 @@ class CompanyCreateView(GenericCreateView):
     form_class = CompanyCreateForm
 
     def form_valid(self, form):
-        # Catch an instance of the object
         c = form.save(commit=False)
-        #data = get_data_from_bce(c.enterprise_number)
         data = get_data_from_bce(c.enterprise_number[2:])
         if len(data):
             for key, value in data.items():
-                if key =='statut': 
+                if key == 'statut':
                     c.enterprise_status = value
                 elif key == 'situation_juridique':
                     c.legal_situation = value
-                elif key == 'date_debut': 
+                elif key == 'date_debut':
                     c.start_date = value
-                elif key == 'denomination': 
+                elif key == 'denomination':
                     c.enterprise_name = value
-                elif key == 'adresse': 
+                elif key == 'adresse':
                     c.social_address_street = value
-                elif key == 'adresse_num': 
+                elif key == 'adresse_num':
                     c.social_address_number = value
-                elif key == 'adresse_cp': 
+                elif key == 'adresse_cp':
                     c.social_address_zip = value
-                elif key == 'adresse_ville': 
+                elif key == 'adresse_ville':
                     c.social_address_city = value
-                elif key == 'forme_legale': 
+                elif key == 'forme_legale':
                     c.legal_form = value
                 elif key == 'date_fin_annee_comptable':
                     c.end_fiscal_date = value
         c.save()
         self.request.user.companies.add(c)
-        return super(CompanyCreateView, self).form_valid(form) 
+        return super(CompanyCreateView, self).form_valid(form)
+
 
 class CompanyListView(GenericListView):
     model = Company

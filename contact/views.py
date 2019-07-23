@@ -4,7 +4,6 @@ from django.utils.translation import gettext as _
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 
 
-
 class ContactCreateView(GenericCreateView):
     model = Contact
 

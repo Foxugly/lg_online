@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path, include, reverse
 from django.conf.urls.static import static
 from django.conf import settings
-from django.apps import apps
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.utils import translation
@@ -89,23 +88,7 @@ if settings.DEBUG:
         path('__debug__/', include(debug_toolbar.urls))]
  
 if not settings.DEBUG:
-    handler400 = '.urls.bad_request'
-    handler403 = '.urls.permission_denied'
-    handler404 = '.urls.page_not_found'
-    handler500 = '.urls.server_error'
-
-def bad_request(request, exception):
-    context = {}
-    return render(request, '400.html', context, status=400)
-
-def permission_denied(request, exception):
-    context = {}
-    return render(request, '403.html', context, status=403)
-
-def page_not_found(request, exception):
-    context = {}
-    return render(request, '404.html', context, status=404)
-
-def server_error(request, exception):
-    context = {}
-    return render(request, '500.html', context, status=500)
+    handler400 = 'lg.views.bad_request'
+    handler403 = 'lg.views.permission_denied'
+    handler404 = 'lg.views.page_not_found'
+    handler500 = 'lg.views.server_error'

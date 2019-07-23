@@ -30,11 +30,9 @@ def activate(request, uidb64, token):
         user.save()
         messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
         return redirect('home')
-        #return render(request, "index.html")
     else:
         messages.error(request, 'Activation link is invalid!')
         return redirect('home')
-        #return render(request, "index.html")
 
 
 class CustomUserLoginView(LoginView):

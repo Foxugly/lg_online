@@ -20,7 +20,7 @@ class GenericCreateView(SuccessMessageMixin, CreateBreadcrumbMixin, CreateView):
             self.model_name = self.model._meta.model_name
             self.success_url = reverse_lazy('%s:%s_list' % (self.app_name, self.model_name))
         super(GenericCreateView, self).__init__(*args, **kwargs)
-    
+
     def get_context_data(self, **kwargs):
         context = super(GenericCreateView, self).get_context_data(**kwargs)
         return context

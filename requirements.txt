@@ -6,7 +6,6 @@ jupyter
 django-debug-toolbar
 django-bootstrap4
 django-view-breadcrumbs
-celery>=4.3,<5.0
 redis>=2.10.3
 pip>=9.0.1
 django-celery==3.3.0

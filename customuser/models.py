@@ -31,14 +31,13 @@ class CustomUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     language = models.CharField(_("language"), max_length=8, choices=settings.LANGUAGES, default=1)
     companies = models.ManyToManyField(Company, blank=True, verbose_name=_("companies"))
-    telephone = PhoneNumberField(_("Phone number"), blank=True)
+    telephone = PhoneNumberField(_("Phone number"), max_length=20, blank=True)
     id_card = models.FileField(upload_to=settings.IDCARD_URL, blank=True)
     contact = models.ForeignKey(Contact, blank=True, null=True, on_delete='cascade')
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-
 
     def __str__(self):
         return self.email
