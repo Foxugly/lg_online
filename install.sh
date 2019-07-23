@@ -15,5 +15,6 @@ sudo cp lg_online80.conf /etc/apache2/sites-enabled/mlg.conf
 sudo ln /etc/apache2/sites-available/mlg.conf /etc/apache2/sites-enabled/mlg.conf -s
 ./run.sh
 deactivate
-sudo chown -R www-data:www-data *
+cd ..
+sudo chown -R www-data:www-data lg_online
 sudo service apache2 restart
