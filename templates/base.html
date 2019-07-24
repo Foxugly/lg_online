@@ -149,6 +149,7 @@
 	      $('#contactUsModalCenter').modal('hide');
           $('#messages').append('<div id="msg_sendmail" class="safe alert alert-success alert-dismissable fade show" role="alert">{% trans "Email sent !" %}</div>' );
           $('#msg_sendmail').delay(3000).fadeOut("slow");
+          $('#msg_sendmail').delay(6000).removeClass("show").addClass("hide");
 	          }
 	        }
 	      });
