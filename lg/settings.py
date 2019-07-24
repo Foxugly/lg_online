@@ -135,11 +135,11 @@ MEDIA_URL = '/media/'
 IDCARD_URL = 'media/id_card/'
 # IDCARD_ROOT = os.path.join(BASE_DIR, 'id_card')
 
-if STATE == 'PROD':
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-else:
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+#if STATE == 'PROD':
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# else:
+#    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 
 HIJACK_LOGIN_REDIRECT_URL = '/'
@@ -154,13 +154,12 @@ AUTH_USER_MODEL = "customuser.CustomUser"
 AUTHENTICATION_BACKENDS = ['customuser.backends.CustomUserBackend']
 
 
-if DEBUG:
-    def show_toolbar(request):
-        return True
+def show_toolbar(request):
+    return DEBUG
 
-    DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_CALLBACK': 'lg.settings.show_toolbar',
-    }
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': 'lg.settings.show_toolbar',
+}
 
 BOOTSTRAP4 = {
 
