@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordResetForm
 from django.forms import ModelForm
 from customuser.models import CustomUser
 from captcha.fields import CaptchaField
@@ -11,6 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from django import forms
 from tools.mail import send_mail_smtp
 from django.contrib.auth import authenticate
+from django.template import loader
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -71,7 +72,17 @@ class CustomUserCreateForm(UserCreationForm):
             'token': account_activation_token.make_token(user),
         })
         to = self.cleaned_data.get('email')
-        from_email = "no_reply@mylieutenantguillaume.com"
         reply_to = "info@lieutenantguillaume.com"
-        send_mail_smtp(str(subject), from_email, to, reply_to, msg_txt, msg_html)
+        send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html)
         return valid
+
+
+class MyPasswordResetForm(PasswordResetForm):
+
+    def send_mail(self, subject_template_name, email_template_name,
+                  context, from_email, to_email, html_email_template_name=None):
+        subject = '[mylieutenantguillaume] ' + loader.render_to_string(subject_template_name, context)
+        subject = ''.join(subject.splitlines())
+        body = loader.render_to_string(email_template_name, context)
+        send_mail_smtp(str(subject), to_email, None, body, None)
+

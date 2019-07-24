@@ -60,7 +60,7 @@
 						</li>
 					{% else %}
 					<li class="nav-item">
-						<a class="nav-link"  href="{% url 'login' %}?next=/"><span class="fa fa-sign-in"></span> Login</a>
+						<a class="nav-link"  href="{% url 'login' %}?next=/"><span class="fa fa-sign-in"></span>{% trans 'Log in' %}</a>
 					</li>
 					{% endif %}
 				</ul>

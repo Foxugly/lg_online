@@ -7,10 +7,10 @@ from customuser.models import CustomUser
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import login
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordResetView
 from django.http import HttpResponse
 from django.contrib import messages
-from customuser.forms import CustomUserCreateForm, CustomUserForm
+from customuser.forms import CustomUserCreateForm, CustomUserForm, MyPasswordResetForm
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from customuser.tokens import account_activation_token
@@ -80,3 +80,10 @@ class CustomUserUpdateView(SuccessMessageMixin, UpdateView):
         context['model'] = self.model
         context.update({'title': "Update User"})
         return context
+
+
+class MyPasswordResetView(PasswordResetView):
+
+    def __init__(self, *args, **kwargs):
+        self.form_class = MyPasswordResetForm
+        print('coucou')

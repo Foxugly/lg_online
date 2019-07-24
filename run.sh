@@ -6,4 +6,5 @@ python3 manage.py makemigrations company
 python3 manage.py makemigrations contact
 python3 manage.py migrate
 python3 manage.py createsuperuser --email 'test@test.be'
+python3 manage.py shell < create_contact.py 
 python3 manage.py runserver
