@@ -48,7 +48,7 @@ class CompanyListView(GenericListView):
     model = Company
 
     def get_queryset(self):
-        queryset = self.request.user.companies.all()
+        queryset = self.request.user.companies.all().order_by('id')
         if not self.request.user.telephone and not self.request.user.id_card:
             messages.info(self.request, 'Please fill in your phonenumber and a copy of your ID card. See <a href=%s>here</a>' % reverse('update_user'), extra_tags='safe')
         elif not self.request.user.telephone:
