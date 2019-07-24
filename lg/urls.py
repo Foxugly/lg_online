@@ -57,7 +57,7 @@ def sendmail(request):
     if request.is_ajax():
         subject = request.GET.get('subject', None)
         content = request.GET.get('content', None)
-        header = "Client : %s %s \nMail : %s\n Phone : %s" % (request.user.first_name, request.user.last_name, request.user.email, request.user.telephone)
+        header = "Client : %s %s \nMail : %s\nPhone : %s\n\n" % (request.user.first_name, request.user.last_name, request.user.email, request.user.telephone)
         send_mail_smtp(subject, request.user.contact.email, request.user.email, header + content, None)
         data = {}
         data['result'] = True
