@@ -37,11 +37,7 @@ def home(request):
     else:
         return render(request, "index.html", c)
 
-
-def test(request):
-    return render(request, "test.html")
-
-
+    
 def set_language(request):
     if 'lang' in request.GET and 'next' in request.GET:
         if translation.LANGUAGE_SESSION_KEY in request.session:
@@ -67,7 +63,6 @@ def sendmail(request):
 urlpatterns = [
 
     path('', home, name='home'),
-    path('test/', test, name='test'),
     path('sendmail/', sendmail, name='sendmail'),
     path('customuser/', include('customuser.urls', namespace='customuser')),
     path('company/', include('company.urls', namespace='company')),
