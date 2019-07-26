@@ -21,7 +21,6 @@ class CompanyUpdateForm(ModelForm):
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['enterprise_number'].widget.attrs['readonly'] = True
-            self.fields['enterprise_number'].widget.attrs['disabled'] = 'disabled'
 
     class Meta:
         model = Company
