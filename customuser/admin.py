@@ -7,6 +7,11 @@ from django.utils.translation import gettext, gettext_lazy as _
 from hijack_admin.admin import HijackUserAdminMixin
 
 
+def set_active(modeladmin, request, queryset):
+    queryset.update(is_active=True)
+set_active.short_description = "Set is_active=True to customuser(s)"
+
+
 class CustomUserAdmin(UserAdmin, HijackUserAdminMixin):
     # form = CustomUserChangeForm
     # add_form = CustomUserCreationForm
@@ -28,6 +33,7 @@ class CustomUserAdmin(UserAdmin, HijackUserAdminMixin):
     search_fields = ('email', 'first_name', 'last_name', )
     ordering = ('email', )
     filter_horizontal = ('companies', )
+    actions = [set_active]
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
