@@ -4,10 +4,19 @@ from django.utils.translation import gettext as _
 from vies.validators import VATINValidator
 
 
-# Create your models here.
+class Iban(GenericClass):
+    iban = models.CharField(_("IBAN"), max_length=20, blank=True, null=True, )
+
+    def __str__(self):
+        return '%s' % (self.iban)
+
+    class Meta:
+        verbose_name = _('Iban')
+
+
 class Company(GenericClass):
     enterprise_name = models.CharField(_("Enterprise Name"), max_length=255, blank=True)
-    iban = models.CharField(_("IBAN"), max_length=20, blank=True, null=True, )
+    ibans = models.ManyToManyField(Iban)
     #enterprise_number = models.CharField(_("Enterprise Number"), max_length=30,null=True)
     enterprise_number = models.CharField(_("Enterprise Number"), max_length=30, null=True, validators=[VATINValidator(verify=True, validate=True)])
     enterprise_status = models.CharField(_("Enterprise Status"), max_length=12, blank=True)
