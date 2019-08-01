@@ -3,8 +3,8 @@ from company.models import Company, Iban
 # Register your models here.
 
 
-class IbanAdmin(admin.ModelAdmin):
-    pass
+#class IbanAdmin(admin.ModelAdmin):
+#    pass
 
 
 class IbanInline(admin.StackedInline):
@@ -13,8 +13,16 @@ class IbanInline(admin.StackedInline):
 
 
 class CompanyAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['enterprise_number', 'enterprise_status', 'legal_situation',
+                           'start_date', 'enterprise_name',
+                           'legal_form', 'end_fiscal_date']}),
+        ('address', {'fields': ['social_address_street',
+                                'social_address_number', 'social_address_zip',
+                                'social_address_city', 'social_address_country']}),
+    ]
     inlines = [IbanInline]
 
 
-admin.site.register(Iban, IbanAdmin)
+# admin.site.register(Iban, IbanAdmin)
 admin.site.register(Company, CompanyAdmin)

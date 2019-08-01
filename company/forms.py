@@ -1,15 +1,15 @@
 from django.forms import ModelForm
-from company.models import Company
-from localflavor.generic.forms import IBANFormField
+from company.models import Company, Iban
+
+from django.forms import inlineformset_factory
 
 
 class CompanyCreateForm(ModelForm):
     model = Company
-    iban = IBANFormField()
 
     class Meta:
         model = Company
-        fields = ['enterprise_number', 'iban']
+        fields = ['enterprise_number', ]
         help_texts = {'enterprise_number': "ex 'BE0123456789", }
 
 
@@ -28,4 +28,13 @@ class CompanyUpdateForm(ModelForm):
                   'start_date', 'enterprise_name', 'social_address_street',
                   'social_address_number', 'social_address_zip',
                   'social_address_city', 'social_address_country',
-                  'legal_form', 'end_fiscal_date', 'iban', ]
+                  'legal_form', 'end_fiscal_date', ]
+
+
+class IbanUpdateForm(ModelForm):
+    class Meta:
+        model = Iban
+        exclude = ()
+
+
+CompanyIbanFormSet = inlineformset_factory(Company, Iban, form=IbanUpdateForm, extra=1)

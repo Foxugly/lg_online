@@ -24,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1bjb+q*)dcd6-lwml5nn-n2v&b655^6sc@3#nqt*sg*dbjmo+0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-STATE = 'PROD' # DEV or ACC or PROD
+DEBUG = True
+STATE = 'ACC'  # DEV or ACC or PROD
 
 ALLOWED_HOSTS = ['*']
 
@@ -88,8 +88,6 @@ TEMPLATES = [
     },
 ]
 
-
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
@@ -100,11 +98,10 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
-#AUTH_PASSWORD_VALIDATORS = [
+# AUTH_PASSWORD_VALIDATORS = [
 #    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
 #    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
 #    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
@@ -133,13 +130,13 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'), ]
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 IDCARD_URL = 'media/id_card/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # IDCARD_ROOT = os.path.join(BASE_DIR, 'id_card')
 
-#if STATE == 'PROD':
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# else:
-#    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+if STATE == 'PROD':
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+else:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 
 HIJACK_LOGIN_REDIRECT_URL = '/'

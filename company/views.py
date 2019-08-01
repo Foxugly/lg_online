@@ -1,9 +1,8 @@
 from tools.generic_views import *
 from company.models import Company
 from django.utils.translation import gettext as _
-from company.forms import CompanyCreateForm, CompanyUpdateForm
-from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
-from view_breadcrumbs import ListBreadcrumbMixin, UpdateBreadcrumbMixin, DetailBreadcrumbMixin, CreateBreadcrumbMixin
+from django.db import transaction
+from company.forms import CompanyCreateForm, CompanyIbanFormSet
 from tools.bce import get_data_from_bce
 from django.contrib import messages
 from django.urls import reverse
@@ -62,8 +61,27 @@ class CompanyListView(GenericListView):
 
 class CompanyUpdateView(GenericUpdateView):
     model = Company
-    fields = None
-    form_class = CompanyUpdateForm
+    fields = '__all__'
+    template_name = 'update_company.html'
+
+    def get_context_data(self, **kwargs):
+        data = super(CompanyUpdateView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['ibans'] = CompanyIbanFormSet(self.request.POST, instance=self.object)
+        else:
+            data['ibans'] = CompanyIbanFormSet(instance=self.object)
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        ibans = context['ibans']
+        with transaction.atomic():
+            self.object = form.save()
+
+            if ibans.is_valid():
+                ibans.instance = self.object
+                ibans.save()
+        return super(CompanyUpdateView, self).form_valid(form)
 
 
 class CompanyDetailView(GenericDetailView):

@@ -23,7 +23,8 @@ def send_mail_smtp(subject, to, reply_to, text, html):
     msg.set_content(text)
     s = smtplib.SMTP()
     s.connect(EMAIL_HOST, EMAIL_PORT)
-    s.starttls()
+    if EMAIL_USE_TLS:
+        s.starttls()
     s.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
     # print(msg)
     # s.sendmail(from_email, to, msg.as_string())
