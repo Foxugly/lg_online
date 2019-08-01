@@ -2,13 +2,14 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from customuser.models import CustomUser
-from customuser.forms import CustomUserChangeForm, CustomUserCreationForm
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from hijack_admin.admin import HijackUserAdminMixin
 
 
 def set_active(modeladmin, request, queryset):
     queryset.update(is_active=True)
+
+
 set_active.short_description = "Set is_active=True to customuser(s)"
 
 

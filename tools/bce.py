@@ -1,8 +1,6 @@
 
 import requests
-import time
 from bs4 import BeautifulSoup
-import os
 import re
 import datetime
 

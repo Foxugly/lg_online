@@ -13,11 +13,11 @@ class CompanyCreateForm(ModelForm):
         help_texts = {'enterprise_number': "ex 'BE0123456789", }
 
 
-class CompanyUpdateForm(ModelForm):
+class CompanyForm(ModelForm):
     model = Company
 
     def __init__(self, *args, **kwargs):
-        super(CompanyUpdateForm, self).__init__(*args, **kwargs)
+        super(CompanyForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['enterprise_number'].widget.attrs['readonly'] = True

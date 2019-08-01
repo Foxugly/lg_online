@@ -1,14 +1,10 @@
-from django.shortcuts import render, redirect
-from customuser.models import CustomUser
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.forms import ModelForm
 from customuser.models import CustomUser
-from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
+from django.views.generic import CreateView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, PasswordResetView
-from django.http import HttpResponse
 from django.contrib import messages
 from customuser.forms import CustomUserCreateForm, CustomUserForm, MyPasswordResetForm
 from django.utils.encoding import force_text

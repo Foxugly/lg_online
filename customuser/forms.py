@@ -2,15 +2,12 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm, Password
 from django.forms import ModelForm
 from customuser.models import CustomUser
 from captcha.fields import CaptchaField
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode
 from customuser.tokens import account_activation_token
 from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_bytes
 from django.utils.translation import gettext_lazy as _
-from django import forms
 from tools.mail import send_mail_smtp
-from django.contrib.auth import authenticate
 from django.template import loader
 
 
@@ -42,8 +39,6 @@ class CustomUserForm(ModelForm):
 
 class CustomUserCreateForm(UserCreationForm):
     model = CustomUser
-    # password = forms.CharField(widget=forms.PasswordInput)
-    # repeat_password = forms.CharField(widget=forms.PasswordInput)
     captcha = CaptchaField()
 
     class Meta:
@@ -85,4 +80,3 @@ class MyPasswordResetForm(PasswordResetForm):
         subject = ''.join(subject.splitlines())
         body = loader.render_to_string(email_template_name, context)
         send_mail_smtp(str(subject), to_email, None, body, None)
-

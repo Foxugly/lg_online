@@ -1,17 +1,10 @@
-from lg.credential_email import EMAIL_USE_TLS, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_SSL, EMAIL_FROM
+from lg.credential_email import EMAIL_USE_TLS, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, \
+    EMAIL_USE_SSL, EMAIL_FROM
 import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 from email.message import EmailMessage
 
 
 def send_mail_smtp(subject, to, reply_to, text, html):
-    # print(subject)
-    # print(from_email)
-    # print(to)
-    # print(text)
-    # print(html)
-    # msg = MIMEMultipart('alternative')
     msg = EmailMessage()
     msg['Subject'] = subject
     msg['From'] = EMAIL_FROM
@@ -26,7 +19,5 @@ def send_mail_smtp(subject, to, reply_to, text, html):
     if EMAIL_USE_TLS:
         s.starttls()
     s.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
-    # print(msg)
-    # s.sendmail(from_email, to, msg.as_string())
     s.send_message(msg)
     s.quit()

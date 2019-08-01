@@ -1,6 +1,5 @@
 from django.db import models
-from tools.generic_class import GenericClass
-from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from company.models import Company
@@ -33,7 +32,12 @@ class CustomUser(AbstractUser):
     companies = models.ManyToManyField(Company, blank=True, verbose_name=_("companies"))
     telephone = PhoneNumberField(_("Phone number"), max_length=20, blank=True)
     id_card = models.FileField(upload_to=settings.IDCARD_URL, blank=True)
-    contact = models.ForeignKey(Contact, blank=True, null=True, on_delete='cascade')
+    address_street = models.CharField(_("Street"), max_length=255, blank=True)
+    address_number = models.CharField(_("Number"), max_length=20, blank=True)
+    address_zip = models.CharField(_("Zip Code"), max_length=20, blank=True)
+    address_city = models.CharField(_("City"), max_length=255, blank=True)
+    address_country = models.CharField(_("Country"), max_length=255, blank=True)
+    contact = models.ForeignKey(Contact, blank=True, null=True, on_delete=models.CASCADE)
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'

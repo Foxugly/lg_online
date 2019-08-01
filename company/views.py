@@ -2,7 +2,7 @@ from tools.generic_views import *
 from company.models import Company
 from django.utils.translation import gettext as _
 from django.db import transaction
-from company.forms import CompanyCreateForm, CompanyIbanFormSet
+from company.forms import CompanyCreateForm, CompanyForm, CompanyIbanFormSet
 from tools.bce import get_data_from_bce
 from django.contrib import messages
 from django.urls import reverse
@@ -48,20 +48,28 @@ class CompanyListView(GenericListView):
 
     def get_queryset(self):
         queryset = self.request.user.companies.all().order_by('id')
-        if not self.request.user.telephone and not self.request.user.id_card:
-            messages.info(self.request, 'Please fill in your phonenumber and a copy of your ID card. See <a href=%s>here</a>' % reverse('update_user'), extra_tags='safe')
+        empty_fiels = []
+        if not (self.request.user.address_street and self.request.user.address_zip and self.request.user.address_city):
+            empty_fiels.append(_('your address'))
         elif not self.request.user.telephone:
-            messages.info(self.request, 'Please fill in your phonenumber. See <a href=%s>here</a>' % reverse('update_user'), extra_tags='html_safe')
+            empty_fiels.append(_('your phonenumber'))
         elif not self.request.user.id_card:
-            messages.info(self.request, 'Please fill in a copy of your ID card. See <a href=%s>here</a>' % reverse('update_user'), extra_tags='safe')
-        else:
-            messages.success(self.request, "OK")
+            empty_fiels.append(_('a copy of your ID card'))
+        if not empty_fiels:
+            if len(empty_fiels) == 1:
+                fields = empty_fiels[0]
+            else:
+                fields = ", ".join(empty_fiels[:-1]) + " %s %s" % (_('and'), empty_fiels[-1])
+            messages.info(self.request, 'Please fill in %s. See <a href=%s>here</a>' % (fields, reverse('update_user')),
+                          extra_tags='safe')
+
         return queryset
 
 
 class CompanyUpdateView(GenericUpdateView):
     model = Company
-    fields = '__all__'
+    fields = None
+    form_class = CompanyForm
     template_name = 'update_company.html'
 
     def get_context_data(self, **kwargs):
