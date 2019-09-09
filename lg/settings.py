@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'customuser',
     'company',
     'contact',
+    'simulation',
 ]
 
 MIDDLEWARE = [

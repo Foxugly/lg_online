@@ -56,6 +56,14 @@ class CustomUserCreateView(SuccessMessageMixin, CreateView):
             self.success_url = reverse_lazy('home')
         super(CustomUserCreateView, self).__init__(*args, **kwargs)
 
+
+    def form_valid(self, form):
+        simulation_id = self.request.GET.get('simulation_id')
+        print(simulation_id)
+        return super(CustomUserCreateView, self).form_valid(form)
+        #form.instance.user = user
+
+
     def get_context_data(self, **kwargs):
         context = super(CustomUserCreateView, self).get_context_data(**kwargs)
         context.update({'title': "New User"})
@@ -86,4 +94,3 @@ class MyPasswordResetView(PasswordResetView):
 
     def __init__(self, *args, **kwargs):
         self.form_class = MyPasswordResetForm
-        print('coucou')

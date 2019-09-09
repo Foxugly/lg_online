@@ -11,7 +11,7 @@ class GenericCreateView(SuccessMessageMixin, CreateBreadcrumbMixin, CreateView):
     model_name = None
     fields = "__all__"
     template_name = 'update.html'
-    success_url = reverse_lazy('%s:%s_list' % (app_name, model_name))
+    # success_url = reverse_lazy('%s:%s_list' % (app_name, model_name))
     success_message = _('object created.')
 
     def __init__(self, *args, **kwargs):
