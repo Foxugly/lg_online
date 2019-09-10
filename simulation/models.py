@@ -26,7 +26,7 @@ TAX_LIABILITY_CHOICES = (
     ('none', : _("Non déposant")),
 )
 
-coef_tax_liability = {'monthly': 1.3, 'qurterly':1, 'none': 0.8}
+coef_tax_liability = {'monthly': 1.3, 'quarterly':1, 'none': 0.8}
 
 
 class Simulation(GenericClass):
