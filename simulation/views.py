@@ -18,6 +18,11 @@ class SimulationCreateView(CreateView):
     fields = "__all__"
     template_name = 'update_simulation.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': "Simulation"})
+        return context
+
 
 class ReadOnlyModelFormMixin(ModelFormMixin):
 
@@ -40,7 +45,8 @@ class SimulationUpdateView(UpdateView, ReadOnlyModelFormMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['update'] = True
-        context['price'] = "1000" # self.object.price
+        context['price'], context['price_calculated'] = self.object.compute()
+        context.update({'title': "Simulation"})
         return context
 
 

@@ -5,4 +5,4 @@ from .models import Simulation
 class SimulationForm(ModelForm):
 	class Meta:
 		model = Simulation
-		fields = ['nb_invoice']
+		fields = "__all__"
