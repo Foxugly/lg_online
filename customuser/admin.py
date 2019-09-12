@@ -19,7 +19,7 @@ class CustomUserAdmin(UserAdmin, HijackUserAdminMixin):
     list_filter = ('is_staff', 'is_superuser', 'is_active', )
     fieldsets = (
         (None, {'fields': ('email', 'password', )}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'telephone', 'id_card', 'contact')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'telephone', 'id_card', 'contact', 'simulation')}),
         (_('Companies'), {'fields': ('companies', )}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', )}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),

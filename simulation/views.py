@@ -15,13 +15,29 @@ from django.views.generic.edit import FormMixin, ModelFormMixin
 
 class SimulationCreateView(CreateView):
     model = Simulation
-    fields = "__all__"
+    fields = ("nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
     template_name = 'update_simulation.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({'title': "Simulation"})
         return context
+
+    def get_initial(self):
+        super(SimulationCreateView, self).get_initial()
+        if self.request.GET.get('simulation_id'):
+            simulation = Simulation.objects.get(pk=self.request.GET.get('simulation_id'))
+            self.initial = {
+                'nb_invoices_sale': simulation.nb_invoices_sale,
+                'nb_invoices_purchase': simulation.nb_invoices_purchase,
+                'nb_managers': simulation.nb_managers,
+                'nb_employees': simulation.nb_employees,
+                'nb_creditcard': simulation.nb_creditcard,
+                'alternatif_payments': simulation.alternatif_payments,
+                'sector': simulation.sector,
+                'tax_liability': simulation.tax_liability,
+            }
+        return self.initial
 
 
 class ReadOnlyModelFormMixin(ModelFormMixin):
@@ -39,7 +55,7 @@ class ReadOnlyModelFormMixin(ModelFormMixin):
 
 class SimulationUpdateView(UpdateView, ReadOnlyModelFormMixin):
     model = Simulation
-    fields = '__all__'
+    fields = ("nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
     template_name = 'update_simulation.html'
 
     def get_context_data(self, **kwargs):

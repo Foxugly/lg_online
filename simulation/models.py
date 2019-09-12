@@ -40,6 +40,7 @@ class Simulation(GenericClass):
     alternatif_payments = models.BooleanField(_("Système de paiements alternatifs (Paypal, Sumup, Stripe, ...)"))
     sector = models.CharField(max_length=20, choices=SECTOR_CHOICES)
     tax_liability = models.CharField(max_length=20, choices=TAX_LIABILITY_CHOICES)
+    created = models.DateTimeField(auto_now_add=True)
     
     def compute(self):
         V_nb_invoices_sale = 0.7 * self.nb_invoices_sale

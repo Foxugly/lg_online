@@ -16,6 +16,7 @@ from django.utils.http import urlsafe_base64_decode
 from customuser.tokens import account_activation_token
 from django.contrib.auth.forms import AuthenticationForm
 from contact.models import Contact
+from simulation.models import Simulation
 
 
 def activate(request, uidb64, token):
@@ -58,10 +59,11 @@ class CustomUserCreateView(SuccessMessageMixin, CreateView):
 
 
     def form_valid(self, form):
-        simulation_id = self.request.GET.get('simulation_id')
-        print(simulation_id)
+        if self.request.GET.get('simulation_id'):
+            instance = form.save(commit=False)
+            simulation_id = self.request.GET.get('simulation_id')
+            instance.simulation = Simulation.objects.get(pk=simulation_id)
         return super(CustomUserCreateView, self).form_valid(form)
-        #form.instance.user = user
 
 
     def get_context_data(self, **kwargs):
@@ -71,6 +73,7 @@ class CustomUserCreateView(SuccessMessageMixin, CreateView):
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data)
+
 
 
 class CustomUserUpdateView(SuccessMessageMixin, UpdateView):

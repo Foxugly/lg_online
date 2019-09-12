@@ -6,6 +6,7 @@ from django.conf import settings
 from company.models import Company
 from phonenumber_field.modelfields import PhoneNumberField
 from contact.models import Contact
+from simulation.models import Simulation
 
 
 class CustomUserManager(BaseUserManager):
@@ -35,6 +36,7 @@ class CustomUser(AbstractUser):
     id_card = models.FileField(upload_to=settings.IDCARD_URL, blank=True)
     contact = models.ForeignKey(Contact, blank=True, null=True, on_delete='cascade')
     objects = CustomUserManager()
+    simulation = models.ForeignKey(Simulation, blank=True, null=True, on_delete='cascade')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
