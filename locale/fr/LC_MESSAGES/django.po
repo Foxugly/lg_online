@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-17 02:02+0200\n"
+"POT-Creation-Date: 2019-09-27 11:53+0000\n"
 "PO-Revision-Date: 2019-09-19 17:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -303,6 +303,18 @@ msgstr "Ajouter"
 #: templates/index.html:33 templates/registration/login.html:44
 msgid "Forgot password"
 msgstr "Mot de passe oublié"
+
+#: templates/index.html:52
+#, fuzzy
+#| msgid "Run simulation"
+msgid "texte avant simulation"
+msgstr "Lancer la simulation"
+
+#: templates/index.html:54
+#, fuzzy
+#| msgid "Change this simulation"
+msgid "texte apres simulation"
+msgstr "Modifier la simulation"
 
 #: templates/registration/login.html:5
 msgid "Your username and password didn't match. Please try again"
