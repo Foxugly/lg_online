@@ -38,16 +38,16 @@ coef_tax_liability = {'monthly': 1.5, 'quarterly': 1.3, 'none': 1}
 
 
 class Simulation(GenericClass):
-    turnover = models.PositiveIntegerField(_("Chiffre d'affaires"), blank=False, default="50000")
-    transmission = models.CharField(_("Mode de transmission des documents"), max_length=20, choices=TRANSMISSION_CHOICES, default='online', blank=False)
+    turnover = models.PositiveIntegerField(_("Chiffre d'affaires"), blank=False)
+    transmission = models.CharField(_("Mode de transmission des documents"), max_length=20, choices=TRANSMISSION_CHOICES, blank=False)
     nb_invoices_sale = models.PositiveIntegerField(_("Nombre de factures de vente annuels"), blank=False)
     nb_invoices_purchase = models.PositiveIntegerField(_("Nombre de factures d'achat et tickets annuels"), blank=False)
     nb_managers = models.PositiveIntegerField(_("Nombre de dirigeants"), blank=False)
     nb_employees = models.PositiveIntegerField(_("Nombre d'employers"), blank=False)
     nb_creditcard = models.PositiveIntegerField(_("Nombre de carte de credits"), blank=False)
     alternatif_payments = models.BooleanField(_("Système de paiements alternatifs (Paypal, Sumup, Stripe, ...)"), blank=False)
-    sector = models.CharField(_("Secteur d'activité"), max_length=20, choices=SECTOR_CHOICES, default=False)
-    tax_liability = models.CharField(_("Mode de paiement"), max_length=20, choices=TAX_LIABILITY_CHOICES, default='monthly')
+    sector = models.CharField(_("Secteur d'activité"), max_length=20, choices=SECTOR_CHOICES)
+    tax_liability = models.CharField(_("Mode de paiement"), max_length=20, choices=TAX_LIABILITY_CHOICES, )
     created = models.DateTimeField(auto_now_add=True)
 
     def compute(self):
