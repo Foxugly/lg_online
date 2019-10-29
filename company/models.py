@@ -28,7 +28,7 @@ class Company(GenericClass):
 class Iban(GenericClass):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     iban = models.CharField(_("IBAN"), max_length=20, blank=True, null=True, )
-    default = models.BooleanField()
+    default = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % (self.iban)
