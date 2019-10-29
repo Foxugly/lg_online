@@ -66,6 +66,7 @@ urlpatterns = [
     path('sendmail/', sendmail, name='sendmail'),
     path('customuser/', include('customuser.urls', namespace='customuser')),
     path('company/', include('company.urls', namespace='company')),
+    path('simulation/', include('simulation.urls', namespace='simulation')),
     path('lang/', set_language, name='lang'),
     path('admin/', admin.site.urls),
     path('captcha/', include('captcha.urls')),

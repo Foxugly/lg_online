@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load bootstrap4 i18n %}
+{% block content %}
+<div class="row justify-content-around">
+    <div class="card col-md-12">
+        <article class="card-body">
+            <h4 class="card-title text-center mb-4 mt-1">{{title}}</h4>
+            <hr>
+            <p class="text-success text-center"></p>
+            <form id="form_simulation" method="post" enctype="multipart/form-data">
+                {% if not update %}
+                    {% csrf_token %}
+                {% endif %}
+                {% bootstrap_form form layout='horizontal' %}
+                {% if update %}
+                    <div class="form-group row">
+                        <div class="col-md-12 alert alert-primary" role="alert"> Montant du devis : <b>{{price}} euros</b> (calculated : {{price_calculated}}€).</div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <a class="btn btn-primary" href="{% url 'simulation:simulation_add' %}">{% trans "Run another simulation (empty)" %}</a>
+                            <a class="btn btn-primary" href="{% url 'simulation:simulation_add' %}?simulation_id={{object.pk}}">{% trans "Change this simulation" %}</a>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <div>
+                                <div class="input-group">
+                                        <input name="emailSendSimulation" id="emailSendSimulation" type="text" class="form-control" placeholder="Enter email" aria-label="Enter email">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button" onclick="sendSimulationMail();">Send simulation by email</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="simulation_sent" name="simulation_sent" style="display: none;">
+                                <div class='alert alert-success mt-2' data-alert>Devis Sent !</div>
+                            </div>
+                            <div id="simulation_error" name="simulation_error" classe="mt-2" style="display: none;">
+                                <div class='alert alert-danger mt-2' data-alert>Error with email address!</div>
+                            </div>
+                        </div>
+                        <script>
+                            function sendSimulationMail() {
+                                var mydata = {'email':$('#emailSendSimulation').val(), 'pk':"{{object.pk}}", 'csrfmiddlewaretoken': '{{ csrf_token }}'};
+                                var url = '/simulation/ajax/send_mail/' ;
+                                $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    data: mydata,
+                                    traditional: true,
+                                    dataType: 'json',
+                                    success: function(result){
+                                        if (result['return']){
+                                            $('#simulation_sent').fadeIn('slow').delay('3000').fadeOut('slow');
+                                        }
+                                        else{
+                                            $('#simulation_error').fadeIn('slow').delay('3000').fadeOut('slow');
+                                        }
+                                    }
+                                });
+                            }
+                        </script>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9"><a class="btn btn-primary" href="{% url 'customuser:customuser_add' %}?simulation_id={{object.pk}}">Souscrire</a></div>
+                    </div>
+                {% else %}
+                    <div class="form-group row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9"><button onclick="run_simulation()" class="btn btn-primary">{% trans "Run simulation" %}</button></div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+            </form>
+        </article>
+    </div>
+</div>
+
+{% endblock %}

@@ -12,6 +12,7 @@ from django.utils.http import urlsafe_base64_decode
 from customuser.tokens import account_activation_token
 from django.contrib.auth.forms import AuthenticationForm
 from contact.models import Contact
+from simulation.models import Simulation
 
 
 def activate(request, uidb64, token):
@@ -52,6 +53,15 @@ class CustomUserCreateView(SuccessMessageMixin, CreateView):
             self.success_url = reverse_lazy('home')
         super(CustomUserCreateView, self).__init__(*args, **kwargs)
 
+
+    def form_valid(self, form):
+        if self.request.GET.get('simulation_id'):
+            instance = form.save(commit=False)
+            simulation_id = self.request.GET.get('simulation_id')
+            instance.simulation = Simulation.objects.get(pk=simulation_id)
+        return super(CustomUserCreateView, self).form_valid(form)
+
+
     def get_context_data(self, **kwargs):
         context = super(CustomUserCreateView, self).get_context_data(**kwargs)
         context.update({'title': "New User"})
@@ -59,6 +69,7 @@ class CustomUserCreateView(SuccessMessageMixin, CreateView):
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data)
+
 
 
 class CustomUserUpdateView(SuccessMessageMixin, UpdateView):
@@ -82,4 +93,3 @@ class MyPasswordResetView(PasswordResetView):
 
     def __init__(self, *args, **kwargs):
         self.form_class = MyPasswordResetForm
-        print('coucou')
