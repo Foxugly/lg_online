@@ -6,6 +6,7 @@ from company.models import Company
 from phonenumber_field.modelfields import PhoneNumberField
 from contact.models import Contact
 from simulation.models import Simulation
+from tools.generic_class import GenericClass
 
 
 class CustomUserManager(BaseUserManager):
@@ -26,7 +27,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
-class CustomUser(AbstractUser):
+class CustomUser(AbstractUser, GenericClass):
     username = None
     email = models.EmailField(_('email address'), unique=True)
     language = models.CharField(_("language"), max_length=8, choices=settings.LANGUAGES, default=1)

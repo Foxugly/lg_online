@@ -33,7 +33,11 @@ from tools.mail import send_mail_smtp
 def home(request):
     c = {}
     if request.user.is_authenticated:
-        return redirect('company:company_list')
+        if request.user.is_active:
+            if request.user.is_staff or request.user.is_superuser :
+                return redirect('customuser:customuser_list')
+            else:
+                return redirect('company:company_list')
     else:
         return render(request, "index.html", c)
 
