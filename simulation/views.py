@@ -15,7 +15,7 @@ from django.views.generic.edit import FormMixin, ModelFormMixin
 
 class SimulationCreateView(CreateView):
     model = Simulation
-    fields = ("nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
+    fields = ("turnover","transmission", "nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
     template_name = 'update_simulation.html'
 
     def get_context_data(self, **kwargs):
@@ -28,6 +28,8 @@ class SimulationCreateView(CreateView):
         if self.request.GET.get('simulation_id'):
             simulation = Simulation.objects.get(pk=self.request.GET.get('simulation_id'))
             self.initial = {
+               # 'transmission':simulation.transmission,
+               # 'turnover':'simulation.turnover,
                 'nb_invoices_sale': simulation.nb_invoices_sale,
                 'nb_invoices_purchase': simulation.nb_invoices_purchase,
                 'nb_managers': simulation.nb_managers,
@@ -45,17 +47,17 @@ class ReadOnlyModelFormMixin(ModelFormMixin):
     def get_form(self, form_class=None):
         form = super(ReadOnlyModelFormMixin, self).get_form()
         for field in form.fields:
-            form.fields[field].widget.attrs['readonly'] = 'readonly'          
+            form.fields[field].widget.attrs['readonly'] = 'readonly'
             form.fields[field].widget.attrs['disabled'] = 'disabled'
         return form
 
-    def form_valid(self, form): 
+    def form_valid(self, form):
         return self.form_invalid(form)
 
 
 class SimulationUpdateView(UpdateView, ReadOnlyModelFormMixin):
     model = Simulation
-    fields = ("nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
+    fields = ("turnover","transmission", "nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
     template_name = 'update_simulation.html'
 
     def get_context_data(self, **kwargs):

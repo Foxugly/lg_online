@@ -46,8 +46,8 @@ class Simulation(GenericClass):
     nb_employees = models.PositiveIntegerField(_("Nombre d'employers"), blank=False)
     nb_creditcard = models.PositiveIntegerField(_("Nombre de carte de credits"), blank=False)
     alternatif_payments = models.BooleanField(_("Système de paiements alternatifs (Paypal, Sumup, Stripe, ...)"), blank=False)
-    sector = models.CharField(max_length=20, choices=SECTOR_CHOICES, default=False)
-    tax_liability = models.CharField(max_length=20, choices=TAX_LIABILITY_CHOICES, default='monthly')
+    sector = models.CharField(_("Secteur d'activité"), max_length=20, choices=SECTOR_CHOICES, default=False)
+    tax_liability = models.CharField(_("Mode de paiement"), max_length=20, choices=TAX_LIABILITY_CHOICES, default='monthly')
     created = models.DateTimeField(auto_now_add=True)
 
     def compute(self):
