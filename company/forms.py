@@ -1,6 +1,5 @@
 from django.forms import ModelForm
 from company.models import Company, Iban
-
 from django.forms import inlineformset_factory
 
 

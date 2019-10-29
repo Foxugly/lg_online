@@ -15,7 +15,7 @@ from django.views.generic.edit import FormMixin, ModelFormMixin
 
 class SimulationCreateView(CreateView):
     model = Simulation
-    fields = ("turnover","transmission", "nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
+    fields = ("turnover", "transmission", "nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
     template_name = 'update_simulation.html'
 
     def get_context_data(self, **kwargs):
@@ -28,8 +28,8 @@ class SimulationCreateView(CreateView):
         if self.request.GET.get('simulation_id'):
             simulation = Simulation.objects.get(pk=self.request.GET.get('simulation_id'))
             self.initial = {
-               # 'transmission':simulation.transmission,
-               # 'turnover':'simulation.turnover,
+                'transmission': simulation.transmission,
+                'turnover': simulation.turnover,
                 'nb_invoices_sale': simulation.nb_invoices_sale,
                 'nb_invoices_purchase': simulation.nb_invoices_purchase,
                 'nb_managers': simulation.nb_managers,
@@ -57,7 +57,7 @@ class ReadOnlyModelFormMixin(ModelFormMixin):
 
 class SimulationUpdateView(UpdateView, ReadOnlyModelFormMixin):
     model = Simulation
-    fields = ("turnover","transmission", "nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
+    fields = ("turnover", "transmission", "nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
     template_name = 'update_simulation.html'
 
     def get_context_data(self, **kwargs):
@@ -68,14 +68,13 @@ class SimulationUpdateView(UpdateView, ReadOnlyModelFormMixin):
         return context
 
 
-
 def send_mail(mail, pk):
     subjct = "[LG & Associates] devis"
     s = Simulation.objects.get(pk=pk)
     text = "Hello,\n\n"
     text += "Link to your devis : %s" % s.get_absolute_url()
     print(text)
-    #send_mail_smtp(subject, mail, None, text, html)
+    send_mail_smtp(subject, mail, None, text, html)
 
 
 def send_simulation_by_mail(request):
@@ -85,7 +84,7 @@ def send_simulation_by_mail(request):
         pk = request.POST['pk']
         email = request.POST['email']
         try:
-            validate_email( email)
+            validate_email(email)
             results['return'] = True
         except ValidationError:
             results['return'] = False

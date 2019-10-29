@@ -3,3 +3,5 @@ media/id_card/*
 company/migrations/*
 contact/migrations/*
 customuser/migrations/*
+simulation/migrations/*
+

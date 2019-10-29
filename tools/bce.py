@@ -53,7 +53,7 @@ def get_data_from_bce(nbce):
                 out['forme_legale'] = parse(value)
             elif "Type d'entité" in field:
                 out['forme_legale'] = parse(value)
-            #elif "Gérant" in field or "Administrateur" in field:
+            # elif "Gérant" in field or "Administrateur" in field:
             #    print(parse(field))
             #    print(parse(value))
             elif "Date de fin de l'année comptable" in field:

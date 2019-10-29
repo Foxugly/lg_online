@@ -20,5 +20,4 @@ urlpatterns = [
     path('', SimulationCreateView.as_view(), name='simulation_add'),
     path('<int:pk>/', SimulationUpdateView.as_view(), name='simulation_change'),
     path('ajax/send_mail/', send_simulation_by_mail, name='send_simulation_by_mail'),
-    
 ]

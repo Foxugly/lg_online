@@ -13,29 +13,25 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 import PIL
 
+
 class LGCanvas(canvas.Canvas):
 
     def __init__(self, *args, **kwargs):
         canvas.Canvas.__init__(self, *args, **kwargs)
         self.pages = []
- 
 
     def showPage(self):
-
         self.pages.append(dict(self.__dict__))
         self._startPage()
- 
+
     def save(self):
         page_count = len(self.pages)
- 
         for page in self.pages:
             self.__dict__.update(page)
             self.header()
             self.footer()
             canvas.Canvas.showPage(self)
- 
         canvas.Canvas.save(self)
-
 
     def get_image(self, path, x, y, width=1*cm):
         img = ImageReader(path)
@@ -45,7 +41,7 @@ class LGCanvas(canvas.Canvas):
 
     def header(self):
         # self.drawRightString(195*mm, 272*mm, "HEADER1")
-        p, x0, y0, x1, y1 = self.get_image('logo_lieutenant_guillaume.png',20*mm, 262*mm, 8*cm)
+        p, x0, y0, x1, y1 = self.get_image('logo_lieutenant_guillaume.png', 20*mm, 262*mm, 8*cm)
         self.drawImage(p, x0, y0, x1, y1, mask="auto")
         # self.drawString(195*mm, 252*mm, "HEADER2")
 
@@ -53,16 +49,12 @@ class LGCanvas(canvas.Canvas):
         self.drawRightString(200*mm, 20*mm, "FOOTER")
 
 
-        
 class Procuration():
     def __init__(self, *args, **kwargs):
-
-        self.doc = SimpleDocTemplate("procuration.pdf",pagesize=A4,
-                            rightMargin=72,leftMargin=72,
-                            topMargin=120,bottomMargin=18)
+        self.doc = SimpleDocTemplate("procuration.pdf", pagesize=A4, rightMargin=72, leftMargin=72, topMargin=120, bottomMargin=18)
         styles = getSampleStyleSheet()
-        styles.add(ParagraphStyle(name='Justify', alignment=TA_JUSTIFY, fontSize = 12,))
-        styles.add(ParagraphStyle(name='Center', alignment=TA_CENTER, fontSize = 24, ))
+        styles.add(ParagraphStyle(name='Justify', alignment=TA_JUSTIFY, fontSize=12, ))
+        styles.add(ParagraphStyle(name='Center', alignment=TA_CENTER, fontSize=24, ))
         self.text = []
         ptext = '<b>Procuration</b>'
         self.text.append(Paragraph(ptext, styles["Center"]))
@@ -102,10 +94,9 @@ class Procuration():
         self.text.append(Spacer(0, 10))
         p = '''L’actuelle procuration restera valable hormis révocation écrite et expresse signifiée au mandataire et à l’Administration.'''
         ptext = '%s' % p
-        self.text.append(Paragraph(ptext, styles["Justify"]))        
-
+        self.text.append(Paragraph(ptext, styles["Justify"]))
         self.doc.build(self.text, canvasmaker=LGCanvas)
- 
-#----------------------------------------------------------------------
+
+
 if __name__ == "__main__":
     p = Procuration()

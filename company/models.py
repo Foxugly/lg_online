@@ -18,6 +18,30 @@ class Company(GenericClass):
     social_address_city = models.CharField(_("City"), max_length=255, blank=True)
     social_address_country = models.CharField(_("Country"), max_length=255, blank=True)
 
+    def fill_data(self, data):
+        if len(data):
+            for key, value in data.items():
+                if key == 'statut':
+                    self.enterprise_status = value
+                elif key == 'situation_juridique':
+                    self.legal_situation = value
+                elif key == 'date_debut':
+                    self.start_date = value
+                elif key == 'denomination':
+                    self.enterprise_name = value
+                elif key == 'adresse':
+                    self.social_address_street = value
+                elif key == 'adresse_num':
+                    self.social_address_number = value
+                elif key == 'adresse_cp':
+                    self.social_address_zip = value
+                elif key == 'adresse_ville':
+                    self.social_address_city = value
+                elif key == 'forme_legale':
+                    self.legal_form = value
+                elif key == 'date_fin_annee_comptable':
+                    self.end_fiscal_date = value
+
     def __str__(self):
         return '[%s] %s' % (self.enterprise_number, self.enterprise_name if self.enterprise_name else None)
 

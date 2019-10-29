@@ -37,7 +37,7 @@ def home(request):
     else:
         return render(request, "index.html", c)
 
-    
+
 def set_language(request):
     if 'lang' in request.GET and 'next' in request.GET:
         if translation.LANGUAGE_SESSION_KEY in request.session:
@@ -84,7 +84,6 @@ if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls))]
- 
 if not settings.DEBUG:
     handler400 = 'lg.views.bad_request'
     handler403 = 'lg.views.permission_denied'

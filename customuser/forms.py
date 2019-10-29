@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordResetForm
 from django.forms import ModelForm
 from customuser.models import CustomUser
+from company.models import Company
+from company.forms import CompanyCreateForm
 from captcha.fields import CaptchaField
 from django.utils.http import urlsafe_base64_encode
 from customuser.tokens import account_activation_token
@@ -9,6 +11,9 @@ from django.utils.encoding import force_bytes
 from django.utils.translation import gettext_lazy as _
 from tools.mail import send_mail_smtp
 from django.template import loader
+from vies.validators import VATINValidator
+from django import forms
+from tools.bce import get_data_from_bce
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -39,6 +44,7 @@ class CustomUserForm(ModelForm):
 
 class CustomUserCreateForm(UserCreationForm):
     model = CustomUser
+    enterprise_number = forms.CharField(label=_("Enterprise Number"), required=True, validators=[VATINValidator(verify=True, validate=True)])
     captcha = CaptchaField()
 
     class Meta:
@@ -52,6 +58,12 @@ class CustomUserCreateForm(UserCreationForm):
         user = self.save(commit=False)
         user.is_active = False
         user.save()
+
+        c = Company(enterprise_number=self.cleaned_data.get('enterprise_number'))
+        c.fill_data(get_data_from_bce(self.cleaned_data.get('enterprise_number')[2:]))
+        c.save()
+        user.companies.add(c)
+
         # current_site = Site.objects.get_current()
         subject = _('[mylieutenantguillaume] activation for your account')
         msg_html = render_to_string('acc_active_email.html', {
