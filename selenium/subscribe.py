@@ -7,9 +7,8 @@ import random
 import string
 
 
-def random(size):
-    s = string.lowercase + string.digits
-    return''.join(random.sample(s, size))
+def rand(size):
+    return''.join(random.sample(string.ascii_lowercase + string.digits, size))
 
 
 def subscribe(driver, user, password):
@@ -33,11 +32,11 @@ def subscribe(driver, user, password):
 
 
 if __name__ == "__main__":
-    driver = webdriver.Chrome()
-    user = "test_mlg_acc_%s@yopmail.com" % random(6)
-    password = random(10)
-    print("user : %s" % user)
-    print("password : %s" % password)
-    subscribe(driver, user, password)
-    driver.close()
-    driver.quit()
+    d = webdriver.Chrome()
+    u = "test_mlg_acc_%s@yopmail.com" % rand(6)
+    p = rand(10)
+    print("user : %s" % u)
+    print("password : %s" % p)
+    subscribe(d, u, p)
+    d.close()
+    d.quit()

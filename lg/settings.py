@@ -107,7 +107,7 @@ DATABASES = {
 #    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
 #    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
 #    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
-#]
+# ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -154,6 +154,7 @@ AUTHENTICATION_BACKENDS = ['customuser.backends.CustomUserBackend']
 
 def show_toolbar(request):
     return DEBUG
+
 
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': 'lg.settings.show_toolbar',

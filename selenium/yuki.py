@@ -17,14 +17,14 @@ def yuki(driver, user, password):
     driver.find_element_by_id('UserEmail').send_keys("usrmail")
     driver.find_element_by_id('UserFullName').send_keys("usrfullname")
     driver.find_element_by_name('CreateUserLogin').click()
-    #driver.find_element_by_id('btnCreate').click()
+    # driver.find_element_by_id('btnCreate').click()
     time.sleep(10)
 
 
 if __name__ == "__main__":
-    driver = webdriver.Chrome()
-    user = input("yuki user : ")
-    password = input("password : ")
-    yuki(driver, user, password)
-    driver.close()
-    driver.quit()
+    d = webdriver.Chrome()
+    u = input("yuki user : ")
+    p = input("password : ")
+    yuki(d, u, p)
+    d.close()
+    d.quit()

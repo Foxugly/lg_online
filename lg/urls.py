@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import handler400, handler403, handler404, handler500
+# from django.conf.urls import handler400, handler403, handler404, handler500
 from django.contrib import admin
 from django.urls import path, include, reverse
 from django.conf.urls.static import static
@@ -21,8 +21,6 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.utils import translation
-from django import http
-import json
 from customuser.views import CustomUserUpdateView, CustomUserLoginView, MyPasswordResetView
 from customuser.decorators import check_lang
 from django.http import JsonResponse
@@ -34,7 +32,7 @@ def home(request):
     c = {}
     if request.user.is_authenticated:
         if request.user.is_active:
-            if request.user.is_staff or request.user.is_superuser :
+            if request.user.is_staff or request.user.is_superuser:
                 return redirect('customuser:customuser_list')
             else:
                 return redirect('company:company_list')
@@ -57,15 +55,14 @@ def sendmail(request):
     if request.is_ajax():
         subject = request.GET.get('subject', None)
         content = request.GET.get('content', None)
-        header = "Client : %s %s \nMail : %s\nPhone : %s\n\n" % (request.user.first_name, request.user.last_name, request.user.email, request.user.telephone)
+        header = "Client : %s %s \nMail : %s\nPhone : %s\n\n" % (request.user.first_name, request.user.last_name,
+                                                                 request.user.email, request.user.telephone)
         send_mail_smtp(subject, request.user.contact.email, request.user.email, header + content, None)
-        data = {}
-        data['result'] = True
+        data = {'result': True}
         return JsonResponse(data)
 
 
 urlpatterns = [
-
     path('', home, name='home'),
     path('sendmail/', sendmail, name='sendmail'),
     path('customuser/', include('customuser.urls', namespace='customuser')),

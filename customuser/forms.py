@@ -44,12 +44,14 @@ class CustomUserForm(ModelForm):
 
 class CustomUserCreateForm(UserCreationForm):
     model = CustomUser
-    enterprise_number = forms.CharField(label=_("Enterprise Number"), required=True, validators=[VATINValidator(verify=True, validate=True)])
+    enterprise_number = forms.CharField(label=_("Enterprise Number"), required=True, help_text="ex 'BE0123456789' no dots no spaces",
+                                        validators=[VATINValidator(verify=True, validate=True)])
     captcha = CaptchaField()
 
     class Meta:
         model = CustomUser
         fields = ['email', 'first_name', 'last_name', 'language', ]
+        help_texts = {'enterprise_number': "ex 'BE0123456789'", }
 
     def is_valid(self):
         valid = super(CustomUserCreateForm, self).is_valid()

@@ -1,17 +1,12 @@
 
 # -*- coding: utf-8 -*-
-from io import BytesIO
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, PageBreak, ListFlowable, ListItem
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle, ListStyle
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
-from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm, cm
-from reportlab.graphics.shapes import Drawing, Rect
-from reportlab.lib import colors
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
-import PIL
 
 
 class LGCanvas(canvas.Canvas):
@@ -20,7 +15,7 @@ class LGCanvas(canvas.Canvas):
         canvas.Canvas.__init__(self, *args, **kwargs)
         self.pages = []
 
-    def showPage(self):
+    def show_page(self):
         self.pages.append(dict(self.__dict__))
         self._startPage()
 
@@ -30,14 +25,15 @@ class LGCanvas(canvas.Canvas):
             self.__dict__.update(page)
             self.header()
             self.footer()
-            canvas.Canvas.showPage(self)
+            canvas.Canvas.show_page(self)
         canvas.Canvas.save(self)
 
-    def get_image(self, path, x, y, width=1*cm):
+    @staticmethod
+    def get_image(path, x, y, width=1 * cm):
         img = ImageReader(path)
         iw, ih = img.getSize()
         aspect = ih / float(iw)
-        return (path, x, y, width, (width * aspect))
+        return path, x, y, width, (width * aspect)
 
     def header(self):
         # self.drawRightString(195*mm, 272*mm, "HEADER1")
@@ -49,9 +45,10 @@ class LGCanvas(canvas.Canvas):
         self.drawRightString(200*mm, 20*mm, "FOOTER")
 
 
-class Procuration():
+class Procuration:
     def __init__(self, *args, **kwargs):
-        self.doc = SimpleDocTemplate("procuration.pdf", pagesize=A4, rightMargin=72, leftMargin=72, topMargin=120, bottomMargin=18)
+        self.doc = SimpleDocTemplate("procuration.pdf", pagesize=A4, rightMargin=72, leftMargin=72, topMargin=120,
+                                     bottomMargin=18)
         styles = getSampleStyleSheet()
         styles.add(ParagraphStyle(name='Justify', alignment=TA_JUSTIFY, fontSize=12, ))
         styles.add(ParagraphStyle(name='Center', alignment=TA_CENTER, fontSize=24, ))
@@ -99,4 +96,4 @@ class Procuration():
 
 
 if __name__ == "__main__":
-    p = Procuration()
+    proc = Procuration()

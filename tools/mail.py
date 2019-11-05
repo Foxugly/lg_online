@@ -1,5 +1,5 @@
 from lg.credential_email import EMAIL_USE_TLS, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, \
-    EMAIL_USE_SSL, EMAIL_FROM
+    EMAIL_FROM
 import smtplib
 from email.message import EmailMessage
 

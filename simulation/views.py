@@ -1,21 +1,18 @@
-from tools.generic_views import *
+
 from .models import Simulation
-from django.utils.translation import gettext as _
-from django.urls import reverse, reverse_lazy
-from django.utils.translation import gettext as _
 from django.views.generic import CreateView, UpdateView
-from .forms import SimulationForm
 from django.http import HttpResponse
 import json
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from tools.mail import send_mail_smtp
-from django.views.generic.edit import FormMixin, ModelFormMixin
+from django.views.generic.edit import ModelFormMixin
 
 
 class SimulationCreateView(CreateView):
     model = Simulation
-    fields = ("turnover", "transmission", "nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
+    fields = ("turnover", "transmission", "nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees",
+              "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
     template_name = 'update_simulation.html'
 
     def get_context_data(self, **kwargs):
@@ -57,7 +54,8 @@ class ReadOnlyModelFormMixin(ModelFormMixin):
 
 class SimulationUpdateView(UpdateView, ReadOnlyModelFormMixin):
     model = Simulation
-    fields = ("turnover", "transmission", "nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees", "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
+    fields = ("turnover", "transmission", "nb_invoices_sale", "nb_invoices_purchase", "nb_managers", "nb_employees",
+              "nb_creditcard", "alternatif_payments", "sector", "tax_liability")
     template_name = 'update_simulation.html'
 
     def get_context_data(self, **kwargs):
@@ -69,12 +67,12 @@ class SimulationUpdateView(UpdateView, ReadOnlyModelFormMixin):
 
 
 def send_mail(mail, pk):
-    subjct = "[LG & Associates] devis"
+    subject = "[LG & Associates] devis"
     s = Simulation.objects.get(pk=pk)
     text = "Hello,\n\n"
     text += "Link to your devis : %s" % s.get_absolute_url()
     print(text)
-    send_mail_smtp(subject, mail, None, text, html)
+    send_mail_smtp(subject, mail, None, text, None)
 
 
 def send_simulation_by_mail(request):

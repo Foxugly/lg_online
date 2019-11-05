@@ -35,7 +35,7 @@ class CompanyListView(GenericListView):
             empty_fields.append(_('a copy of your ID card'))
         if not empty_fields:
             if len(empty_fields) == 1:
-                fields = empty_fiels[0]
+                fields = empty_fields[0]
             else:
                 fields = ", ".join(empty_fields[:-1]) + " %s %s" % (_('and'), empty_fields[-1])
             messages.info(self.request, 'Please fill in %s. See <a href=%s>here</a>' % (fields, reverse('update_user')),
@@ -62,10 +62,11 @@ class CompanyUpdateView(GenericUpdateView):
         context = self.get_context_data()
         ibans = context['ibans']
         with transaction.atomic():
-            self.object = form.save()
-
+            # self.object = form.save()
+            inst = form.save()
             if ibans.is_valid():
-                ibans.instance = self.object
+                # ibans.instance = self.object
+                ibans.instance = inst
                 ibans.save()
         return super(CompanyUpdateView, self).form_valid(form)
 

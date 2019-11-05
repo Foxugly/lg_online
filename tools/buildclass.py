@@ -61,7 +61,8 @@ class BuildClass:
 
     def headerview(self):
         self.txt += "from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView\n"
-        self.txt += "from view_breadcrumbs import ListBreadcrumbMixin, UpdateBreadcrumbMixin, DetailBreadcrumbMixin, CreateBreadcrumbMixin\n"
+        self.txt += "from view_breadcrumbs import ListBreadcrumbMixin, UpdateBreadcrumbMixin, DetailBreadcrumbMixin, " \
+                    "CreateBreadcrumbMixin\n"
         self.txt += "from django.contrib.messages.views import SuccessMessageMixin\n"
         self.txt += "from django.utils.translation import gettext as _\n"
         self.txt += "from django.urls import reverse_lazy\n"

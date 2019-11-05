@@ -1,5 +1,4 @@
 from django import template
-import re
 
 
 register = template.Library()
@@ -17,9 +16,9 @@ def dict(h):
 
 @register.filter(name='verbose_name')
 def verbose_name(obj):
-    return obj._meta.verbose_name
+    return obj.verbose_name
 
 
 @register.filter(name='app_name')
 def app_name(obj):
-    return obj._meta.app_label
+    return obj.app_label

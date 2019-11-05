@@ -29,8 +29,9 @@ def get_data_from_bce(nbce):
                 value = value.split('Depuis')[0]
                 out['situation_juridique'] = parse(value)
             elif "Date de début" in field:
-                mois = {'janvier': '1', 'février': '2', 'mars': '3', 'avril': '4', 'mai': '5', 'juin': '6', 'juillet': '7', 'aout': '8',
-                        'août': '8', 'septembre': '9', 'octobre': '10', 'novembre': '11', 'décembre': '12', 'decembre': '12'}
+                mois = {'janvier': '1', 'février': '2', 'mars': '3', 'avril': '4', 'mai': '5', 'juin': '6',
+                        'juillet': '7', 'aout': '8', 'août': '8', 'septembre': '9', 'octobre': '10',
+                        'novembre': '11', 'décembre': '12', 'decembre': '12'}
                 s = parse(value).split(' ')
                 date = datetime.date(int(s[2]), int(mois[s[1]]), int(s[0]))
                 out['date_debut'] = date

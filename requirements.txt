@@ -18,3 +18,5 @@ django-localflavor
 django-vies
 django-phonenumber-field
 phonenumbers
+reportlab
+celery

@@ -46,7 +46,6 @@ class CustomUserLoginView(LoginView):
                 return reverse_lazy('company:company_list')
 
 
-
 class CustomUserCreateView(GenericCreateView):
     model = CustomUser
     fields = None

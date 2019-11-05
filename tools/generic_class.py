@@ -17,12 +17,22 @@ class GenericClass(models.Model):
     def __init__(self, *args, **kwargs):
         self.app_name = self._meta.app_label
         self.model_name = self._meta.model_name
+        self.verbose_name = self._meta.verbose_name
         self.change_url = '%s:%s_change' % (self.app_name, self.model_name)
         self.add_url = '%s:%s_add' % (self.app_name, self.model_name)
         self.detail_url = '%s:%s_detail' % (self.app_name, self.model_name)
         self.delete_url = '%s:%s_delete' % (self.app_name, self.model_name)
         self.list_url = '%s:%s_list' % (self.app_name, self.model_name)
         super(GenericClass, self).__init__(*args, **kwargs)
+
+    def get_app_label(self):
+        return self._meta.app_label
+
+    def get_app_name(self):
+        return self._meta.app_label
+
+    def get_model_name(self):
+        return self._meta.model_name
 
     def get_absolute_url(self):
         return reverse(self.change_url, kwargs={'pk': self.pk})
