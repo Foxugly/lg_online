@@ -1,0 +1,12 @@
+{% autoescape off %}
+<html>
+<head></head>
+<body>
+<p>Hi {{ user.first_name }},</p>
+<p> We propose a final offer  : {{user.simulation.proposed_amount}} € </p>
+<p>Please click on the link to confirm your registration : http://{{ domain }}{% url 'customuser:confirm_proposal' uidb64=uid token=token %}</p>
+<p>regards</p>
+<p>The Lieutenantguillaume team</p>
+</body>
+</html>
+{% endautoescape %}

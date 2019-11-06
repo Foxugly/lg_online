@@ -82,6 +82,7 @@ class CustomUserCreateForm(UserCreationForm):
         })
         to = self.cleaned_data.get('email')
         reply_to = "info@lieutenantguillaume.com"
+        print(msg_txt)
         send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html)
         return valid
 

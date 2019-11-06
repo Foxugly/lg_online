@@ -14,6 +14,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from contact.models import Contact
 from simulation.models import Simulation
 from tools.generic_views import *
+from django.views.generic.edit import FormMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from simulation.forms import SimulationAjustedForm, ReadOnlySimulationMixin
+from django.contrib.auth.tokens import default_token_generator
 
 
 def activate(request, uidb64, token):
@@ -26,6 +30,23 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.contact = Contact.objects.filter(default=True)[0]
         user.save()
+        messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
+        return redirect('home')
+    else:
+        messages.error(request, 'Activation link is invalid!')
+        return redirect('home')
+
+
+def confirm(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = CustomUser.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        # TODO
+        # si on a les data, il faut lancer l'install dans Fid et Yuki (méthode dans customuser lié à une company
+
         messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
         return redirect('home')
     else:
@@ -77,6 +98,24 @@ class CustomUserCreateView(GenericCreateView):
         return self.success_message % dict(cleaned_data)
 
 
+class ProfileUpdateView(SuccessMessageMixin, UpdateView):
+    model = CustomUser
+    fields = None
+    form_class = CustomUserForm
+    template_name = 'update.html'
+    success_url = reverse_lazy('profile_update')
+    success_message = _('Changes saved.')
+
+    def get_object(self):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['model'] = self.model
+        context.update({'title': "Update profile"})
+        return context
+
+
 class CustomUserUpdateView(GenericUpdateView):
     model = CustomUser
     fields = None
@@ -85,8 +124,8 @@ class CustomUserUpdateView(GenericUpdateView):
     success_url = reverse_lazy('update_user')
     success_message = _('Changes saved.')
 
-    def get_object(self):
-        return self.request.user
+    #def get_object(self):
+    #    return self.request.user
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -106,11 +145,33 @@ class CustomUserListView(GenericListView):
     model = CustomUser
 
     def get_queryset(self):
-       return CustomUser.objects.filter(is_active=False, is_superuser=False)
+       return CustomUser.objects.filter(is_active=True, is_superuser=False)
 
 
-class CustomUserDetailView(GenericDetailView):
+
+
+class CustomUserDetailView(ReadOnlySimulationMixin, GenericUpdateView):
     model = CustomUser
+    template_name = 'detail_customuser.html'
+    fields= None
+    form_class = SimulationAjustedForm
+
+
+    def get_success_url(self):
+        return reverse('customuser_detail', kwargs={'pk': self.object.id})
+
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomUserDetailView, self).get_context_data(**kwargs)
+        context['form'] = SimulationAjustedForm(instance=self.object.simulation)
+        return context
+
+    def form_valid(self, form):
+        instance = self.object.simulation
+        instance.proposed_amount = form.cleaned_data.get('proposed_amount')
+        instance.save()
+        self.object.send_adjusted_proposition()
+        return super(CustomUserDetailView, self).form_valid(form)
 
 
 class CustomUserDeleteView(GenericDeleteView):

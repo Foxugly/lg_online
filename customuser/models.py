@@ -7,6 +7,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 from contact.models import Contact
 from simulation.models import Simulation
 from tools.generic_class import GenericClass
+from django.contrib.auth.tokens import default_token_generator 
+
 
 
 class CustomUserManager(BaseUserManager):
@@ -54,3 +56,24 @@ class CustomUser(AbstractUser, GenericClass):
 
     def get_short_name(self):
         return self.email
+
+    def send_adjusted_proposition(self):
+        print("J'envoi le mail de confirmation")
+
+        subject = _('[mylieutenantguillaume] Proposal')
+        msg_html = render_to_string('acc_confirm_proposal.html', {
+            'user': user,
+            'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': default_token_generator.make_token(user),
+        })
+        msg_txt = render_to_string('acc_confirm_proposal.txt', {
+            'user': user,
+            'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': default_token_generator.make_token(user),
+        })
+        to = self.cleaned_data.get('email')
+        reply_to = "info@lieutenantguillaume.com"
+        print(msg_txt)
+        send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html)

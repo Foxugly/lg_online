@@ -61,7 +61,7 @@ class SimulationUpdateView(UpdateView, ReadOnlyModelFormMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['update'] = True
-        context['price'], context['price_calculated'] = self.object.compute()
+        context['price'], context['price_calculated'] = self.object.proposed_amount, self.object.calculated_amount
         context.update({'title': "Simulation"})
         return context
 

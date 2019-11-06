@@ -2,6 +2,7 @@ from tools.generic_class import GenericClass
 from django.db import models
 from django.utils.translation import gettext as _
 import math
+from django.utils import timezone
 
 
 SECTOR_CHOICES = (
@@ -38,19 +39,22 @@ coef_tax_liability = {'monthly': 1.5, 'quarterly': 1.3, 'none': 1}
 
 
 class Simulation(GenericClass):
-    turnover = models.PositiveIntegerField(_("Chiffre d'affaires"), blank=False)
+    turnover = models.PositiveIntegerField(_("Chiffre d'affaires"), blank=False, default=50000)
     transmission = models.CharField(_("Mode de transmission des documents"), max_length=20,
-                                    choices=TRANSMISSION_CHOICES, blank=False)
-    nb_invoices_sale = models.PositiveIntegerField(_("Nombre de factures de vente annuels"), blank=False)
+                                    choices=TRANSMISSION_CHOICES, blank=False, default='online')
+    nb_invoices_sale = models.PositiveIntegerField(_("Nombre de factures de vente annuels"), blank=False, default=200)
     nb_invoices_purchase = models.PositiveIntegerField(_("Nombre de factures d'achat et tickets annuels"),
-                                                       blank=False)
-    nb_managers = models.PositiveIntegerField(_("Nombre de dirigeants"), blank=False)
-    nb_employees = models.PositiveIntegerField(_("Nombre d'employers"), blank=False)
-    nb_creditcard = models.PositiveIntegerField(_("Nombre de carte de credits"), blank=False)
+                                                       blank=False, default=200)
+    nb_managers = models.PositiveIntegerField(_("Nombre de dirigeants"), blank=False, default=1)
+    nb_employees = models.PositiveIntegerField(_("Nombre d'employers"), blank=False, default=0)
+    nb_creditcard = models.PositiveIntegerField(_("Nombre de carte de credits"), blank=False, default=1)
     alternatif_payments = models.BooleanField(_("Système de paiements alternatifs (Paypal, Sumup, Stripe, ...)"),
                                               blank=False)
-    sector = models.CharField(_("Secteur d'activité"), max_length=20, choices=SECTOR_CHOICES)
-    tax_liability = models.CharField(_("Mode de paiement"), max_length=20, choices=TAX_LIABILITY_CHOICES, )
+    sector = models.CharField(_("Secteur d'activité"), max_length=20, choices=SECTOR_CHOICES, default="horeca")
+    tax_liability = models.CharField(_("Mode de paiement"), max_length=20, choices=TAX_LIABILITY_CHOICES, default='quarterly')
+    calculated_amount = models.PositiveIntegerField(_("Montant calculé"), blank=True, default=0)
+    date_calculated_amount = models.DateTimeField(blank=True)
+    proposed_amount = models.PositiveIntegerField(_("Montant proposé"), blank=True, default=0)
     created = models.DateTimeField(auto_now_add=True)
 
     def compute(self):
@@ -73,7 +77,25 @@ class Simulation(GenericClass):
         s = v_nb_invoices_sale + v_nb_invoices_purchase + v_transmission + v_nb_managers + v_nb_employees + \
             v_nb_creditcard + v_alternatif_payments
         max_calulated = (s * v_ca * coef_sector[self.sector] * coef_tax_liability[self.tax_liability])/12
-        return max(200, math.ceil(max_calulated)), max_calulated
+        return max_calulated
+
+    def compute_with_max(self):
+        return max(200, math.ceil(self.compute()))
+
+
+    def update(self):
+        self.proposed_amount = self.compute_with_max()
+        self.save()
+
+
+    def save(self, *args, **kwargs):
+        if self.calculated_amount == 0:
+            self.calculated_amount = max(200, self.compute_with_max())
+            self.date_calculated_amount = timezone.now()
+            self.proposed_amount = self.calculated_amount
+        super().save(*args, **kwargs)
+
+
 
     def __str__(self):
         return '%s' % self.pk

@@ -10,13 +10,16 @@
 from django.urls import path
 
 from django.conf.urls import url
-from customuser.views import activate
+from customuser.views import activate, confirm
 from tools.generic_urls import add_url_from_generic_views
+from customuser.views import ProfileUpdateView
 
 app_name = 'customuser'
 
 urlpatterns = [
-    # path('add/', CustomUserCreateView.as_view(), name='customuser_add'),
+    path('profile/', ProfileUpdateView.as_view(), name='profile_update'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         activate, name='activate'),
+    url(r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        activate, name='confirm_proposal'),
 ] + add_url_from_generic_views('customuser.views')
