@@ -1,9 +1,7 @@
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from customuser.models import CustomUser
-from django.views.generic import CreateView, UpdateView
-from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.views import LoginView, PasswordResetView
 from django.contrib import messages
 from customuser.forms import CustomUserCreateForm, CustomUserForm, MyPasswordResetForm
@@ -14,7 +12,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from contact.models import Contact
 from simulation.models import Simulation
 from tools.generic_views import *
-from django.views.generic.edit import FormMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from simulation.forms import SimulationAjustedForm, ReadOnlySimulationMixin
 from django.contrib.auth.tokens import default_token_generator
@@ -37,13 +34,13 @@ def activate(request, uidb64, token):
         return redirect('home')
 
 
-def confirm(request, uidb64, token):
+def confirm_proposal(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = CustomUser.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
         user = None
-    if user is not None and account_activation_token.check_token(user, token):
+    if user is not None and default_token_generator.check_token(user, token):
         # TODO
         # si on a les data, il faut lancer l'install dans Fid et Yuki (méthode dans customuser lié à une company
 
@@ -61,7 +58,7 @@ class CustomUserLoginView(LoginView):
 
     def get_success_url(self):
         if self.request.user.is_active:
-            if self.request.user.is_staff or self.request.user.is_superuser :
+            if self.request.user.is_staff or self.request.user.is_superuser:
                 return reverse_lazy('customuser:customuser_list')
             else:
                 return reverse_lazy('company:company_list')
@@ -106,7 +103,7 @@ class ProfileUpdateView(SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('profile_update')
     success_message = _('Changes saved.')
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         return self.request.user
 
     def get_context_data(self, **kwargs):
@@ -124,9 +121,6 @@ class CustomUserUpdateView(GenericUpdateView):
     success_url = reverse_lazy('update_user')
     success_message = _('Changes saved.')
 
-    #def get_object(self):
-    #    return self.request.user
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['model'] = self.model
@@ -139,27 +133,24 @@ class MyPasswordResetView(PasswordResetView):
 
     def __init__(self, *args, **kwargs):
         self.form_class = MyPasswordResetForm
+        super(MyPasswordResetView, self).__init__(*args, **kwargs)
 
 
 class CustomUserListView(GenericListView):
     model = CustomUser
 
     def get_queryset(self):
-       return CustomUser.objects.filter(is_active=True, is_superuser=False)
-
-
+        return CustomUser.objects.filter(is_active=True, is_superuser=False)
 
 
 class CustomUserDetailView(ReadOnlySimulationMixin, GenericUpdateView):
     model = CustomUser
     template_name = 'detail_customuser.html'
-    fields= None
+    fields = None
     form_class = SimulationAjustedForm
-
 
     def get_success_url(self):
         return reverse('customuser_detail', kwargs={'pk': self.object.id})
-
 
     def get_context_data(self, **kwargs):
         context = super(CustomUserDetailView, self).get_context_data(**kwargs)

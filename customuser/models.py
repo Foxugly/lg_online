@@ -8,7 +8,10 @@ from contact.models import Contact
 from simulation.models import Simulation
 from tools.generic_class import GenericClass
 from django.contrib.auth.tokens import default_token_generator 
-
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from tools.mail import send_mail_smtp
 
 
 class CustomUserManager(BaseUserManager):
@@ -57,7 +60,7 @@ class CustomUser(AbstractUser, GenericClass):
     def get_short_name(self):
         return self.email
 
-    def send_adjusted_proposition(self):
+    def send_adjusted_proposition(self, user):
         print("J'envoi le mail de confirmation")
 
         subject = _('[mylieutenantguillaume] Proposal')
@@ -73,7 +76,7 @@ class CustomUser(AbstractUser, GenericClass):
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': default_token_generator.make_token(user),
         })
-        to = self.cleaned_data.get('email')
+        to = self.email
         reply_to = "info@lieutenantguillaume.com"
         print(msg_txt)
         send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html)

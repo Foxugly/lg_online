@@ -1,5 +1,5 @@
 
-from .models import Simulation
+from simulation.models import Simulation
 from django.views.generic import CreateView, UpdateView
 from django.http import HttpResponse
 import json

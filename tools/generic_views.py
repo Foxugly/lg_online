@@ -1,5 +1,4 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from view_breadcrumbs import ListBreadcrumbMixin, UpdateBreadcrumbMixin, DetailBreadcrumbMixin, CreateBreadcrumbMixin
@@ -15,7 +14,7 @@ class GenericCreateView(SuccessMessageMixin, CreateBreadcrumbMixin, CreateView):
     success_message = _('object created.')
 
     def __init__(self, *args, **kwargs):
-        #if self.model:
+        # if self.model:
         #    self.app_name = self.model.app_label
         #    self.model_name = self.model.model_name
         #    self.success_url = reverse_lazy('%s:%s_list' % (self.app_name, self.model_name))
@@ -51,13 +50,13 @@ class GenericUpdateView(SuccessMessageMixin, UpdateBreadcrumbMixin, UpdateView):
     success_message = _('object updated.')
 
     def __init__(self, *args, **kwargs):
-        #if self.model:
+        # if self.model:
         #    self.app_name = self.model._meta.app_label
         #    self.model_name = self.model._meta.model_name
         #    self.success_url = reverse_lazy('%s:%s_list' % (self.app_name, self.model_name))
         super(GenericUpdateView, self).__init__(*args, **kwargs)
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         return self.model.objects.get(pk=self.kwargs['pk'])
         # return get_object_or_404(self.model, pk=self.kwargs['pk'])
 
@@ -75,7 +74,7 @@ class GenericDetailView(DetailBreadcrumbMixin, DetailView):
     success_url = None
 
     def __init__(self, *args, **kwargs):
-        #if self.model:
+        # if self.model:
         #    self.app_name = self.model._meta.app_label
         #    self.model_name = self.model._meta.model_name
         #    self.success_url = reverse_lazy('%s:%s_list' % (self.app_name, self.model_name))
@@ -92,7 +91,7 @@ class GenericDeleteView(SuccessMessageMixin, DeleteView):
     success_message = _('object deleted.')
 
     def __init__(self, *args, **kwargs):
-        #if self.model:
+        # if self.model:
         #    self.app_name = self.model._meta.app_label
         #    self.model_name = self.model._meta.model_name
         #    self.success_url = reverse_lazy('%s:%s_list' % (self.app_name, self.model_name))

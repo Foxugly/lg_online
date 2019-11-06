@@ -4,14 +4,14 @@ from django import template
 register = template.Library()
 
 
-@register.filter(name='hash')
-def hash(h, key):
-    return h[key]
+# @register.filter(name='hash')
+# def hash(h, key):
+#    return h[key]
 
 
-@register.filter(name='dict')
-def dict(h):
-    return None
+# @register.filter(name='dict')
+# def dict(h):
+#    return None
 
 
 @register.filter(name='verbose_name')

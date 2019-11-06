@@ -51,7 +51,8 @@ class Simulation(GenericClass):
     alternatif_payments = models.BooleanField(_("Système de paiements alternatifs (Paypal, Sumup, Stripe, ...)"),
                                               blank=False)
     sector = models.CharField(_("Secteur d'activité"), max_length=20, choices=SECTOR_CHOICES, default="horeca")
-    tax_liability = models.CharField(_("Mode de paiement"), max_length=20, choices=TAX_LIABILITY_CHOICES, default='quarterly')
+    tax_liability = models.CharField(_("Mode de paiement"), max_length=20, choices=TAX_LIABILITY_CHOICES,
+                                     default='quarterly')
     calculated_amount = models.PositiveIntegerField(_("Montant calculé"), blank=True, default=0)
     date_calculated_amount = models.DateTimeField(blank=True)
     proposed_amount = models.PositiveIntegerField(_("Montant proposé"), blank=True, default=0)
@@ -82,11 +83,9 @@ class Simulation(GenericClass):
     def compute_with_max(self):
         return max(200, math.ceil(self.compute()))
 
-
     def update(self):
         self.proposed_amount = self.compute_with_max()
         self.save()
-
 
     def save(self, *args, **kwargs):
         if self.calculated_amount == 0:
@@ -94,8 +93,6 @@ class Simulation(GenericClass):
             self.date_calculated_amount = timezone.now()
             self.proposed_amount = self.calculated_amount
         super().save(*args, **kwargs)
-
-
 
     def __str__(self):
         return '%s' % self.pk

@@ -2,7 +2,6 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm, Password
 from django.forms import ModelForm
 from customuser.models import CustomUser
 from company.models import Company
-from company.forms import CompanyCreateForm
 from captcha.fields import CaptchaField
 from django.utils.http import urlsafe_base64_encode
 from customuser.tokens import account_activation_token
@@ -44,7 +43,8 @@ class CustomUserForm(ModelForm):
 
 class CustomUserCreateForm(UserCreationForm):
     model = CustomUser
-    enterprise_number = forms.CharField(label=_("Enterprise Number"), required=True, help_text="ex 'BE0123456789' no dots no spaces",
+    enterprise_number = forms.CharField(label=_("Enterprise Number"), required=True,
+                                        help_text="ex 'BE0123456789' no dots no spaces",
                                         validators=[VATINValidator(verify=True, validate=True)])
     captcha = CaptchaField()
 
