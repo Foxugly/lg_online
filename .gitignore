@@ -4,4 +4,12 @@ company/migrations/*
 contact/migrations/*
 customuser/migrations/*
 simulation/migrations/*
+__pycache__/*
+company/__pycache__/*
+contact/__pycache__/*
+customuser/__pycache__/*
+db.sqlite3
+lg/__pycache__/*
+simulation/__pycache__/*
+tools/__pycache__/*
 
