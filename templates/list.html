@@ -14,7 +14,15 @@
 	 </thead>
 	 <tbody>
 	{% for obj in object_list %}
-	    <tr><td><a href="{{obj.get_absolute_url}}">{{ obj }}</a></td>
+	    <tr>
+        <td>
+          <a href="{{obj.get_absolute_url}}">{{ obj }}</a> 
+            {% if obj.get_empty_fields %}
+              <a class="btn" href="{{obj.get_absolute_url}}" title="Missing fields : {{obj.get_empty_fields}}"><span class="fa fa-warning" style="color:red"></span></a>
+            {% else %}
+             <span class="fa fa-check" style="color:green"></span>
+            {% endif %}
+      </td>
 	    <td><a class="btn" href="{{obj.get_detail_url}}"><span class="fa fa-eye"></span></a></td>
     	<td><a class="btn confirmation" href="{{obj.get_delete_url}}"><span class="fa fa-trash"></span></a></td>
     	</tr>

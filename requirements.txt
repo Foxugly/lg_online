@@ -20,3 +20,4 @@ django-phonenumber-field
 phonenumbers
 reportlab
 celery
+django-countries

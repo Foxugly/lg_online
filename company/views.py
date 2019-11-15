@@ -26,19 +26,13 @@ class CompanyListView(GenericListView):
 
     def get_queryset(self):
         queryset = self.request.user.companies.all().order_by('id')
-        empty_fields = []
-        if not (self.request.user.address_street and self.request.user.address_zip and self.request.user.address_city):
-            empty_fields.append(_('your address'))
-        elif not self.request.user.telephone:
-            empty_fields.append(_('your phonenumber'))
-        elif not self.request.user.id_card:
-            empty_fields.append(_('a copy of your ID card'))
-        if not empty_fields:
+        empty_fields = self.request.user.get_empty_fields()
+        if empty_fields:
             if len(empty_fields) == 1:
                 fields = empty_fields[0]
             else:
-                fields = ", ".join(empty_fields[:-1]) + " %s %s" % (_('and'), empty_fields[-1])
-            messages.info(self.request, 'Please fill in %s. See <a href=%s>here</a>' % (fields, reverse('update_user')),
+                fields = ", ".join(str(v) for v in empty_fields[:-1]) + " %s %s" % (_('and'), str(empty_fields[-1]))
+            messages.info(self.request, 'Please fill in %s. See <a href=%s>here</a>' % (fields, reverse('customuser:profile_update')),
                           extra_tags='safe')
 
         return queryset

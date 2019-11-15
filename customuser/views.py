@@ -44,7 +44,7 @@ def confirm_proposal(request, uidb64, token):
         # TODO
         # si on a les data, il faut lancer l'install dans Fid et Yuki (méthode dans customuser lié à une company
 
-        messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
+        messages.success(request, 'Thank you for accepting our proposal ! You will receive in a few hours an email with all informations you will need !')
         return redirect('home')
     else:
         messages.error(request, 'Activation link is invalid!')
@@ -161,7 +161,7 @@ class CustomUserDetailView(ReadOnlySimulationMixin, GenericUpdateView):
         instance = self.object.simulation
         instance.proposed_amount = form.cleaned_data.get('proposed_amount')
         instance.save()
-        self.object.send_adjusted_proposition()
+        self.object.send_adjusted_proposition(self.object)
         return super(CustomUserDetailView, self).form_valid(form)
 
 

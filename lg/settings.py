@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'company',
     'contact',
     'simulation',
+    'django_countries',
 ]
 
 MIDDLEWARE = [

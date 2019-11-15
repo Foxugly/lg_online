@@ -2,6 +2,7 @@ from tools.generic_class import GenericClass
 from django.db import models
 from django.utils.translation import gettext as _
 from vies.validators import VATINValidator
+from django_countries.fields import CountryField
 
 
 class Company(GenericClass):
@@ -17,7 +18,24 @@ class Company(GenericClass):
     social_address_number = models.CharField(_("Number"), max_length=20, blank=True)
     social_address_zip = models.CharField(_("Zip Code"), max_length=20, blank=True)
     social_address_city = models.CharField(_("City"), max_length=255, blank=True)
-    social_address_country = models.CharField(_("Country"), max_length=255, blank=True)
+    social_address_country = CountryField(_("Country"), max_length=255, blank=True)
+
+    def get_empty_fields(self):
+        empty_fields = []
+        if not (self.social_address_street and self.social_address_zip and self.social_address_city and self.social_address_country):
+            empty_fields.append(_('your address'))
+        ibans = Iban.objects.filter(company=self)
+        if not ibans:
+            empty_fields.append(_('an iban account'))
+        if empty_fields:
+            if len(empty_fields)==1:
+                out = str(empty_fields[0])
+            else:
+                out = ", ".join(str(v) for v in empty_fields[:-1]) + " %s %s" % (_('and'), str(empty_fields[-1]))
+            return out
+        else:
+            return None
+
 
     def fill_data(self, data):
         if len(data):

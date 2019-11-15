@@ -12,6 +12,7 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from tools.mail import send_mail_smtp
+from django_countries.fields import CountryField
 
 
 class CustomUserManager(BaseUserManager):
@@ -43,7 +44,7 @@ class CustomUser(AbstractUser, GenericClass):
     address_number = models.CharField(_("Number"), max_length=20, blank=True)
     address_zip = models.CharField(_("Zip Code"), max_length=20, blank=True)
     address_city = models.CharField(_("City"), max_length=255, blank=True)
-    address_country = models.CharField(_("Country"), max_length=255, blank=True)
+    address_country = CountryField(_("Country"), max_length=255, blank=True)
     contact = models.ForeignKey(Contact, blank=True, null=True, on_delete=models.CASCADE)
     objects = CustomUserManager()
     simulation = models.ForeignKey(Simulation, blank=True, null=True, on_delete='cascade')
@@ -59,6 +60,16 @@ class CustomUser(AbstractUser, GenericClass):
 
     def get_short_name(self):
         return self.email
+
+    def get_empty_fields(self):
+        empty_fields = []
+        if not (self.address_street and self.address_zip and self.address_city):
+            empty_fields.append(_('your address'))
+        if not self.telephone:
+            empty_fields.append(_('your phonenumber'))
+        if not self.id_card:
+            empty_fields.append(_('a copy of your ID card'))
+        return empty_fields
 
     def send_adjusted_proposition(self, user):
         print("J'envoi le mail de confirmation")
