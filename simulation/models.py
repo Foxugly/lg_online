@@ -54,7 +54,7 @@ class Simulation(GenericClass):
     tax_liability = models.CharField(_("Mode de paiement"), max_length=20, choices=TAX_LIABILITY_CHOICES,
                                      default='quarterly')
     calculated_amount = models.PositiveIntegerField(_("Montant calculé"), blank=True, default=0)
-    date_calculated_amount = models.DateTimeField(blank=True)
+    date_calculated_amount = models.DateTimeField(blank=True, null=True)
     proposed_amount = models.PositiveIntegerField(_("Montant proposé"), blank=True, default=0)
     created = models.DateTimeField(auto_now_add=True)
 
