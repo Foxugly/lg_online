@@ -44,10 +44,12 @@ class CustomUser(AbstractUser, GenericClass):
     address_number = models.CharField(_("Number"), max_length=20, blank=True)
     address_zip = models.CharField(_("Zip Code"), max_length=20, blank=True)
     address_city = models.CharField(_("City"), max_length=255, blank=True)
-    address_country = CountryField(_("Country"), max_length=255, blank=True)
+    address_country = CountryField(_("Country"), default='BE', max_length=255, blank=True)
     contact = models.ForeignKey(Contact, blank=True, null=True, on_delete=models.CASCADE)
     objects = CustomUserManager()
     simulation = models.ForeignKey(Simulation, blank=True, null=True, on_delete='cascade')
+    valid = models.BooleanField(default=False)
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -69,7 +71,19 @@ class CustomUser(AbstractUser, GenericClass):
             empty_fields.append(_('your phonenumber'))
         if not self.id_card:
             empty_fields.append(_('a copy of your ID card'))
-        return empty_fields
+        if empty_fields :
+            return empty_fields
+        else:
+            return None
+
+    def save(self, *args, **kwargs):
+        super(CustomUser, self).save(*args, **kwargs)
+        self.valid = not self.get_empty_fields()
+        for c in self.companies.all():
+            c.valid_user = not self.get_empty_fields()
+            c.save()
+        super(CustomUser, self).save(*args, **kwargs)
+
 
     def send_adjusted_proposition(self, user):
         print("J'envoi le mail de confirmation")

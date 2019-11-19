@@ -3,6 +3,8 @@ from django.db import models
 from django.utils.translation import gettext as _
 from vies.validators import VATINValidator
 from django_countries.fields import CountryField
+from localflavor.generic.models import IBANField
+from contact.models import Contact
 
 
 class Company(GenericClass):
@@ -18,7 +20,11 @@ class Company(GenericClass):
     social_address_number = models.CharField(_("Number"), max_length=20, blank=True)
     social_address_zip = models.CharField(_("Zip Code"), max_length=20, blank=True)
     social_address_city = models.CharField(_("City"), max_length=255, blank=True)
-    social_address_country = CountryField(_("Country"), max_length=255, blank=True)
+    social_address_country = CountryField(_("Country"), default='BE', max_length=255, blank=True)
+    contact = models.ForeignKey(Contact, blank=True, null=True, on_delete=models.CASCADE)
+    valid = models.BooleanField(default=False)
+    valid_user = models.BooleanField(default=False)
+    sent = models.BooleanField(default=False)
 
     def get_empty_fields(self):
         empty_fields = []
@@ -36,6 +42,14 @@ class Company(GenericClass):
         else:
             return None
 
+    def save(self, *args, **kwargs):
+        self.valid = not self.get_empty_fields()
+        if self.valid and self.valid_user and not self.sent:
+            self.sent = True
+            print("GO TO FID YUKI CODABOX")
+            # TODO FID YUKI CODABOX
+            # TODO envoyé à contact : tu as un nouveau client
+        super(Company, self).save(*args, **kwargs)
 
     def fill_data(self, data):
         if len(data):
@@ -70,7 +84,7 @@ class Company(GenericClass):
 
 class Iban(GenericClass):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    iban = models.CharField(_("IBAN"), max_length=20, blank=True, null=True, )
+    iban = IBANField(_("Iban"), max_length=20, blank=True, null=True, )
     default = models.BooleanField(default=False)
 
     def __str__(self):
@@ -80,25 +94,3 @@ class Iban(GenericClass):
         verbose_name = _('Iban')
 
 
-# import string
-# LETTERS = {ord(d): str(i) for i, d in enumerate(string.digits + string.ascii_uppercase)}
-
-# def _number_iban(iban):
-#     return (iban[4:] + iban[:4]).translate(LETTERS)
-
-
-# def generate_iban_check_digits(iban):
-#     number_iban = _number_iban(iban[:2] + '00' + iban[4:])
-#     return '{:0>2}'.format(98 - (int(number_iban) % 97))
-
-
-# def valid_iban(iban):
-#     return int(_number_iban(iban)) % 97 == 1
-
-
-# if __name__ == '__main__':
-#     my_iban = 'RO13RZBR0000060007134800'
-#     if generate_iban_check_digits(my_iban) == my_iban[2:4] and valid_iban(my_iban):
-#         print('IBAN ok!\n')
-#     else:
-#         print('IBAN not ok!\n')

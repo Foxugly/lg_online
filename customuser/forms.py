@@ -13,6 +13,7 @@ from django.template import loader
 from vies.validators import VATINValidator
 from django import forms
 from tools.bce import get_data_from_bce
+from django.views.generic.edit import ModelFormMixin
 
 
 class CustomUserCreationForm(UserCreationForm):

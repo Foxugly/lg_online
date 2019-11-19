@@ -100,7 +100,7 @@ class ProfileUpdateView(SuccessMessageMixin, UpdateView):
     fields = None
     form_class = CustomUserForm
     template_name = 'update.html'
-    success_url = reverse_lazy('profile_update')
+    success_url = reverse_lazy('customuser:profile_update')
     success_message = _('Changes saved.')
 
     def get_object(self, **kwargs):

@@ -2,7 +2,7 @@ from tools.generic_views import *
 from company.models import Company
 from django.utils.translation import gettext as _
 from django.db import transaction
-from company.forms import CompanyCreateForm, CompanyForm, CompanyIbanFormSet
+from company.forms import CompanyCreateForm, CompanyForm, CompanyAdminForm, CompanyIbanFormSet
 from tools.bce import get_data_from_bce
 from django.contrib import messages
 from django.urls import reverse
@@ -41,11 +41,22 @@ class CompanyListView(GenericListView):
 class CompanyUpdateView(GenericUpdateView):
     model = Company
     fields = None
-    form_class = CompanyForm
+    form_class = None
     template_name = 'update_company.html'
+
+
+    def __init__(self, *args, **kwargs):
+        super(CompanyUpdateView, self).__init__(*args, **kwargs)
+
+    def get_form_class(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return CompanyAdminForm
+        else:
+            return CompanyForm
 
     def get_context_data(self, **kwargs):
         data = super(CompanyUpdateView, self).get_context_data(**kwargs)
+        self.form_class = CompanyForm
         if self.request.POST:
             data['ibans'] = CompanyIbanFormSet(self.request.POST, instance=self.object)
         else:
