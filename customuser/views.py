@@ -9,7 +9,7 @@ from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from customuser.tokens import account_activation_token
 from django.contrib.auth.forms import AuthenticationForm
-from contact.models import Contact
+from accountant.models import Accountant
 from simulation.models import Simulation
 from tools.generic_views import *
 from django.contrib.messages.views import SuccessMessageMixin
@@ -25,7 +25,7 @@ def activate(request, uidb64, token):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
-        user.contact = Contact.objects.filter(default=True)[0]
+        user.accountant = accountant.objects.filter(default=True)[0]
         user.save()
         messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
         return redirect('home')

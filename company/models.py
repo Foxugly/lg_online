@@ -4,7 +4,6 @@ from django.utils.translation import gettext as _
 from vies.validators import VATINValidator
 from django_countries.fields import CountryField
 from localflavor.generic.models import IBANField
-from contact.models import Contact
 
 
 class Company(GenericClass):
@@ -21,7 +20,7 @@ class Company(GenericClass):
     social_address_zip = models.CharField(_("Zip Code"), max_length=20, blank=True)
     social_address_city = models.CharField(_("City"), max_length=255, blank=True)
     social_address_country = CountryField(_("Country"), default='BE', max_length=255, blank=True)
-    contact = models.ForeignKey(Contact, blank=True, null=True, on_delete=models.CASCADE)
+    accountant = models.ForeignKey('accountant.Accountant', blank=True, null=True, on_delete=models.CASCADE)
     valid = models.BooleanField(default=False)
     valid_user = models.BooleanField(default=False)
     sent = models.BooleanField(default=False)

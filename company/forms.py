@@ -29,7 +29,7 @@ class CompanyAdminForm(ModelForm):
                   'start_date', 'enterprise_name', 'social_address_street',
                   'social_address_number', 'social_address_zip',
                   'social_address_city', 'social_address_country',
-                  'legal_form', 'end_fiscal_date', 'contact', ]
+                  'legal_form', 'end_fiscal_date', 'accountant', ]
 
 
 class CompanyForm(ModelForm):

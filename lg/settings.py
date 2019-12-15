@@ -44,12 +44,13 @@ INSTALLED_APPS = [
     'compat',
     'hijack_admin',
     'bootstrap4',
+    'agenda',
     'captcha',
     'localflavor',
     'phonenumber_field',
     'customuser',
     'company',
-    'contact',
+    'accountant',
     'simulation',
     'django_countries',
 ]
@@ -124,6 +125,38 @@ LANGUAGES = (
     ('fr', _('Français')),
     ('nl', _('Nederlands')),
 )
+
+DAY_CHOICES = (
+    (1, _(u'Lundi')),
+    (2, _(u'Mardi')),
+    (3, _(u'Mercredi')),
+    (4, _(u'Jeudi')),
+    (5, _(u'Vendredi')),
+    (6, _(u'Samedi')),
+    (7, _(u'Dimanche')),
+)
+
+
+TITLE_CHOICES = (
+    (1, _(u'Professeur')),
+    (2, _(u'Docteur')),
+    (3, _(u'Madame')),
+    (4, _(u'Monsieur')),
+)
+
+SLOT_TYPE = (
+    (1, _(u'Premier RDV')),
+)
+
+TYPE_OFFER = (
+    (1, _(u'Free')),
+    (2, _(u'Standard')),
+    (3, _(u'Premium')),
+)
+
+SLOT_COLOR = ['#73B5EB', '#94F7CE', '#D798E2', '#FFE68F', ]
+
+
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'), ]
 # Static files (CSS, JavaScript, Images)

@@ -1,12 +1,15 @@
 lg/credential_email.py
 media/id_card/*
+media/*
 company/migrations/*
-contact/migrations/*
+accountant/migrations/*
 customuser/migrations/*
 simulation/migrations/*
+agenda/migrations/*
 __pycache__/*
 company/__pycache__/*
-contact/__pycache__/*
+accountant/__pycache__/*
+agenda/__pycache__/*
 customuser/__pycache__/*
 db.sqlite3
 lg/__pycache__/*

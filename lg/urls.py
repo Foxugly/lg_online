@@ -25,19 +25,22 @@ from customuser.views import CustomUserUpdateView, CustomUserLoginView, MyPasswo
 from customuser.decorators import check_lang
 from django.http import JsonResponse
 from tools.mail import send_mail_smtp
+from agenda.views import calendar
 
 
 @check_lang
 def home(request):
-    c = {}
-    if request.user.is_authenticated:
-        if request.user.is_active:
-            if request.user.is_staff or request.user.is_superuser:
-                return redirect('customuser:customuser_list')
-            else:
-                return redirect('company:company_list')
-    else:
-        return render(request, "index.html", c)
+    return calendar(request, 1)
+    #c = {}
+    #if request.user.is_authenticated:
+    #    if request.user.is_active:
+    #        if request.user.is_staff or request.user.is_superuser:
+    #            return redirect('customuser:customuser_list')
+    #        else:
+    #            return redirect('company:company_list')
+    #else:
+    #    return render(request, "index.html", c)
+
 
 
 def set_language(request):
@@ -57,7 +60,7 @@ def sendmail(request):
         content = request.GET.get('content', None)
         header = "Client : %s %s \nMail : %s\nPhone : %s\n\n" % (request.user.first_name, request.user.last_name,
                                                                  request.user.email, request.user.telephone)
-        send_mail_smtp(subject, request.user.contact.email, request.user.email, header + content, None)
+        send_mail_smtp(subject, request.user.accountant.email, request.user.email, header + content, None)
         data = {'result': True}
         return JsonResponse(data)
 
@@ -65,6 +68,7 @@ def sendmail(request):
 urlpatterns = [
     path('', home, name='home'),
     path('sendmail/', sendmail, name='sendmail'),
+    path('agenda/', include('agenda.urls', namespace='agenda')),
     path('customuser/', include('customuser.urls', namespace='customuser')),
     path('company/', include('company.urls', namespace='company')),
     path('simulation/', include('simulation.urls', namespace='simulation')),

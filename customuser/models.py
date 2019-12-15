@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from company.models import Company
 from phonenumber_field.modelfields import PhoneNumberField
-from contact.models import Contact
 from simulation.models import Simulation
 from tools.generic_class import GenericClass
 from django.contrib.auth.tokens import default_token_generator 
@@ -45,7 +44,7 @@ class CustomUser(AbstractUser, GenericClass):
     address_zip = models.CharField(_("Zip Code"), max_length=20, blank=True)
     address_city = models.CharField(_("City"), max_length=255, blank=True)
     address_country = CountryField(_("Country"), default='BE', max_length=255, blank=True)
-    contact = models.ForeignKey(Contact, blank=True, null=True, on_delete=models.CASCADE)
+    accountant = models.ForeignKey('accountant.Accountant', blank=True, null=True, on_delete=models.CASCADE)
     objects = CustomUserManager()
     simulation = models.ForeignKey(Simulation, blank=True, null=True, on_delete='cascade')
     valid = models.BooleanField(default=False)

@@ -1,22 +1,22 @@
 from tools.generic_views import *
-from contact.models import Contact
+from accountant.models import Accountant
 
 
 class ContactCreateView(GenericCreateView):
-    model = Contact
+    model = Accountant
 
 
 class ContactListView(GenericListView):
-    model = Contact
-
+    model = Accountant
+    
 
 class ContactUpdateView(GenericUpdateView):
-    model = Contact
+    model = Accountant
 
 
 class ContactDetailView(GenericDetailView):
-    model = Contact
+    model = Accountant
 
 
 class ContactDeleteView(GenericDeleteView):
-    model = Contact
+    model = Accountant

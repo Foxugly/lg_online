@@ -21,3 +21,4 @@ phonenumbers
 reportlab
 celery
 django-countries
+icalendar
