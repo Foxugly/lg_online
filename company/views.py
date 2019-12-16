@@ -34,6 +34,9 @@ class CompanyListView(GenericListView):
                 fields = ", ".join(str(v) for v in empty_fields[:-1]) + " %s %s" % (_('and'), str(empty_fields[-1]))
             messages.info(self.request, 'Please fill in %s. See <a href=%s>here</a>' % (fields, reverse('customuser:profile_update')),
                           extra_tags='safe')
+            if self.request.user.schedule_meeting:
+                messages.info(self.request, 'Please click <a href=%s>here</a> to schedule a meeting' % reverse('agenda:slot_list'),
+                          extra_tags='safe')
 
         return queryset
 

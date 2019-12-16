@@ -3,16 +3,17 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- coucou 1 -->
 		{% bootstrap_css %}
-		<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+		<!-- coucou 2 -->
+		<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="{% static 'select2/css/bootstrap-select.css' %}" />
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/b-1.5.4/datatables.min.css"/>
+		<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/b-1.5.4/datatables.min.css"/>
     	<link rel="stylesheet" type="text/css" href='{% static "bootstrap4-datetimepicker-master/build/css/bootstrap-datetimepicker.min.css" %}' />-->
 		<link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-		{% block css %}
-  		{% endblock css %}
+		{% block css %}{% endblock css %}
 	</head>
 	<body>
 		{% if DEBUG %}
@@ -33,7 +34,7 @@
 				<ul class="navbar-nav navbar-right">
 					{% if user.is_authenticated %}
 					<li class="nav-item">
-						<a href="#" class="nav-link" data-toggle="modal" data-target="#contactUsModalCenter" title="{% trans 'contact us' %}"><span class="fa fa-envelope-o"></span></a>
+						<a href="#" class="nav-link" data-toggle="modal" data-target="#contactUsModalCenter" title="{% trans 'contact us' %}"><i class="fa fa-envelope-o"></i></a>
 					</li>
 					{% endif %}
 					<li>
@@ -63,7 +64,7 @@
 						</li>
 					{% else %}
 					<li class="nav-item">
-						<a class="nav-link"  href="{% url 'login' %}?next=/"><span class="fa fa-sign-in"></span>{% trans 'Log in' %}</a>
+						<a class="nav-link"  href="{% url 'login' %}?next=/"><span class="fa fa-sign-in"></span> {% trans 'Log in' %}</a>
 					</li>
 					{% endif %}
 				</ul>
@@ -84,8 +85,8 @@
 			            {{ message }}
 			        {% endif %}
 			    </div>
-			</div>
 			{% endfor %}
+			</div>
 			{% block content %}{% endblock content %}
 		</div>
 
@@ -128,8 +129,8 @@
 	{% bootstrap_javascript jquery='full' %}
 	<script type="text/javascript" src="{% static 'bootbox/bootbox.min.js' %}"></script>
     <script type="text/javascript" src="//momentjs.com/downloads/moment-with-locales.js"></script>
-	 <script type="text/javascript" src="{% static 'select2/js/bootstrap-select.js' %}"></script>
-    <script type="text/javascript" src='{% static "bootstrap4-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js" %}'></script>
+	<script type="text/javascript" src="{% static 'select2/js/bootstrap-select.js' %}"></script>
+    <!--<script type="text/javascript" src='{% static "bootstrap4-datetimepicker-master/build/js/bootstrap-datetimepicker.min.js" %}'></script>-->
 
   <script>
 

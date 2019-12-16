@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'accountant',
     'simulation',
     'django_countries',
+    'address',
 ]
 
 MIDDLEWARE = [
@@ -164,9 +165,11 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'), ]
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-IDCARD_URL = 'media/id_card/'
+IDCARD_URL = 'idcard/'
+ICS_URL = 'media/ics/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# IDCARD_ROOT = os.path.join(BASE_DIR, 'id_card')
+IDCARD_ROOT = os.path.join(MEDIA_ROOT, 'idcard')
+ICS_ROOT = os.path.join(MEDIA_ROOT, 'ics')
 
 if STATE == 'PROD':
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')

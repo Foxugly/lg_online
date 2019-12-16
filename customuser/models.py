@@ -12,6 +12,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from tools.mail import send_mail_smtp
 from django_countries.fields import CountryField
+from timezone_field import TimeZoneField
 
 
 class CustomUserManager(BaseUserManager):
@@ -48,6 +49,8 @@ class CustomUser(AbstractUser, GenericClass):
     objects = CustomUserManager()
     simulation = models.ForeignKey(Simulation, blank=True, null=True, on_delete='cascade')
     valid = models.BooleanField(default=False)
+    schedule_meeting = models.BooleanField(default=True)
+    timezone = TimeZoneField(default=settings.TIME_ZONE)
 
 
     USERNAME_FIELD = 'email'

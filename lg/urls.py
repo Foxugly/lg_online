@@ -25,21 +25,20 @@ from customuser.views import CustomUserUpdateView, CustomUserLoginView, MyPasswo
 from customuser.decorators import check_lang
 from django.http import JsonResponse
 from tools.mail import send_mail_smtp
-from agenda.views import calendar
 
 
 @check_lang
 def home(request):
-    return calendar(request, 1)
-    #c = {}
-    #if request.user.is_authenticated:
-    #    if request.user.is_active:
-    #        if request.user.is_staff or request.user.is_superuser:
-    #            return redirect('customuser:customuser_list')
-    #        else:
-    #            return redirect('company:company_list')
-    #else:
-    #    return render(request, "index.html", c)
+    #return calendar(request, request.user.accountant.pk)
+    c = {}
+    if request.user.is_authenticated:
+        if request.user.is_active:
+            if request.user.is_staff or request.user.is_superuser:
+                return redirect('customuser:customuser_list')
+            else:
+                return redirect('company:company_list')
+    else:
+        return render(request, "index.html", c)
 
 
 

@@ -25,7 +25,7 @@ class SlotTemplate(models.Model):
     booked = models.BooleanField(verbose_name=_(u'Booked'), default=False)
 
     def __str__(self):
-        return u"%s - %s (%s)" % (self.start, self.end, settings.SLOT_TYPE[self.slot_type])
+        return u"ST %d" % (self.pk)
 
     def t_start(self, i):
         date = datetime.strptime(settings.FULLCALENDAR_REF_DATE, "%Y-%m-%d")
@@ -69,7 +69,7 @@ class DayTemplate(models.Model):
         return self.slots.all()
 
     def __str__(self):
-        return u"[%d] %s" % (self.id, dict(settings.DAY_CHOICES)[self.day])
+        return u"DT %d" % (self.id)
 
 
 class WeekTemplate(models.Model):
@@ -184,7 +184,7 @@ class Slot(models.Model):
             self.random = string_random(16)
         super(Slot, self).save(*args, **kwargs)
         if self.refer_accountant:
-            self.path = os.path.join(settings.MEDIA_ROOT, 'ics', 'slot',
+            self.path = os.path.join(settings.ICS_ROOT, 
                                      '%s_%s_%s.ics' % (self.random, self.refer_accountant, self.id))
         super(Slot, self).save(*args, **kwargs)
 
@@ -194,18 +194,18 @@ class Slot(models.Model):
         cal.add('prodid', '-//Medical appointement//')
         cal.add('calscale', 'GREGORIAN')
         cal.add('method', 'PUBLISH')
-        cal.add('x-wr-calname', '[Medagenda] appointment')
+        cal.add('x-wr-calname', '[LG&Associates]')
         cal.add('x-wr-timezone', self.refer_accountant.timezone)
         cal.add('x-wr-caldesc', '')
         event = Event()
-        title = '[Medical appointment] %s' % str(self.refer_accountant.full_name())
+        title = 'LG&Associates - meeting with %s' % str(self.refer_accountant.name)
         event.add('dtstart', self.start_dt())
         event.add('dtend', self.end_dt())
         event.add('dtstamp', datetime.now(pytz.timezone(str(self.refer_accountant.timezone))))
         event.add('created', datetime.now(pytz.timezone(str(self.refer_accountant.timezone))))
-        event['description'] = vText(_(u"Medical consultation with %s" % self.refer_accountant.full_name()))
+        event['description'] = vText(_(u"Meeting with %s" % self.refer_accountant.name))
         event.add('last-modified', datetime.now(pytz.timezone(str(self.refer_accountant.timezone))))
-        event['location'] = vText(self.refer_accountant.address.formatted)
+        event['location'] = vText(self.refer_accountant.address.formatted())
         event.add('sequence', 0)
         event['status'] = vText('CONFIRMED')
         event.add('summary', title)

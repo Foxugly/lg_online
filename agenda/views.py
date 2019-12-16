@@ -19,24 +19,28 @@ from multiprocessing import Process
 from threading import Thread
 from django.db import connection
 from django.shortcuts import render
+from tools.generic_views import GenericListView
+from django.urls import reverse_lazy
 
 
-def calendar(request, accountant_id=None):
-    res = Accountant.objects.filter(pk=accountant_id)
-    if res:
-        accountant = res[0]
-        c = {}
+class CalendarListView(GenericListView):
+    model = Slot
+    paginate_by = None
+    template_name = 'calendar.html'
+    crumbs = [('Agenda', reverse_lazy('agenda:slot_list'))]  # OR reverse_lazy
+
+    def get_queryset(self):
+        accountant = self.request.user.accountant
         today = datetime.now().date()
-        c['slots'] = []
+        l_slots = []
         if accountant.view_busy_slot :
             slots = slot.objects.filter(date__gte=today, refer_accountant=accountant)
         else:
             slots = Slot.objects.filter(date__gte=today, refer_accountant=accountant, customer__isnull=True)
         for s in slots:
-            c['slots'].append(s.as_json())
-        if len(c['slots']) == 0:
-            del c['slots']
-    return render(request, 'calendar.html', c)
+            l_slots.append(s.as_json())
+        return l_slots
+
 
 @login_required
 def st_add(request):
@@ -142,7 +146,6 @@ def st_remove(request, st_id):
 
 
 def get_slot(request, slot_id):
-    print('get_slot')
     results = {}
     if request.is_ajax():
         s = Slot.objects.get(id=int(slot_id))
@@ -163,13 +166,13 @@ def get_slot(request, slot_id):
 def book_slot(request, slot_id):
     if request.is_ajax():
         s = Slot.objects.get(id=slot_id)
-        if request.POST["customer"] is None or int(request.POST["customer"]) == 0:
-            s.customer = request.CustomUser
+        s.customer = request.user
         s.booked = True
         s.save()
         s.icalendar()
         #mail_customer_new_appointment(request, s)
-        print("mail2")
+        request.user.schedule_meeting = False
+        request.user.save()
         d = {'return': True, 'slot': s.as_json()}
         return HttpResponse(json.dumps(d))
 

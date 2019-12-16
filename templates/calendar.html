@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap4 common_tags i18n %}
-{% load staticfiles %}
-
+{% load bootstrap4 static i18n hijack_tags common_tags %}
 {% get_current_language as LANGUAGE_CODE %}
 
 {% block css %}
@@ -45,8 +43,8 @@ $(function(){
       editable: false,
       allDaySlot:false,
       eventLimit: true, // allow "more" link when too many events
-      {% if slots %}
-            events: {{slots|safe}},
+      {% if object_list %}
+            events: {{object_list|safe}},
       {% else %}  
       events: [
         { id:"1",
@@ -93,31 +91,6 @@ $(function(){
         }
     });
 
-    $('#id_email').focusout(function(){
-        var url = '/patient/ajax/search/';
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: {'email': $('#id_email').val()},
-            traditional: true,
-            dataType: 'json',
-            success: function(result){
-                if (result['return']){
-                    $('#id_patient').val(result['patient']['id']);
-                    $('#id_first_name').val(result['patient']['first_name']);
-                    $('#id_last_name').val(result['patient']['last_name']);
-                    $('#id_telephone').val(result['patient']['telephone']);
-                }
-                else{
-                    $('#id_patient').val(0);
-                    $('#id_first_name').val("");
-                    $('#id_last_name').val("");
-                    $('#id_telephone').val("");
-                }
-            }
-        });
-    });
-
     function clean_modal(){
         $('#id_slot').val("0");
         $('#id_patient').val("0");
@@ -143,10 +116,11 @@ $(function(){
     $('#bookingslot_submit').click(function(){
         var form = $('#form_bookingslot');
         var id = $('#id_slot').val();
-        var url = '/slot/ajax/s/book/' + id + '/';
+        var url = '/agenda/ajax/s/book/' + id + '/';
         $.ajax({
             url: url,
             type: 'POST',
+            headers:{"X-CSRFToken": csrftoken},
             data: form.serialize(),
             traditional: true,
             dataType: 'json',
@@ -264,12 +238,18 @@ $(function(){
           <div class="row form-group">
             <label class="col-md-4 control-label text-right" for="id_date">{% trans "Date" %} :</label>
             <div class="col-md-8 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+              </div>
               <input id="id_date" name="date" type="text" class="form-control" disabled>
             </div>
           </div>
           <div class="row form-group">
             <label class="col-md-4 control-label text-right" for="id_start_time">{% trans "Start time" %} :</label>
             <div class="col-md-8 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-clock" aria-hidden="true"></i></span>
+              </div>
               <input id="id_start_time" name="start_time" type="text" class="form-control" disabled>
             </div>
           </div>
