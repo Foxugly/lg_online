@@ -5,7 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.conf import settings
 from timezone_field import TimeZoneField
 from address.models import Address
-from agenda.models import WeekTemplate
+from agenda.models import WeekTemplate, Slot
 
 
 class ColorSlot(models.Model):
@@ -21,13 +21,14 @@ class ColorSlot(models.Model):
 class Accountant(GenericClass):
     name = models.CharField(_("name"), max_length=50, blank=True)
     email = models.CharField(_("email"), max_length=50, blank=True, null=True,)
-    telephone = PhoneNumberField(_("Phone number"), blank=True, null=True,)
+    telephone = PhoneNumberField(_("Phone number"), blank=True, null=True, help_text='format : +3221234567')
     default = models.BooleanField()
     view_busy_slot = models.BooleanField(default="False")
     colorslots = models.ManyToManyField(ColorSlot, verbose_name=_(u'ColorSlot'), blank=True)
     timezone = TimeZoneField(default=settings.TIME_ZONE)
     address = models.ForeignKey(Address, blank=True, null=True, on_delete=models.CASCADE)
     weektemplate = models.ForeignKey(WeekTemplate, verbose_name=_(u'Week template'), blank=True, null=True, on_delete=models.CASCADE)
+    slots = models.ManyToManyField(Slot, verbose_name=_(u'slots'), blank=True)
 
     def __str__(self):
         return self.name

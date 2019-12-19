@@ -177,16 +177,18 @@ class Slot(models.Model):
                     'title': str(_('Free')), 'color': self.refer_accountant.get_color(self.st.slot_type, self.booked)}
 
     def __str__(self):
-        return u"Slot %d" % self.id
+        return u"Slot %d" % self.pk
 
     def save(self, *args, **kwargs):
+        super(Slot, self).save(*args, **kwargs)          
         if not self.random:
             self.random = string_random(16)
-        super(Slot, self).save(*args, **kwargs)
         if self.refer_accountant:
             self.path = os.path.join(settings.ICS_ROOT, 
                                      '%s_%s_%s.ics' % (self.random, self.refer_accountant, self.id))
-        super(Slot, self).save(*args, **kwargs)
+            if self not in self.refer_accountant.slots.all():
+                self.refer_accountant.slots.add(self)
+        super(Slot, self).save(*args, **kwargs)   
 
     def icalendar(self):
         cal = Calendar()

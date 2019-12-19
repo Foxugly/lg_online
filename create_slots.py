@@ -40,8 +40,10 @@ end_date = date(2019,12,27)
 accountant = Accountant.objects.get(pk=1)
 accountant.weektemplate = wt
 accountant.save()
+days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 for i in range(0, 7):
+    print("create slots for %s" % days[i])
     current_day = start_date + timedelta(days=i)
     while current_day <= end_date:
         sts = accountant.get_daytemplate(
