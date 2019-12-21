@@ -90,18 +90,20 @@ class CustomUser(AbstractUser, GenericClass):
     def send_adjusted_proposition(self, user):
         print("J'envoi le mail de confirmation")
 
-        subject = _('[mylieutenantguillaume] Proposal')
+        subject = _('[LG&Associates] Final proposal')
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
         msg_html = render_to_string('acc_confirm_proposal.html', {
             'user': user,
             'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': default_token_generator.make_token(user),
+            'uid': uid,
+            'token': token,
         })
         msg_txt = render_to_string('acc_confirm_proposal.txt', {
             'user': user,
             'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': default_token_generator.make_token(user),
+            'uid': uid,
+            'token': token,
         })
         to = self.email
         reply_to = "info@lieutenantguillaume.com"

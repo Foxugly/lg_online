@@ -63,20 +63,10 @@ class SimulationUpdateView(UpdateView, ReadOnlyModelFormMixin):
         context['update'] = True
         context['price'], context['price_calculated'] = self.object.proposed_amount, self.object.calculated_amount
         context.update({'title': "Simulation"})
-        return context
-
-
-def send_mail(mail, pk):
-    subject = "[LG & Associates] devis"
-    s = Simulation.objects.get(pk=pk)
-    text = "Hello,\n\n"
-    text += "Link to your devis : %s" % s.get_absolute_url()
-    print(text)
-    send_mail_smtp(subject, mail, None, text, None)
+        return context  
 
 
 def send_simulation_by_mail(request):
-    print("COMPUTE_SIMULATION")
     results = {}
     if request.is_ajax():
         pk = request.POST['pk']
@@ -87,7 +77,12 @@ def send_simulation_by_mail(request):
         except ValidationError:
             results['return'] = False
         if results['return']:
-            send_mail(email, pk)
+            subject = "[LG&Associates] Quotation"
+            s = Simulation.objects.get(pk=pk)
+            text = "Hello,\n\n"
+            text += "Link to your quotation : %s" % s.get_absolute_url()
+            print(text)
+            send_mail_smtp(subject, email, None, text, None, None)
     else:
         results['return'] = False
     return HttpResponse(json.dumps(results))

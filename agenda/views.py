@@ -21,7 +21,7 @@ from django.db import connection
 from django.shortcuts import render
 from tools.generic_views import GenericListView
 from django.urls import reverse_lazy
-
+from tools.mail import send_mail_smtp
 
 class CalendarListView(GenericListView):
     model = Slot
@@ -170,7 +170,8 @@ def book_slot(request, slot_id):
         s.booked = True
         s.save()
         s.icalendar()
-        #mail_customer_new_appointment(request, s)
+        msg_txt = render_to_string('mail_meeting.txt', {'user': s.customer})
+        send_mail_smtp(_('[LG&Associates] icalendar of meeting'), [s.customer.email, s.refer_accountant.email], reply_to, msg_txt, None, [s.path])
         request.user.schedule_meeting = False
         request.user.save()
         d = {'return': True, 'slot': s.as_json()}
