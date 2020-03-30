@@ -18,10 +18,13 @@ from tools.toolbox import string_random
 from multiprocessing import Process
 from threading import Thread
 from django.db import connection
+from django.template.loader import render_to_string
 from django.shortcuts import render
 from tools.generic_views import GenericListView
 from django.urls import reverse_lazy
 from tools.mail import send_mail_smtp
+from django.utils.translation import gettext_lazy as _
+
 
 class CalendarListView(GenericListView):
     model = Slot
@@ -171,7 +174,8 @@ def book_slot(request, slot_id):
         s.save()
         s.icalendar()
         msg_txt = render_to_string('mail_meeting.txt', {'user': s.customer})
-        send_mail_smtp(_('[LG&Associates] icalendar of meeting'), [s.customer.email, s.refer_accountant.email], reply_to, msg_txt, None, [s.path])
+        send_mail_smtp("[LG&Associates] icalendar of meeting", [s.customer.email, s.refer_accountant.email], None, msg_txt, None, [s.path])
+        # send_mail_smtp(_("[LG&Associates] icalendar of meeting"), [s.customer.email, s.refer_accountant.email], None, msg_txt, None, [s.path])
         request.user.schedule_meeting = False
         request.user.save()
         d = {'return': True, 'slot': s.as_json()}

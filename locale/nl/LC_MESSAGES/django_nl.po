@@ -1,0 +1,455 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-17 02:02+0200\n"
+"PO-Revision-Date: 2019-02-17 21:31+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: company/models.py:8
+msgid "Enterprise Name"
+msgstr ""
+
+#: company/models.py:9
+msgid "Enterprise Number"
+msgstr ""
+
+#: company/models.py:10
+msgid "Enterprise Status"
+msgstr ""
+
+#: company/models.py:11
+msgid "Legal Situation"
+msgstr ""
+
+#: company/models.py:12
+msgid "Start date"
+msgstr ""
+
+#: company/models.py:13
+msgid "Legal form"
+msgstr ""
+
+#: company/models.py:14
+msgid "End fiscal date"
+msgstr ""
+
+#: company/models.py:15
+msgid "Street"
+msgstr ""
+
+#: company/models.py:16
+msgid "Number"
+msgstr ""
+
+#: company/models.py:17
+msgid "Zip Code"
+msgstr ""
+
+#: company/models.py:18
+msgid "City"
+msgstr ""
+
+#: company/models.py:19
+msgid "Country"
+msgstr ""
+
+#: company/models.py:25
+msgid "Company"
+msgstr ""
+
+#: company/models.py:30
+msgid "IBAN"
+msgstr ""
+
+#: company/models.py:37
+msgid "Iban"
+msgstr ""
+
+#: contact/models.py:8
+msgid "name"
+msgstr "name"
+
+#: contact/models.py:9
+msgid "email"
+msgstr ""
+
+#: contact/models.py:10 customuser/models.py:35
+msgid "Phone number"
+msgstr ""
+
+#: contact/models.py:17
+msgid "Contact"
+msgstr ""
+
+#: customuser/admin.py:22
+msgid "Personal info"
+msgstr ""
+
+#: customuser/admin.py:23
+msgid "Companies"
+msgstr ""
+
+#: customuser/admin.py:24
+msgid "Permissions"
+msgstr ""
+
+#: customuser/admin.py:25
+msgid "Important dates"
+msgstr ""
+
+#: customuser/forms.py:61
+msgid "[mylieutenantguillaume] activation for your account"
+msgstr ""
+
+#: customuser/models.py:32
+msgid "email address"
+msgstr ""
+
+#: customuser/models.py:33
+msgid "language"
+msgstr ""
+
+#: customuser/models.py:34
+msgid "companies"
+msgstr ""
+
+#: customuser/views.py:51
+msgid "We just send you an email for validation."
+msgstr ""
+
+#: customuser/views.py:84
+msgid "Changes saved."
+msgstr ""
+
+#: lg/settings.py:122
+msgid "English"
+msgstr ""
+
+#: lg/settings.py:123
+msgid "Français"
+msgstr ""
+
+#: lg/settings.py:124
+msgid "Nederlands"
+msgstr ""
+
+#: simulation/models.py:8
+msgid "Horeca"
+msgstr ""
+
+#: simulation/models.py:9
+msgid "Société de management"
+msgstr ""
+
+#: simulation/models.py:10
+msgid "Profession libérale"
+msgstr ""
+
+#: simulation/models.py:11
+msgid "Construction"
+msgstr ""
+
+#: simulation/models.py:12
+msgid "Immobilière / Patrimoniale"
+msgstr ""
+
+#: simulation/models.py:13
+msgid "Assurances"
+msgstr ""
+
+#: simulation/models.py:14
+msgid "Informatique"
+msgstr ""
+
+#: simulation/models.py:15
+#, fuzzy
+#| msgid "Detail"
+msgid "Retails"
+msgstr "Detail"
+
+#: simulation/models.py:16
+msgid "Avocat"
+msgstr ""
+
+#: simulation/models.py:17
+msgid "Design"
+msgstr ""
+
+#: simulation/models.py:18
+msgid "Architecte"
+msgstr ""
+
+#: simulation/models.py:19
+msgid "Marketing"
+msgstr ""
+
+#: simulation/models.py:26
+msgid "mensuellement"
+msgstr ""
+
+#: simulation/models.py:27
+msgid "trimestriellement"
+msgstr ""
+
+#: simulation/models.py:28
+msgid "Non déposant"
+msgstr ""
+
+#: simulation/models.py:35
+msgid "Nombre de factures de vente annuels"
+msgstr ""
+
+#: simulation/models.py:36
+msgid "Nombre de factures d'achat et tickets annuels"
+msgstr ""
+
+#: simulation/models.py:37
+msgid "Nombre de dirigeants"
+msgstr ""
+
+#: simulation/models.py:38
+msgid "Nombre d'employers"
+msgstr ""
+
+#: simulation/models.py:39
+msgid "Nombre de carte de credits"
+msgstr ""
+
+#: simulation/models.py:40
+msgid "Système de paiements alternatifs (Paypal, Sumup, Stripe, ...)"
+msgstr ""
+
+#: simulation/models.py:60
+msgid "Simulation"
+msgstr ""
+
+#: templates/base.html:33
+msgid "contact us"
+msgstr ""
+
+#: templates/base.html:55
+msgid "Change Profile"
+msgstr "Change Profile"
+
+#: templates/base.html:56 templates/registration/password_change_done.html:8
+msgid "Password change"
+msgstr "Password change"
+
+#: templates/base.html:58
+msgid "Log out"
+msgstr "Log out"
+
+#: templates/base.html:63 templates/registration/password_change_done.html:12
+#: templates/registration/password_reset_complete.html:13
+#: templates/registration/password_reset_done.html:11
+msgid "Log in"
+msgstr "Log in"
+
+#: templates/base.html:77
+msgid "close"
+msgstr ""
+
+#: templates/base.html:93
+msgid "Contact us"
+msgstr ""
+
+#: templates/base.html:102
+msgid "Subject"
+msgstr ""
+
+#: templates/base.html:109
+msgid "Content"
+msgstr ""
+
+#: templates/base.html:117
+msgid "Close"
+msgstr ""
+
+#: templates/base.html:118
+msgid "Send message"
+msgstr ""
+
+#: templates/base.html:149
+msgid "Email sent !"
+msgstr ""
+
+#: templates/base.html:161
+msgid "Do you really want to delete selected object ?"
+msgstr ""
+
+#: templates/base.html:164
+msgid "Yes"
+msgstr "Yes"
+
+#: templates/base.html:168
+msgid "No"
+msgstr "No"
+
+#: templates/base.html:188 templates/list.html:8
+msgid "Add"
+msgstr "Add"
+
+#: templates/index.html:33 templates/registration/login.html:44
+msgid "Forgot password"
+msgstr "Forgot password"
+
+#: templates/registration/login.html:5
+msgid "Your username and password didn't match. Please try again"
+msgstr "Your username and password didn't match. Please try again"
+
+#: templates/registration/login.html:18
+msgid "Sign in"
+msgstr "Sign in"
+
+#: templates/registration/password_change_done.html:11
+msgid "Your password was changed."
+msgstr "Your password was changed."
+
+#: templates/registration/password_change_form.html:14
+#: templates/registration/password_reset_confirm.html:14
+msgid "Error(s)"
+msgstr "Error(s)"
+
+#: templates/registration/password_change_form.html:15
+#: templates/registration/password_reset_confirm.html:15
+msgid "Please correct the error below."
+msgstr "Please correct the error below."
+
+#: templates/registration/password_change_form.html:15
+#: templates/registration/password_reset_confirm.html:15
+msgid "Please correct the errors below."
+msgstr "Please correct the errors below."
+
+#: templates/registration/password_change_form.html:20
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+
+#: templates/registration/password_change_form.html:65
+#: templates/registration/password_reset_confirm.html:51
+msgid "Change my password"
+msgstr "Change my password"
+
+#: templates/registration/password_reset_complete.html:4
+#: templates/registration/password_reset_complete.html:11
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr "Your password has been set.  You may go ahead and log in now."
+
+#: templates/registration/password_reset_complete.html:9
+#: templates/registration/password_reset_done.html:7
+#: templates/registration/password_reset_form.html:7
+msgid "Password reset"
+msgstr "Password reset"
+
+#: templates/registration/password_reset_done.html:9
+msgid ""
+"We've emailed you instructions for setting your password, if an account "
+"exists with the email you entered. You should receive them shortly."
+msgstr ""
+"We've emailed you instructions for setting your password, if an account "
+"exists with the email you entered. You should receive them shortly."
+
+#: templates/registration/password_reset_done.html:10
+msgid ""
+"If you don't receive an email, please make sure you've entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+"If you don't receive an email, please make sure you've entered the address "
+"you registered with, and check your spam folder."
+
+#: templates/registration/password_reset_email.html:2
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+
+#: templates/registration/password_reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr "Please go to the following page and choose a new password:"
+
+#: templates/registration/password_reset_email.html:8
+msgid "Your username, in case you've forgotten:"
+msgstr "Your username, in case you've forgotten:"
+
+#: templates/registration/password_reset_email.html:10
+msgid "Thanks for using our site!"
+msgstr "Thanks for using our site!"
+
+#: templates/registration/password_reset_email.html:12
+#, python-format
+msgid "The %(site_name)s team"
+msgstr "The %(site_name)s team"
+
+#: templates/registration/password_reset_form.html:9
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll email "
+"instructions for setting a new one."
+msgstr ""
+"Forgotten your password? Enter your email address below, and we'll email "
+"instructions for setting a new one."
+
+#: templates/registration/password_reset_form.html:16
+msgid "Reset my password"
+msgstr "Reset my password"
+
+#: templates/update.html:17 templates/update_company.html:44
+msgid "Submit"
+msgstr ""
+
+#: templates/update_simulation.html:22
+msgid "Run another simulation (empty)"
+msgstr ""
+
+#: templates/update_simulation.html:23
+msgid "Change this simulation"
+msgstr ""
+
+#: templates/update_simulation.html:73
+msgid "Run simulation"
+msgstr ""
+
+#: tools/generic_views.py:15
+msgid "object created."
+msgstr ""
+
+#: tools/generic_views.py:51
+msgid "object updated."
+msgstr ""
+
+#: tools/generic_views.py:92
+msgid "object deleted."
+msgstr ""
+
+#~ msgid "Bar"
+#~ msgstr "Bar"
+
+#~ msgid "Multibar"
+#~ msgstr "Multibar"
+
+#~ msgid "bar"
+#~ msgstr "bar"
+
+#~ msgid "multibars"
+#~ msgstr "multibars"
+
+#~ msgid "Login"
+#~ msgstr "Login"

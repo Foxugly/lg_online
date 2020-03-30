@@ -82,9 +82,8 @@ class CustomUserCreateForm(UserCreationForm):
             'token': account_activation_token.make_token(user),
         })
         to = self.cleaned_data.get('email')
-        reply_to = "info@lieutenantguillaume.com"
         print(msg_txt)
-        send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html)
+        send_mail_smtp(str(subject), to, None, msg_txt, msg_html, None)
         return valid
 
 
@@ -95,4 +94,4 @@ class MyPasswordResetForm(PasswordResetForm):
         subject = '[mylieutenantguillaume] ' + loader.render_to_string(subject_template_name, context)
         subject = ''.join(subject.splitlines())
         body = loader.render_to_string(email_template_name, context)
-        send_mail_smtp(str(subject), to_email, None, body, None)
+        send_mail_smtp(str(subject), to_email, None, body, None, None)
