@@ -23,19 +23,20 @@ def send_mail_smtp(subject, to, reply_to, text, html, attachments):
     msg.set_content(text)
     if html:
         msg.add_alternative(html, subtype='html')
-    for path in attachments:
-        if not os.path.isfile(path):
-            continue
-        ctype, encoding = mimetypes.guess_type(path)
+    if attachments
+        for path in attachments:
+            if not os.path.isfile(path):
+                continue
+            ctype, encoding = mimetypes.guess_type(path)
 
-        if ctype is None or encoding is not None:
-            ctype = 'application/octet-stream'
-        maintype, subtype = ctype.split('/', 1)
-        with open(path, 'rb') as fp:
-            msg.add_attachment(fp.read(),
-                               maintype=maintype,
-                               subtype=subtype,
-                               filename=os.path.basename(path))
+            if ctype is None or encoding is not None:
+                ctype = 'application/octet-stream'
+            maintype, subtype = ctype.split('/', 1)
+            with open(path, 'rb') as fp:
+                msg.add_attachment(fp.read(),
+                                   maintype=maintype,
+                                   subtype=subtype,
+                                   filename=os.path.basename(path))
 
     s = smtplib.SMTP()
     s.connect(EMAIL_HOST, EMAIL_PORT)
