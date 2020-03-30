@@ -80,7 +80,7 @@ def send_simulation_by_mail(request):
             subject = "[LG&Associates] Quotation"
             s = Simulation.objects.get(pk=pk)
             text = "Hello,\n\n"
-            text += "Link to your quotation : %s" % s.get_absolute_url()
+            text += "Link to your quotation : www.mylieutenantguillaume.com%s" % s.get_absolute_url()
             print(text)
             send_mail_smtp(subject, email, None, text, None, None)
     else:
