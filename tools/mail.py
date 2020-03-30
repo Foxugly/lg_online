@@ -23,7 +23,7 @@ def send_mail_smtp(subject, to, reply_to, text, html, attachments):
     msg.set_content(text)
     if html:
         msg.add_alternative(html, subtype='html')
-    if attachments
+    if attachments:
         for path in attachments:
             if not os.path.isfile(path):
                 continue
