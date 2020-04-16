@@ -68,11 +68,11 @@ class CustomUser(AbstractUser, GenericClass):
     def get_empty_fields(self):
         empty_fields = []
         if not (self.address_street and self.address_zip and self.address_city):
-            empty_fields.append(_('your address'))
+            empty_fields.append(_('votre adresse'))
         if not self.telephone:
-            empty_fields.append(_('your phonenumber'))
+            empty_fields.append(_('votre numéro de téléphone'))
         if not self.id_card:
-            empty_fields.append(_('a copy of your ID card'))
+            empty_fields.append(_("une copie de votre carte d'identité"))
         if empty_fields :
             return empty_fields
         else:

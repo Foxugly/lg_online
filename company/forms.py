@@ -40,6 +40,9 @@ class CompanyForm(ModelForm):
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['enterprise_number'].widget.attrs['readonly'] = True
+        self.fields['end_fiscal_date'].widget.attrs['class'] = 'date'
+        self.fields['start_date'].widget.attrs['class'] = 'date'
+
 
 
     class Meta:

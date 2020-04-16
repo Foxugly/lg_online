@@ -12,7 +12,8 @@ class CompanyCreateView(GenericCreateView):
     model = Company
     fields = None
     form_class = CompanyCreateForm
-
+    success_message = _('Entreprise ajoutée.')
+    
     def form_valid(self, form):
         c = form.save(commit=False)
         c.fill_data(get_data_from_bce(c.enterprise_number[2:]))
@@ -32,13 +33,19 @@ class CompanyListView(GenericListView):
                 fields = empty_fields[0]
             else:
                 fields = ", ".join(str(v) for v in empty_fields[:-1]) + " %s %s" % (_('and'), str(empty_fields[-1]))
-            messages.info(self.request, 'Please fill in %s. See <a href=%s>here</a>' % (fields, reverse('customuser:profile_update')),
-                          extra_tags='safe')
+            msg = '%s %s %s <a href=%s>%s</a>' % (_('Pour compléter votre profil, veuillez renseigner'), fields, _("cliquez"), reverse('customuser:profile_update'), _("ici"))
+            messages.info(self.request, msg, extra_tags='safe')
             if self.request.user.schedule_meeting:
-                messages.info(self.request, 'Please click <a href=%s>here</a> to schedule a meeting' % reverse('agenda:slot_list'),
-                          extra_tags='safe')
-
+                msg_calendar = "%s <a href=%s>%s</a>" % (_("Prenez un rendez-vous dès maintenant avec un membre de notre équipe cliquez"), reverse('agenda:slot_list'), _("ici"))
+                messages.info(self.request, msg_calendar, extra_tags='safe')
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'title': _("Mon entreprise")})
+        context.update({'detail': _("Bienvenue sur votre compte LG & Associates. Depuis cette interface vous pouvez renseigner les informations de votre entreprise et gérer vos rendez-vous. Notre équipe est à votre disposition, prenez un rendez-vous dès maintenant pour commencer votre aventure au sein de notre cabinet. Nous nous adaptons à vos besoins en vous proposant des rendez-vous physiques ou en visioconférences.")})
+        context.update({'add_label': _("Ajouter une entreprise")})
+        return context
 
 
 class CompanyUpdateView(GenericUpdateView):
@@ -58,13 +65,14 @@ class CompanyUpdateView(GenericUpdateView):
             return CompanyForm
 
     def get_context_data(self, **kwargs):
-        data = super(CompanyUpdateView, self).get_context_data(**kwargs)
+        context = super(CompanyUpdateView, self).get_context_data(**kwargs)
+        context.update({'title': _("Mon entreprise")})
         self.form_class = CompanyForm
         if self.request.POST:
-            data['ibans'] = CompanyIbanFormSet(self.request.POST, instance=self.object)
+            context['ibans'] = CompanyIbanFormSet(self.request.POST, instance=self.object)
         else:
-            data['ibans'] = CompanyIbanFormSet(instance=self.object)
-        return data
+            context['ibans'] = CompanyIbanFormSet(instance=self.object)
+        return context
 
     def form_valid(self, form):
         context = self.get_context_data()

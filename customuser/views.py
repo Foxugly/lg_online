@@ -27,10 +27,10 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.accountant = Accountant.objects.filter(default=True)[0]
         user.save()
-        messages.success(request, 'Thank you for your email confirmation. Now you can login your account.')
+        messages.success(request, _('Thank you for your email confirmation. Now you can login your account.'))
         return redirect('home')
     else:
-        messages.error(request, 'Activation link is invalid!')
+        messages.error(request, _('Activation link is invalid!'))
         return redirect('home')
 
 
@@ -44,10 +44,10 @@ def confirm_proposal(request, uidb64, token):
         # TODO
         # si on a les data, il faut lancer l'install dans Fid et Yuki (méthode dans customuser lié à une company
 
-        messages.success(request, 'Thank you for accepting our proposal ! You will receive in a few hours an email with all informations you will need !')
+        messages.success(request, _('Thank you for accepting our proposal ! You will receive in a few hours an email with all informations you will need !'))
         return redirect('home')
     else:
-        messages.error(request, 'Activation link is invalid!')
+        messages.error(request, _('Activation link is invalid!'))
         return redirect('home')
 
 
@@ -88,7 +88,9 @@ class CustomUserCreateView(GenericCreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CustomUserCreateView, self).get_context_data(**kwargs)
-        context.update({'title': "New User"})
+        context.update({'title': _("Je m’enregistre")})
+        context.update({'detail': _("Remplissez les champs suivants et n’oubliez pas de cliquer sur le lien de l’e-mail qui vous sera envoyé pour activer votre compte.")})
+        # TODO verbose_name
         return context
 
     def get_success_message(self, cleaned_data):
@@ -109,7 +111,7 @@ class ProfileUpdateView(SuccessMessageMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['model'] = self.model
-        context.update({'title': "Update profile"})
+        context.update({'title': _("Mise à jour de mon profil")})
         return context
 
 
@@ -124,7 +126,7 @@ class CustomUserUpdateView(GenericUpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['model'] = self.model
-        context.update({'title': "Update User"})
+        context.update({'title': _("Mise à jour de mon profil")})
         return context
 
 

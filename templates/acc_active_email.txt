@@ -1,7 +1,14 @@
+{% load i18n %}
 {% autoescape off %}
-Hi {{ user.first_name }},
-Please click on the link to confirm your registration.
+{% trans "Bonjour" %} {{ user.first_name }},
+
+{% blocktrans %}Bravo vous venez de vous enregistrer{% endblocktrans %} !
+
+{% blocktrans %}Encore une dernière étape et vous pourrez accéder à votre compte{% endblocktrans %}.
+
+{% blocktrans %}Activez votre compte en cliquant sur le lien suivant{% endblocktrans %} :
+
 http://{{ domain }}{% url 'customuser:activate' uidb64=uid token=token %}
-Regards,
-The LieutenantGuillaume Team
+
+{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}
 {% endautoescape %}

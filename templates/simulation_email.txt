@@ -1,0 +1,28 @@
+{% autoescape off %}
+Bonjour,
+
+Vous venez d’effectuer votre simulation personnalisée*  
+
+Vous pouvez la retrouver à tous moments en cliquant sur le lien suivant :  
+
+{{ url_simulation }}
+
+Vous voulez en savoir plus ou souhaitez rejoindre notre cabinet ?  
+
+Prenez un rendez-vous gratuit avec un de nos collaborateurs.  
+
+Pour cela enregistrez-vous en cliquant sur le lien suivant :  
+
+ 
+{{ url_register }}
+ 
+
+En tant qu’entrepreneur nous savons que votre temps est compté. C’est pourquoi les rendez-vous sont aussi disponibles en visioconférence. 
+
+
+A bientôt chez LG et Associates
+ 
+
+*Il s’agit bien d’une simulation et non d’un devis. Pour connaître le montant exact de votre futur abonnement, vous devez vous connecter sur votre espace et renseigner quelques champs obligatoires.   
+{% endautoescape %}
+ 

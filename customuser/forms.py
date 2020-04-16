@@ -45,7 +45,7 @@ class CustomUserForm(ModelForm):
 class CustomUserCreateForm(UserCreationForm):
     model = CustomUser
     enterprise_number = forms.CharField(label=_("Enterprise Number"), required=True,
-                                        help_text="ex 'BE0123456789' no dots no spaces",
+                                        help_text=_("ex 'BE0123456789' pas de points, pas d'espaces"),
                                         validators=[VATINValidator(verify=True, validate=True)])
     captcha = CaptchaField()
 
@@ -68,7 +68,7 @@ class CustomUserCreateForm(UserCreationForm):
         user.companies.add(c)
 
         # current_site = Site.objects.get_current()
-        subject = _('[mylieutenantguillaume] activation for your account')
+        subject = _('[LG & Associates] activation for your account')
         msg_html = render_to_string('acc_active_email.html', {
             'user': user,
             'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,

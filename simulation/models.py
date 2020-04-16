@@ -98,4 +98,5 @@ class Simulation(GenericClass):
         return '%s' % self.pk
 
     class Meta:
-        verbose_name = _('Simulation')
+        verbose_name = _('Ma simulation personnalisée')
+        # detail_name = _('Essayez de renseigner chaque indicateur avec des chiffres au plus près de votre activité pour avoir une estimation la plus fidèle possible.')

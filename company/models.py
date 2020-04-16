@@ -78,7 +78,9 @@ class Company(GenericClass):
         return '[%s] %s' % (self.enterprise_number, self.enterprise_name if self.enterprise_name else None)
 
     class Meta:
-        verbose_name = _('Company')
+        verbose_name = _('Mon entreprise')
+        verbose_name_plural = _('Mes entreprises')
+
 
 
 class Iban(GenericClass):

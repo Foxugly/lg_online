@@ -2,11 +2,14 @@
 from simulation.models import Simulation
 from django.views.generic import CreateView, UpdateView
 from django.http import HttpResponse
+from django.urls import reverse, reverse_lazy
 import json
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from tools.mail import send_mail_smtp
 from django.views.generic.edit import ModelFormMixin
+from django.utils.translation import gettext as _
+from django.template.loader import render_to_string
 
 
 class SimulationCreateView(CreateView):
@@ -17,7 +20,9 @@ class SimulationCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update({'title': "Simulation"})
+        context.update({'title': _("Ma simulation personnalisée")})
+        context.update({'detail': _("Essayez de renseigner chaque indicateur avec des chiffres au plus près de votre activité pour avoir une estimation la plus fidèle possible.")})
+        # TODO verbose_name
         return context
 
     def get_initial(self):
@@ -62,7 +67,7 @@ class SimulationUpdateView(UpdateView, ReadOnlyModelFormMixin):
         context = super().get_context_data(**kwargs)
         context['update'] = True
         context['price'], context['price_calculated'] = self.object.proposed_amount, self.object.calculated_amount
-        context.update({'title': "Simulation"})
+        context.update({'title': _("Ma simulation")})
         return context  
 
 
@@ -77,12 +82,20 @@ def send_simulation_by_mail(request):
         except ValidationError:
             results['return'] = False
         if results['return']:
-            subject = "[LG&Associates] Quotation"
+            subject = "[LG & Associates] " + _('Ma simulation personnalisée') 
             s = Simulation.objects.get(pk=pk)
-            text = "Hello,\n\n"
-            text += "Link to your quotation : www.mylieutenantguillaume.com%s" % s.get_absolute_url()
-            print(text)
-            send_mail_smtp(subject, email, None, text, None, None)
+            url_simulation = "www.mylieutenantguillaume.com%s" % s.get_absolute_url()
+            url_register = "www.mylieutenantguillaume.com%s?simulation_id=%d" % (reverse_lazy('customuser:customuser_add'), s.pk)
+
+            msg_html = render_to_string('simulation_email.html', {
+                'url_simulation': url_simulation,
+                'url_register' : url_register
+            })
+            msg_txt = render_to_string('simulation_email.txt', {
+                'url_simulation': url_simulation,
+                'url_register' : url_register
+            })
+            send_mail_smtp(subject, email, None, msg_txt, msg_html, None)
     else:
         results['return'] = False
     return HttpResponse(json.dumps(results))
