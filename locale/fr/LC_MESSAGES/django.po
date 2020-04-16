@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-27 11:58+0000\n"
-"PO-Revision-Date: 2019-09-19 17:52+0200\n"
+"POT-Creation-Date: 2020-04-16 20:28+0200\n"
+"PO-Revision-Date: 2020-04-16 20:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,305 +16,698 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
-#: company/models.py:8
-msgid "Enterprise Name"
-msgstr "Nom de la société"
+#: accountant/models.py:13
+msgid "Type of slot"
+msgstr ""
 
-#: company/models.py:9
-msgid "Enterprise Number"
-msgstr "Numéro d'entreprise"
+#: accountant/models.py:14
+msgid "Free pricing free slot color"
+msgstr ""
 
-#: company/models.py:10
-msgid "Enterprise Status"
-msgstr "Statut de l'entreprise"
+#: accountant/models.py:15
+msgid "Booked slot color"
+msgstr ""
 
-#: company/models.py:11
-msgid "Legal Situation"
-msgstr "Situation juridique"
-
-#: company/models.py:12
-msgid "Start date"
-msgstr "Date de départ"
-
-#: company/models.py:13
-msgid "Legal form"
-msgstr "Forme légale"
-
-#: company/models.py:14
-msgid "End fiscal date"
-msgstr "Date de fin d'année fiscale"
-
-#: company/models.py:15
-msgid "Street"
-msgstr "Rue"
-
-#: company/models.py:16
-msgid "Number"
-msgstr "Numéro"
-
-#: company/models.py:17
-msgid "Zip Code"
-msgstr "Code postal"
-
-#: company/models.py:18
-msgid "City"
-msgstr "Ville"
-
-#: company/models.py:19
-msgid "Country"
-msgstr "Pays"
-
-#: company/models.py:25
-msgid "Company"
-msgstr "Entreprise"
-
-#: company/models.py:30
-msgid "IBAN"
-msgstr "IBAN"
-
-#: company/models.py:37
-msgid "Iban"
-msgstr "IBAN"
-
-#: contact/models.py:8
+#: accountant/models.py:22 address/models.py:7
 msgid "name"
 msgstr "nom"
 
-#: contact/models.py:9
+#: accountant/models.py:23
 msgid "email"
 msgstr "mail"
 
-#: contact/models.py:10 customuser/models.py:35
+#: accountant/models.py:24 customuser/models.py:41
 msgid "Phone number"
 msgstr "Numéro de téléphone"
 
-#: contact/models.py:17
-msgid "Contact"
-msgstr "Contact"
+#: accountant/models.py:27
+msgid "ColorSlot"
+msgstr ""
 
-#: customuser/admin.py:22
+#: accountant/models.py:30
+msgid "Week template"
+msgstr ""
+
+#: accountant/models.py:31
+msgid "slots"
+msgstr ""
+
+#: accountant/models.py:37
+msgid "Comptable"
+msgstr "Comptable"
+
+#: address/models.py:8 company/models.py:18 customuser/models.py:43
+msgid "Street"
+msgstr "Rue"
+
+#: address/models.py:9 company/models.py:19 customuser/models.py:44
+msgid "Number"
+msgstr "Numéro"
+
+#: address/models.py:10 company/models.py:20 customuser/models.py:45
+msgid "Zip Code"
+msgstr "Code postal"
+
+#: address/models.py:11 company/models.py:21 customuser/models.py:46
+msgid "City"
+msgstr "Ville"
+
+#: address/models.py:12 company/models.py:22 customuser/models.py:47
+msgid "Country"
+msgstr "Pays"
+
+#: agenda/models.py:22
+msgid "Start"
+msgstr "Début"
+
+#: agenda/models.py:23
+msgid "End"
+msgstr "Fin"
+
+#: agenda/models.py:24
+msgid "Slot type"
+msgstr ""
+
+#: agenda/models.py:25 agenda/models.py:41 agenda/models.py:123
+#: agenda/models.py:156 agenda/models.py:166
+msgid "Booked"
+msgstr ""
+
+#: agenda/models.py:41 agenda/models.py:156 agenda/models.py:177
+#: lg/settings.py:153
+msgid "Free"
+msgstr "Libre"
+
+#: agenda/models.py:49
+msgid "Day"
+msgstr ""
+
+#: agenda/models.py:50
+msgid "Slots"
+msgstr ""
+
+#: agenda/models.py:76
+msgid "Days"
+msgstr "Jours"
+
+#: agenda/models.py:118 templates/calendar.html:239
+msgid "Date"
+msgstr "Date"
+
+#: agenda/models.py:119
+msgid "Slot template"
+msgstr ""
+
+#: agenda/models.py:120
+msgid "Customer"
+msgstr ""
+
+#: agenda/models.py:121
+msgid "refer_accountant"
+msgstr ""
+
+#: agenda/models.py:122
+msgid "Usefull informations"
+msgstr ""
+
+#: agenda/models.py:124
+msgid "random character"
+msgstr ""
+
+#: agenda/models.py:125
+msgid "path_ics"
+msgstr ""
+
+#: agenda/models.py:208
+#, python-format
+msgid "Meeting with %s"
+msgstr ""
+
+#: company/models.py:10
+msgid "Enterprise Name"
+msgstr "Nom de la société"
+
+#: company/models.py:11 customuser/forms.py:49
+msgid "Enterprise Number"
+msgstr "Numéro d'entreprise"
+
+#: company/models.py:13
+msgid "Enterprise Status"
+msgstr "Statut de l'entreprise"
+
+#: company/models.py:14
+msgid "Legal Situation"
+msgstr "Situation juridique"
+
+#: company/models.py:15
+msgid "Start date"
+msgstr "Date de départ"
+
+#: company/models.py:16
+msgid "Legal form"
+msgstr "Forme légale"
+
+#: company/models.py:17
+msgid "End fiscal date"
+msgstr "Date de fin d'année fiscale"
+
+#: company/models.py:31
+msgid "your address"
+msgstr "votre adresse email"
+
+#: company/models.py:34
+msgid "an iban account"
+msgstr "Un compte iban"
+
+#: company/models.py:39 company/views.py:35
+msgid "and"
+msgstr "et"
+
+#: company/models.py:81 company/views.py:45 company/views.py:69
+msgid "Mon entreprise"
+msgstr "Mon entreprise"
+
+#: company/models.py:82
+msgid "Mes entreprises"
+msgstr "Mes entreprises"
+
+#: company/models.py:88 company/models.py:95
+msgid "Iban"
+msgstr "Iban"
+
+#: company/views.py:15
+msgid "Entreprise ajoutée."
+msgstr "Entreprise ajoutée."
+
+#: company/views.py:36
+msgid "Pour compléter votre profil, veuillez renseigner"
+msgstr "Pour compléter votre profil, veuillez renseigner"
+
+#: company/views.py:36
+msgid "cliquez"
+msgstr "cliquez"
+
+#: company/views.py:36 company/views.py:39
+msgid "ici"
+msgstr "ici"
+
+#: company/views.py:39
+msgid ""
+"Prenez un rendez-vous dès maintenant avec un membre de notre équipe cliquez"
+msgstr ""
+"Prenez un rendez-vous dès maintenant avec un membre de notre équipe cliquez"
+
+#: company/views.py:46
+msgid ""
+"Bienvenue sur votre compte LG & Associates. Depuis cette interface vous "
+"pouvez renseigner les informations de votre entreprise et gérer vos rendez-"
+"vous. Notre équipe est à votre disposition, prenez un rendez-vous dès "
+"maintenant pour commencer votre aventure au sein de notre cabinet. Nous nous "
+"adaptons à vos besoins en vous proposant des rendez-vous physiques ou en "
+"visioconférences."
+msgstr ""
+"Bienvenue sur votre compte LG & Associates. Depuis cette interface vous "
+"pouvez renseigner les informations de votre entreprise et gérer vos rendez-"
+"vous. Notre équipe est à votre disposition, prenez un rendez-vous dès "
+"maintenant pour commencer votre aventure au sein de notre cabinet. Nous nous "
+"adaptons à vos besoins en vous proposant des rendez-vous physiques ou en "
+"visioconférences."
+
+#: company/views.py:47
+msgid "Ajouter une entreprise"
+msgstr "Ajouter une entreprise"
+
+#: customuser/admin.py:23
 msgid "Personal info"
 msgstr "Informations personnelles"
 
-#: customuser/admin.py:23
+#: customuser/admin.py:24
 msgid "Companies"
 msgstr "Entreprises"
 
-#: customuser/admin.py:24
+#: customuser/admin.py:25
 msgid "Permissions"
 msgstr "Autorisations"
 
-#: customuser/admin.py:25
+#: customuser/admin.py:26
 msgid "Important dates"
 msgstr "Dates importantes"
 
-#: customuser/forms.py:61
-msgid "[mylieutenantguillaume] activation for your account"
-msgstr "[mylieutenantguillaume] activation de votre compte"
+#: customuser/forms.py:50
+msgid "ex 'BE0123456789' pas de points, pas d'espaces"
+msgstr "ex 'BE0123456789' pas de points, pas d'espaces"
 
-#: customuser/models.py:32
+#: customuser/forms.py:73
+msgid "[LG & Associates] activation for your account"
+msgstr "[LG & Associates]  activation de votre compte"
+
+#: customuser/models.py:38
 msgid "email address"
 msgstr "adresse email"
 
-#: customuser/models.py:33
+#: customuser/models.py:39
 msgid "language"
 msgstr "langue"
 
-#: customuser/models.py:34
+#: customuser/models.py:40
 msgid "companies"
 msgstr "entreprises"
 
-#: customuser/views.py:51
+#: customuser/models.py:71
+msgid "votre adresse"
+msgstr "votre adresse"
+
+#: customuser/models.py:73
+msgid "votre numéro de téléphone"
+msgstr "votre numéro de téléphone"
+
+#: customuser/models.py:75
+msgid "une copie de votre carte d'identité"
+msgstr "une copie de votre carte d'identité"
+
+#: customuser/models.py:93
+msgid "[LG&Associates] Final proposal"
+msgstr ""
+
+#: customuser/views.py:30
+msgid "Thank you for your email confirmation. Now you can login your account."
+msgstr ""
+
+#: customuser/views.py:33 customuser/views.py:50
+msgid "Activation link is invalid!"
+msgstr ""
+
+#: customuser/views.py:47
+msgid ""
+"Thank you for accepting our proposal ! You will receive in a few hours an "
+"email with all informations you will need !"
+msgstr ""
+
+#: customuser/views.py:73
 msgid "We just send you an email for validation."
 msgstr "Nous venons de vous envoyer un mail pour validation."
 
-#: customuser/views.py:84
+#: customuser/views.py:91
+msgid "Je m’enregistre"
+msgstr "Je m’enregistre"
+
+#: customuser/views.py:92
+msgid ""
+"Remplissez les champs suivants et n’oubliez pas de cliquer sur le lien de "
+"l’e-mail qui vous sera envoyé pour activer votre compte."
+msgstr ""
+"Remplissez les champs suivants et n’oubliez pas de cliquer sur le lien de "
+"l’e-mail qui vous sera envoyé pour activer votre compte."
+
+#: customuser/views.py:106 customuser/views.py:124
 msgid "Changes saved."
 msgstr "Changements sauvegardés."
 
-#: lg/settings.py:122
+#: customuser/views.py:114 customuser/views.py:129
+msgid "Mise à jour de mon profil"
+msgstr "Mise à jour de mon profil"
+
+#: lg/settings.py:125
 msgid "English"
-msgstr "Anglais"
+msgstr "English"
 
-#: lg/settings.py:123
+#: lg/settings.py:126
 msgid "Français"
-msgstr "French"
+msgstr "Français"
 
-#: lg/settings.py:124
+#: lg/settings.py:127
 msgid "Nederlands"
-msgstr "Néerlandais"
+msgstr "Nederlands"
 
-#: simulation/models.py:8
+#: lg/settings.py:131
+msgid "Lundi"
+msgstr "Lundi"
+
+#: lg/settings.py:132
+msgid "Mardi"
+msgstr "Mardi"
+
+#: lg/settings.py:133
+msgid "Mercredi"
+msgstr "Mercredi"
+
+#: lg/settings.py:134
+msgid "Jeudi"
+msgstr "Jeudi"
+
+#: lg/settings.py:135
+msgid "Vendredi"
+msgstr "Vendredi"
+
+#: lg/settings.py:136
+msgid "Samedi"
+msgstr "Samedi"
+
+#: lg/settings.py:137
+msgid "Dimanche"
+msgstr "Dimanche"
+
+#: lg/settings.py:142
+msgid "Professeur"
+msgstr ""
+
+#: lg/settings.py:143
+msgid "Docteur"
+msgstr ""
+
+#: lg/settings.py:144
+msgid "Madame"
+msgstr ""
+
+#: lg/settings.py:145
+msgid "Monsieur"
+msgstr ""
+
+#: lg/settings.py:149
+msgid "Premier RDV"
+msgstr ""
+
+#: lg/settings.py:154
+msgid "Standard"
+msgstr ""
+
+#: lg/settings.py:155
+msgid "Premium"
+msgstr ""
+
+#: simulation/models.py:9
 msgid "Horeca"
 msgstr "Horeca"
 
-#: simulation/models.py:9
+#: simulation/models.py:10
 msgid "Société de management"
 msgstr "Société de management"
 
-#: simulation/models.py:10
+#: simulation/models.py:11
 msgid "Profession libérale"
 msgstr "Profession libérale"
 
-#: simulation/models.py:11
+#: simulation/models.py:12
 msgid "Construction"
 msgstr "Construction"
 
-#: simulation/models.py:12
+#: simulation/models.py:13
 msgid "Immobilière / Patrimoniale"
 msgstr "Immobilière / Patrimoniale"
 
-#: simulation/models.py:13
+#: simulation/models.py:14
 msgid "Assurances"
 msgstr "Assurances"
 
-#: simulation/models.py:14
+#: simulation/models.py:15
 msgid "Informatique"
 msgstr "Informatique"
 
-#: simulation/models.py:15
+#: simulation/models.py:16
 msgid "Retails"
 msgstr "Commerce de détail"
 
-#: simulation/models.py:16
+#: simulation/models.py:17
 msgid "Avocat"
 msgstr "Avocat"
 
-#: simulation/models.py:17
+#: simulation/models.py:18
 msgid "Design"
 msgstr "Designer"
 
-#: simulation/models.py:18
+#: simulation/models.py:19
 msgid "Architecte"
 msgstr "Architecte"
 
-#: simulation/models.py:19
+#: simulation/models.py:20
 msgid "Marketing"
 msgstr "Marketing"
 
-#: simulation/models.py:26
+#: simulation/models.py:28
 msgid "mensuellement"
 msgstr "mensuellement"
 
-#: simulation/models.py:27
+#: simulation/models.py:29
 msgid "trimestriellement"
 msgstr "trimestriellement"
 
-#: simulation/models.py:28
+#: simulation/models.py:30
 msgid "Non déposant"
 msgstr "Non déposant"
 
+#: simulation/models.py:34
+msgid "En ligne"
+msgstr "En ligne"
+
 #: simulation/models.py:35
+msgid "Papier"
+msgstr "Papier"
+
+#: simulation/models.py:42
+msgid "Chiffre d'affaires"
+msgstr "Chiffre d'affaires"
+
+#: simulation/models.py:43
+msgid "Mode de transmission des documents"
+msgstr "Mode de transmission des documents"
+
+#: simulation/models.py:45
 msgid "Nombre de factures de vente annuels"
 msgstr "Nombre de factures de vente annuels"
 
-#: simulation/models.py:36
+#: simulation/models.py:46
 msgid "Nombre de factures d'achat et tickets annuels"
 msgstr "Nombre de factures d'achat et tickets annuels"
 
-#: simulation/models.py:37
+#: simulation/models.py:48
 msgid "Nombre de dirigeants"
 msgstr "Nombre de dirigeants"
 
-#: simulation/models.py:38
+#: simulation/models.py:49
 msgid "Nombre d'employers"
 msgstr "Nombre d'employés"
 
-#: simulation/models.py:39
+#: simulation/models.py:50
 msgid "Nombre de carte de credits"
 msgstr "Nombre de carte de crédits"
 
-#: simulation/models.py:40
+#: simulation/models.py:51
 msgid "Système de paiements alternatifs (Paypal, Sumup, Stripe, ...)"
 msgstr "Système de paiements alternatifs (Paypal, Sumup, Stripe, ...)"
 
-#: simulation/models.py:60
-msgid "Simulation"
-msgstr "Simulation"
+#: simulation/models.py:53
+msgid "Secteur d'activité"
+msgstr "Secteur d'activité"
 
-#: templates/base.html:33
+#: simulation/models.py:54
+msgid "Mode de paiement"
+msgstr "Mode de paiement"
+
+#: simulation/models.py:56
+msgid "Montant calculé"
+msgstr "Montant calculé"
+
+#: simulation/models.py:58
+msgid "Montant proposé"
+msgstr "Montant proposé"
+
+#: simulation/models.py:101 simulation/views.py:23 simulation/views.py:85
+msgid "Ma simulation personnalisée"
+msgstr "Ma simulation personnalisée"
+
+#: simulation/views.py:24
+msgid ""
+"Essayez de renseigner chaque indicateur avec des chiffres au plus près de "
+"votre activité pour avoir une estimation la plus fidèle possible."
+msgstr ""
+"Essayez de renseigner chaque indicateur avec des chiffres au plus près de "
+"votre activité pour avoir une estimation la plus fidèle possible."
+
+#: simulation/views.py:70
+msgid "Ma simulation"
+msgstr "Ma simulation"
+
+#: templates/acc_active_email.html:5 templates/acc_active_email.txt:3
+msgid "Bonjour"
+msgstr "Bonjour"
+
+#: templates/acc_active_email.html:7
+msgid "Bravo vous venez de vous Enregistrer"
+msgstr "Bravo vous venez de vous enregistrer"
+
+#: templates/acc_active_email.html:8 templates/acc_active_email.txt:7
+msgid "Encore une dernière étape et vous pourrez accéder à votre compte"
+msgstr "Encore une dernière étape et vous pourrez accéder à votre compte"
+
+#: templates/acc_active_email.html:9 templates/acc_active_email.txt:9
+msgid "Activez votre compte en cliquant sur le lien suivant"
+msgstr "Activez votre compte en cliquant sur le lien suivant"
+
+#: templates/acc_active_email.html:13 templates/acc_active_email.txt:13
+#: templates/registration/password_reset_email.html:12
+msgid "A bientôt chez LG et Associates"
+msgstr "A bientôt chez LG et Associates"
+
+#: templates/acc_active_email.txt:5
+msgid "Bravo vous venez de vous enregistrer"
+msgstr "Bravo vous venez de vous enregistrer"
+
+#: templates/base.html:38
 msgid "contact us"
 msgstr "contactez-nous"
 
-#: templates/base.html:55
+#: templates/base.html:60
 msgid "Change Profile"
 msgstr "Changer votre profil"
 
-#: templates/base.html:56 templates/registration/password_change_done.html:8
+#: templates/base.html:61 templates/registration/password_change_done.html:8
 msgid "Password change"
 msgstr "Changement de mot de passe"
 
-#: templates/base.html:58
+#: templates/base.html:63
 msgid "Log out"
 msgstr "Déconnexion"
 
-#: templates/base.html:63 templates/registration/password_change_done.html:12
-#: templates/registration/password_reset_complete.html:13
-#: templates/registration/password_reset_done.html:11
+#: templates/base.html:68 templates/registration/password_change_done.html:12
+#: templates/registration/password_reset_complete.html:11
+#: templates/registration/password_reset_done.html:12
 msgid "Log in"
 msgstr "Connexion"
 
-#: templates/base.html:77
+#: templates/base.html:82
 msgid "close"
 msgstr "fermer"
 
-#: templates/base.html:93
+#: templates/base.html:98
 msgid "Contact us"
 msgstr "Contactez-nous"
 
-#: templates/base.html:102
+#: templates/base.html:107
 msgid "Subject"
 msgstr "Objet"
 
-#: templates/base.html:109
+#: templates/base.html:114
 msgid "Content"
 msgstr "Contenu"
 
-#: templates/base.html:117
+#: templates/base.html:122
 msgid "Close"
 msgstr "Fermer"
 
-#: templates/base.html:118
+#: templates/base.html:123
 msgid "Send message"
 msgstr "Envoyer un message"
 
-#: templates/base.html:149
+#: templates/base.html:156
 msgid "Email sent !"
 msgstr "Mail envoyé !"
 
-#: templates/base.html:161
+#: templates/base.html:168
 msgid "Do you really want to delete selected object ?"
 msgstr "Êtes-vous certain de vouloir supprimer l'objet sélectionné?"
 
-#: templates/base.html:164
+#: templates/base.html:171
 msgid "Yes"
 msgstr "Oui"
 
-#: templates/base.html:168
+#: templates/base.html:175
 msgid "No"
 msgstr "Non"
 
-#: templates/base.html:188 templates/list.html:8
+#: templates/base.html:195 templates/list.html:9
 msgid "Add"
 msgstr "Ajouter"
+
+#: templates/calendar.html:203
+msgid "Calendrier"
+msgstr "Calendrier"
+
+#: templates/calendar.html:227
+msgid "Book a slot"
+msgstr ""
+
+#: templates/calendar.html:248
+msgid "Start time"
+msgstr "Date de debut"
+
+#: templates/calendar.html:257
+msgid "Informations"
+msgstr "Informations"
+
+#: templates/calendar.html:265
+msgid "Remove"
+msgstr "Supprimer"
+
+#: templates/calendar.html:266
+msgid "Clean"
+msgstr "Effacer"
+
+#: templates/calendar.html:269
+msgid "Confirm"
+msgstr "Confirmer"
+
+#: templates/calendar.html:270
+msgid "Cancel"
+msgstr "Annuler"
+
+#: templates/calendar.html:282
+msgid "Already Booked"
+msgstr ""
+
+#: templates/calendar.html:285
+msgid "This slot is already booked !"
+msgstr ""
+
+#: templates/calendar.html:288
+msgid "Ok"
+msgstr "Ok"
+
+#: templates/detail_customuser.html:29
+msgid "Submit"
+msgstr "Soumettre"
+
+#: templates/index.html:8
+msgid "Étape 2 Je me connecte"
+msgstr "Étape 2 Je me connecte"
+
+#: templates/index.html:30
+msgid "Connexion"
+msgstr "Connexion"
 
 #: templates/index.html:33 templates/registration/login.html:44
 msgid "Forgot password"
 msgstr "Mot de passe oublié"
 
+#: templates/index.html:50
+msgid "Étape 1 Je réalise ma simulation"
+msgstr "Étape 1 Je réalise ma simulation"
+
 #: templates/index.html:52
-#, fuzzy
-#| msgid "Run simulation"
-msgid "texte avant simulation"
-msgstr "Lancer la simulation"
+msgid ""
+"En 1 minute estimez le prix personnalisé de votre abonnement au sein de "
+"notre cabinet. Pour réaliser votre simulation rien de plus simple ! il "
+"suffit de cliquer sur le bouton ci-dessous, puis laissez-vous guider par les "
+"champs à remplir."
+msgstr ""
+"En 1 minute estimez le prix personnalisé de votre abonnement au sein de "
+"notre cabinet. Pour réaliser votre simulation rien de plus simple ! il "
+"suffit de cliquer sur le bouton ci-dessous, puis laissez-vous guider par les "
+"champs à remplir."
+
+#: templates/index.html:53
+msgid "Simulation"
+msgstr "Simulation"
 
 #: templates/index.html:54
-#, fuzzy
-#| msgid "Change this simulation"
-msgid "texte apres simulation"
-msgstr "Modifier la simulation"
+msgid ""
+"Une fois votre simulation effectuée connectez-vous pour pouvoir prendre un "
+"RDV avec notre équipe."
+msgstr ""
+"Une fois votre simulation effectuée connectez-vous pour pouvoir prendre un "
+"RDV avec notre équipe."
 
 #: templates/registration/login.html:5
 msgid "Your username and password didn't match. Please try again"
@@ -360,13 +753,19 @@ msgid "Change my password"
 msgstr "Changer mon mot de passe"
 
 #: templates/registration/password_reset_complete.html:4
-#: templates/registration/password_reset_complete.html:11
 msgid "Your password has been set.  You may go ahead and log in now."
 msgstr ""
 "Votre mot de passe a été défini. Vous pouvez vous connecter et vous "
 "connecter maintenant."
 
 #: templates/registration/password_reset_complete.html:9
+msgid "Bravo votre mot de passe a été modifié !"
+msgstr "Bravo votre mot de passe a été modifié !"
+
+#: templates/registration/password_reset_complete.html:12
+msgid "Connectez-vous dès maintenant avec votre nouveau mot de passe."
+msgstr "Connectez-vous dès maintenant avec votre nouveau mot de passe."
+
 #: templates/registration/password_reset_done.html:7
 #: templates/registration/password_reset_form.html:7
 msgid "Password reset"
@@ -374,29 +773,30 @@ msgstr "Réinitialiser le mot de passe"
 
 #: templates/registration/password_reset_done.html:9
 msgid ""
-"We've emailed you instructions for setting your password, if an account "
-"exists with the email you entered. You should receive them shortly."
+"Nous vous avons envoyé un email contenant des instructions pour définir un "
+"nouveau mot de passe. Si un compte existe avec l’e-mail que vous avez saisi, "
+"vous devriez le recevoir sous peu."
 msgstr ""
-"Nous vous avons envoyé des instructions pour définir votre mot de passe, si "
-"un compte existe avec le courrier que vous avez saisi, vous devriez les "
-"recevoir sous peu."
+"Nous vous avons envoyé un email contenant des instructions pour définir un "
+"nouveau mot de passe. Si un compte existe avec l’e-mail que vous avez saisi, "
+"vous devriez le recevoir sous peu."
 
 #: templates/registration/password_reset_done.html:10
 msgid ""
-"If you don't receive an email, please make sure you've entered the address "
-"you registered with, and check your spam folder."
+"Si vous ne recevez pas l’e-mail, assurez-vous d’avoir entré correctement "
+"votre adresse et vérifiez votre dossier de courrier indésirable."
 msgstr ""
-"Si vous ne recevez pas d'e-mail, assurez-vous d'avoir entré votre adresse et "
-"vérifiez votre dossier de courrier indésirable."
+"Si vous ne recevez pas l’e-mail, assurez-vous d’avoir entré correctement "
+"votre adresse et vérifiez votre dossier de courrier indésirable."
 
 #: templates/registration/password_reset_email.html:2
 #, python-format
 msgid ""
-"You're receiving this email because you requested a password reset for your "
-"user account at %(site_name)s."
+"Vous recevez cet e-mail car vous avez demandé la réinitialisation du mot de "
+"passe de votre compte d utilisateur du site %%(site_name)."
 msgstr ""
 "Vous recevez cet e-mail car vous avez demandé la réinitialisation du mot de "
-"passe de votre compte d'utilisateur du site %(site_name)s."
+"passe de votre compte d utilisateur du site %%(site_name)."
 
 #: templates/registration/password_reset_email.html:4
 msgid "Please go to the following page and choose a new password:"
@@ -410,11 +810,6 @@ msgstr "Votre nom d'utilisateur, au cas où vous auriez oublié:"
 msgid "Thanks for using our site!"
 msgstr "Merci d'utiliser notre site!"
 
-#: templates/registration/password_reset_email.html:12
-#, python-format
-msgid "The %(site_name)s team"
-msgstr "L'équipe %(site_name)s"
-
 #: templates/registration/password_reset_form.html:9
 msgid ""
 "Forgotten your password? Enter your email address below, and we'll email "
@@ -427,33 +822,102 @@ msgstr ""
 msgid "Reset my password"
 msgstr "Réinitialiser mon mot de passe"
 
-#: templates/update.html:17 templates/update_company.html:44
-msgid "Submit"
-msgstr "Soumettre"
+#: templates/update.html:19 templates/update_company.html:44
+msgid "Valider"
+msgstr "Valider"
 
-#: templates/update_simulation.html:22
-msgid "Run another simulation (empty)"
-msgstr "Lancer une nouvelle simulation"
+#: templates/update_simulation.html:18
+msgid "Résultat de la simulation"
+msgstr "Résultat de la simulation"
 
 #: templates/update_simulation.html:23
-msgid "Change this simulation"
+msgid "Lancer une nouvelle simulation"
+msgstr "Lancer une nouvelle simulation"
+
+#: templates/update_simulation.html:24
+msgid "Modifier la simulation"
 msgstr "Modifier la simulation"
 
-#: templates/update_simulation.html:73
+#: templates/update_simulation.html:32
+msgid "mon adresse email"
+msgstr "mon adresse email"
+
+#: templates/update_simulation.html:34
+msgid "Recevoir ma simulation par email"
+msgstr "Recevoir ma simulation par email"
+
+#: templates/update_simulation.html:39
+msgid "Simulation envoyée !"
+msgstr "Simulation envoyée !"
+
+#: templates/update_simulation.html:42
+msgid "Erreur avec l'adresse email"
+msgstr "Erreur avec l'adresse email"
+
+#: templates/update_simulation.html:69
+msgid "Je m’enregistre pour pouvoir prendre rendez-vous"
+msgstr "Je m’enregistre pour pouvoir prendre rendez-vous"
+
+#: templates/update_simulation.html:74
 msgid "Run simulation"
 msgstr "Lancer la simulation"
 
-#: tools/generic_views.py:15
+#: tools/generic_views.py:14
 msgid "object created."
 msgstr "objet créé."
 
-#: tools/generic_views.py:51
+#: tools/generic_views.py:50
 msgid "object updated."
 msgstr "objet mis à jour."
 
-#: tools/generic_views.py:92
+#: tools/generic_views.py:91
 msgid "object deleted."
 msgstr "objet supprimé."
+
+#~ msgid ""
+#~ "You're receiving this email because you requested a password reset for "
+#~ "your user account at %(site_name)s"
+#~ msgstr ""
+#~ "Vous recevez cet e-mail car vous avez demandé la réinitialisation du mot "
+#~ "de passe de votre compte d utilisateur du site %(site_name)."
+
+#~ msgid "The %(site_name)s team"
+#~ msgstr "L equipe %(site_name)"
+
+#~ msgid "Company"
+#~ msgstr "Entreprise"
+
+#~ msgid "IBAN"
+#~ msgstr "IBAN"
+
+#~ msgid "Contact"
+#~ msgstr "Contact"
+
+#, fuzzy
+#~| msgid "Change this simulation"
+#~ msgid "texte apres simulation"
+#~ msgstr "Modifier la simulation"
+
+#~ msgid ""
+#~ "We've emailed you instructions for setting your password, if an account "
+#~ "exists with the email you entered. You should receive them shortly."
+#~ msgstr ""
+#~ "Nous vous avons envoyé des instructions pour définir votre mot de passe, "
+#~ "si un compte existe avec le courrier que vous avez saisi, vous devriez "
+#~ "les recevoir sous peu."
+
+#~ msgid ""
+#~ "If you don't receive an email, please make sure you've entered the "
+#~ "address you registered with, and check your spam folder."
+#~ msgstr ""
+#~ "Si vous ne recevez pas d'e-mail, assurez-vous d'avoir entré votre adresse "
+#~ "et vérifiez votre dossier de courrier indésirable."
+
+#~ msgid "Run another simulation (empty)"
+#~ msgstr "Lancer une nouvelle simulation"
+
+#~ msgid "Change this simulation"
+#~ msgstr "Modifier la simulation"
 
 #~ msgid "Bar"
 #~ msgstr "Bar"

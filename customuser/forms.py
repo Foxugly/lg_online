@@ -36,6 +36,8 @@ class CustomUserForm(ModelForm):
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['email'].widget.attrs['readonly'] = True
+        self.fields['address_country'].widget.attrs['data-live-search'] = 'true'
+        self.fields['id_card'].widget.attrs['class'] = "form-control"
 
     class Meta:
         model = CustomUser
