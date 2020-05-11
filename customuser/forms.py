@@ -49,7 +49,7 @@ class CustomUserCreateForm(UserCreationForm):
     enterprise_number = forms.CharField(label=_("Enterprise Number"), required=True,
                                         help_text=_("ex 'BE0123456789' pas de points, pas d'espaces"),
                                         validators=[VATINValidator(verify=True, validate=True)])
-    captcha = CaptchaField()
+    captcha = CaptchaField(label=_('Captcha'),)
 
     class Meta:
         model = CustomUser
