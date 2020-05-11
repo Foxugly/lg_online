@@ -48,8 +48,8 @@ class CustomUserCreateForm(UserCreationForm):
     model = CustomUser
     enterprise_number = forms.CharField(label=_("Enterprise Number"), required=True,
                                         help_text=_("ex 'BE0123456789' pas de points, pas d'espaces"),
-                                        validators=[VATINValidator(verify=True, validate=True)])
-    captcha = CaptchaField(label=_('Captcha'),)
+                                        validators=[VATINValidator(verify=True)])
+    captcha = CaptchaField(label=_('Captcha'),error_messages=dict(invalid="%s : %s" % (_("Captcha"), _("Invalid CAPTCHA"))))
 
     class Meta:
         model = CustomUser
