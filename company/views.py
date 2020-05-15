@@ -24,6 +24,7 @@ class CompanyCreateView(GenericCreateView):
 
 class CompanyListView(GenericListView):
     model = Company
+    template_name = 'list_company.html'
 
     def get_queryset(self):
         queryset = self.request.user.companies.all().order_by('id')
@@ -36,7 +37,8 @@ class CompanyListView(GenericListView):
             msg = '%s %s %s <a href=%s>%s</a>' % (_('Pour compléter votre profil, veuillez renseigner'), fields, _("cliquez"), reverse('customuser:profile_update'), _("ici"))
             messages.info(self.request, msg, extra_tags='safe')
             if self.request.user.schedule_meeting:
-                msg_calendar = "%s <a href=%s>%s</a>" % (_("Prenez un rendez-vous dès maintenant avec un membre de notre équipe cliquez"), reverse('agenda:slot_list'), _("ici"))
+                #msg_calendar = "%s <a href=%s>%s</a>" % (_("Prenez un rendez-vous dès maintenant avec un membre de notre équipe cliquez"), reverse('agenda:slot_list'), _("ici"))
+                msg_calendar = _("<b>Un comptable vous contactera pour prendre rendez-vous !</b>")
                 messages.info(self.request, msg_calendar, extra_tags='safe')
         return queryset
 
@@ -45,6 +47,7 @@ class CompanyListView(GenericListView):
         context.update({'title': _("Mon entreprise")})
         context.update({'detail': _("Bienvenue sur votre compte LG & Associates. Depuis cette interface vous pouvez renseigner les informations de votre entreprise et gérer vos rendez-vous. Notre équipe est à votre disposition, prenez un rendez-vous dès maintenant pour commencer votre aventure au sein de notre cabinet. Nous nous adaptons à vos besoins en vous proposant des rendez-vous physiques ou en visioconférences.")})
         context.update({'add_label': _("Ajouter une entreprise")})
+
         return context
 
 
@@ -67,6 +70,9 @@ class CompanyUpdateView(GenericUpdateView):
     def get_context_data(self, **kwargs):
         context = super(CompanyUpdateView, self).get_context_data(**kwargs)
         context.update({'title': _("Mon entreprise")})
+        context.update({'detail': _("Les données ci-dessous proviennent de la Banque Carrefour des Entreprises.")})
+        context.update({'add_iban' : _("Ajouter un iban")})
+        context.update({'delete_iban' : _("supprimer")})
         self.form_class = CompanyForm
         if self.request.POST:
             context['ibans'] = CompanyIbanFormSet(self.request.POST, instance=self.object)

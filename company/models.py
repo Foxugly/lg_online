@@ -7,6 +7,16 @@ from localflavor.generic.models import IBANField
 
 
 class Company(GenericClass):
+
+    END_FISCAL_DATE_CHOICES = [
+        (1, _('31 mars')),
+        (2, _('30 juin')),
+        (3, _('30 septembre')),
+        (4, _('31 décembre')),
+        (0, _('autre')),
+    ]
+
+
     enterprise_name = models.CharField(_("Enterprise Name"), max_length=255, blank=True)
     enterprise_number = models.CharField(_("Enterprise Number"), max_length=30, null=True,
                                          validators=[VATINValidator(verify=True)])
@@ -14,7 +24,7 @@ class Company(GenericClass):
     legal_situation = models.CharField(_("Legal Situation"), max_length=50, blank=True)
     start_date = models.DateField(_("Start date"), blank=True, null=True)
     legal_form = models.CharField(_("Legal form"), max_length=255, blank=True)
-    end_fiscal_date = models.CharField(_("End fiscal date"), max_length=50, blank=True)
+    end_fiscal_date = models.CharField(_("End fiscal date"), max_length=50, choices=END_FISCAL_DATE_CHOICES, default=4, )
     social_address_street = models.CharField(_("Street"), max_length=255, blank=True)
     social_address_number = models.CharField(_("Number"), max_length=20, blank=True)
     social_address_zip = models.CharField(_("Zip Code"), max_length=20, blank=True)
@@ -86,7 +96,7 @@ class Company(GenericClass):
 class Iban(GenericClass):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     iban = IBANField(_("Iban"), max_length=20, blank=True, null=True, )
-    default = models.BooleanField(default=False)
+    default = models.BooleanField(_("par défaut"), default=False)
 
     def __str__(self):
         return '%s' % self.iban

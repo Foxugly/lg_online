@@ -5,6 +5,7 @@
     <div class="card col-md-10">
         <article class="card-body">
             <h4 class="card-title text-center mb-4 mt-1">{{title}}</h4>
+            <h7 class="card-title text-center mb-4 mt-1">{{detail}}</h7>
             <hr>
             <p class="text-success text-center"></p>
             <form method="post" enctype="multipart/form-data">
@@ -16,8 +17,6 @@
                         <table class="table">
                             {{ ibans.management_form }}
                             {% for form in ibans.forms %}
-                                {% if forloop.first %}
-                                {% endif %}
                                 <tr class="{% cycle row1 row2 %} formset_row">
                                     {% for field in form.visible_fields %}
                                         <td>
@@ -53,8 +52,8 @@
 <script src="{% static 'formset/jquery.formset.js' %}"></script>
 <script type="text/javascript">
     $('.formset_row').formset({
-        addText: 'add iban',
-        deleteText: 'remove'
+        addText: '{{ add_iban }}',
+        deleteText: '{{ delete_iban }}'
         /*prefix: 'iban_set'*/
     });
 </script>

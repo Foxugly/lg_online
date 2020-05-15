@@ -1,10 +1,10 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
-from view_breadcrumbs import ListBreadcrumbMixin, UpdateBreadcrumbMixin, DetailBreadcrumbMixin, CreateBreadcrumbMixin
+#from view_breadcrumbs import ListBreadcrumbMixin, UpdateBreadcrumbMixin, DetailBreadcrumbMixin, CreateBreadcrumbMixin
 
 
-class GenericCreateView(SuccessMessageMixin, CreateBreadcrumbMixin, CreateView):
+class GenericCreateView(SuccessMessageMixin, CreateView):
     # model = None
     # app_name = None
     # model_name = None
@@ -25,7 +25,7 @@ class GenericCreateView(SuccessMessageMixin, CreateBreadcrumbMixin, CreateView):
         return context
 
 
-class GenericListView(ListBreadcrumbMixin, ListView):
+class GenericListView(ListView):
     # model = None
     paginate_by = 10
     ordering = ['pk']
@@ -40,7 +40,7 @@ class GenericListView(ListBreadcrumbMixin, ListView):
         return context
 
 
-class GenericUpdateView(SuccessMessageMixin, UpdateBreadcrumbMixin, UpdateView):
+class GenericUpdateView(UpdateView):
     # model = None
     # app_name = None
     # model_name = None
@@ -66,7 +66,7 @@ class GenericUpdateView(SuccessMessageMixin, UpdateBreadcrumbMixin, UpdateView):
         return context
 
 
-class GenericDetailView(DetailBreadcrumbMixin, DetailView):
+class GenericDetailView(DetailView):
     # model = None
     # app_name = None
     # model_name = None
