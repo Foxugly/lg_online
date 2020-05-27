@@ -65,6 +65,21 @@ class CustomUser(AbstractUser, GenericClass):
     def get_short_name(self):
         return self.email
 
+    def get_company_name(self):
+        return self.companies.all()[0].enterprise_name
+
+    def get_company_number(self):
+        return self.companies.all()[0].enterprise_number
+
+    def get_company_url(self):
+        return self.companies.all()[0].get_absolute_url()
+
+    def get_simulation_url(self):
+        return self.simulation.get_absolute_url()
+
+    def get_simulation_price(self):
+        return self.simulation.proposed_amount
+
     def get_empty_fields(self):
         empty_fields = []
         if not (self.address_street and self.address_zip and self.address_city):
@@ -108,4 +123,4 @@ class CustomUser(AbstractUser, GenericClass):
         to = self.email
         reply_to = "info@lieutenantguillaume.com"
         print(msg_txt)
-        send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html)
+        send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html, None)

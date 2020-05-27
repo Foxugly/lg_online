@@ -9,11 +9,11 @@ from localflavor.generic.models import IBANField
 class Company(GenericClass):
 
     END_FISCAL_DATE_CHOICES = [
-        (1, _('31 mars')),
-        (2, _('30 juin')),
-        (3, _('30 septembre')),
-        (4, _('31 décembre')),
-        (0, _('autre')),
+        ("1", _('31 mars')),
+        ("2", _('30 juin')),
+        ("3", _('30 septembre')),
+        ("4", _('31 décembre')),
+        ("0", _('autre')),
     ]
 
 
@@ -50,6 +50,7 @@ class Company(GenericClass):
             return out
         else:
             return None
+
 
     def save(self, *args, **kwargs):
         self.valid = not self.get_empty_fields()

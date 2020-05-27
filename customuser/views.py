@@ -140,7 +140,7 @@ class MyPasswordResetView(PasswordResetView):
 
 class CustomUserListView(GenericListView):
     model = CustomUser
-
+    template_name = 'list_customer.html'
     def get_queryset(self):
         return CustomUser.objects.filter(is_active=True, is_superuser=False)
 

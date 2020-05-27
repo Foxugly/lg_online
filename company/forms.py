@@ -17,7 +17,7 @@ class CompanyAdminForm(ModelForm):
     model = Company
 
     def __init__(self, *args, **kwargs):
-        super(CompanyForm, self).__init__(*args, **kwargs)
+        super(CompanyAdminForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['enterprise_number'].widget.attrs['readonly'] = True

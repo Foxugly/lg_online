@@ -51,11 +51,11 @@ class Simulation(GenericClass):
     alternatif_payments = models.BooleanField(_("Système de paiements alternatifs (Paypal, Sumup, Stripe, ...)"),
                                               blank=False)
     sector = models.CharField(_("Secteur d'activité"), max_length=20, choices=SECTOR_CHOICES, default="horeca")
-    tax_liability = models.CharField(_("Mode de paiement"), max_length=20, choices=TAX_LIABILITY_CHOICES,
+    tax_liability = models.CharField(_("Fréquence de déclaration TVA"), max_length=20, choices=TAX_LIABILITY_CHOICES,
                                      default='quarterly')
-    calculated_amount = models.PositiveIntegerField(_("Montant calculé"), blank=True, default=0)
+    calculated_amount = models.PositiveIntegerField(_("Mensualité calculée"), blank=True, default=0)
     date_calculated_amount = models.DateTimeField(blank=True, null=True)
-    proposed_amount = models.PositiveIntegerField(_("Montant proposé"), blank=True, default=0)
+    proposed_amount = models.PositiveIntegerField(_("Mensualité proposée"), blank=True, default=0)
     created = models.DateTimeField(auto_now_add=True)
 
     def compute(self):

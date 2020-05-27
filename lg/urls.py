@@ -59,7 +59,7 @@ def sendmail(request):
         content = request.GET.get('content', None)
         header = "Client : %s %s \nMail : %s\nPhone : %s\n\n" % (request.user.first_name, request.user.last_name,
                                                                  request.user.email, request.user.telephone)
-        send_mail_smtp(subject, request.user.accountant.email, request.user.email, header + content, None)
+        send_mail_smtp(subject, request.user.accountant.email, request.user.email, header + content, None, None)
         data = {'result': True}
         return JsonResponse(data)
 
