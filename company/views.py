@@ -38,7 +38,7 @@ class CompanyListView(GenericListView):
             messages.info(self.request, msg, extra_tags='safe')
             if self.request.user.schedule_meeting:
                 #msg_calendar = "%s <a href=%s>%s</a>" % (_("Prenez un rendez-vous dès maintenant avec un membre de notre équipe cliquez"), reverse('agenda:slot_list'), _("ici"))
-                msg_calendar = _("<b>Un comptable vous contactera pour prendre rendez-vous !</b>")
+                msg_calendar = _("<b>Un expert comptable vous contactera pour prendre rendez-vous !</b>")
                 messages.info(self.request, msg_calendar, extra_tags='safe')
         return queryset
 
