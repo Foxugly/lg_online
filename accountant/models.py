@@ -5,7 +5,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.conf import settings
 from timezone_field import TimeZoneField
 from address.models import Address
-from agenda.models import WeekTemplate, Slot
 
 
 class ColorSlot(models.Model):
@@ -28,7 +27,7 @@ class Accountant(GenericClass):
     timezone = TimeZoneField(default=settings.TIME_ZONE)
     address = models.ForeignKey(Address, blank=True, null=True, on_delete=models.CASCADE)
     weektemplate = models.ForeignKey('agenda.WeekTemplate', verbose_name=_(u'Week template'), blank=True, null=True, on_delete=models.CASCADE)
-    slots = models.ManyToManyField(Slot, verbose_name=_(u'slots'), blank=True)
+    slots = models.ManyToManyField('agenda.Slot', verbose_name=_(u'slots'), blank=True)
 
     def __str__(self):
         return self.name

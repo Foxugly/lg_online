@@ -38,10 +38,12 @@ def send_mail_smtp(subject, to, reply_to, text, html, attachments):
                                    subtype=subtype,
                                    filename=os.path.basename(path))
 
-    s = smtplib.SMTP()
-    s.connect(EMAIL_HOST, EMAIL_PORT)
-    if EMAIL_USE_TLS:
-        s.starttls()
-    s.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
-    s.send_message(msg)
-    s.quit()
+    print(msg)
+    if EMAIL_HOST:
+        s = smtplib.SMTP()
+        s.connect(EMAIL_HOST, EMAIL_PORT)
+        if EMAIL_USE_TLS:
+            s.starttls()
+        s.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
+        s.send_message(msg)
+        s.quit()
