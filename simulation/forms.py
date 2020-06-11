@@ -20,7 +20,7 @@ class ReadOnlySimulationMixin(ModelFormMixin):
     def get_form(self, form_class=None):
         form = super(ReadOnlySimulationMixin, self).get_form()
         for field in form.fields:
-            if field is not "proposed_amount":
+            if field != "proposed_amount":
                 form.fields[field].widget.attrs['readonly'] = 'readonly'
                 form.fields[field].widget.attrs['disabled'] = 'disabled'
         return form

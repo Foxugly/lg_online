@@ -6,7 +6,7 @@ from company.models import Company
 from phonenumber_field.modelfields import PhoneNumberField
 from simulation.models import Simulation
 from tools.generic_class import GenericClass
-from django.contrib.auth.tokens import default_token_generator 
+from django.contrib.auth.tokens import default_token_generator
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -47,7 +47,7 @@ class CustomUser(AbstractUser, GenericClass):
     address_country = CountryField(_("Country"), default='BE', max_length=255, blank=True)
     accountant = models.ForeignKey('accountant.Accountant', blank=True, null=True, on_delete=models.CASCADE)
     objects = CustomUserManager()
-    simulation = models.ForeignKey(Simulation, blank=True, null=True, on_delete='cascade')
+    simulation = models.ForeignKey(Simulation, blank=True, null=True, on_delete=models.CASCADE)
     valid = models.BooleanField(default=False)
     schedule_meeting = models.BooleanField(default=True)
     timezone = TimeZoneField(default=settings.TIME_ZONE)

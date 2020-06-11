@@ -27,7 +27,7 @@ class Accountant(GenericClass):
     colorslots = models.ManyToManyField(ColorSlot, verbose_name=_(u'ColorSlot'), blank=True)
     timezone = TimeZoneField(default=settings.TIME_ZONE)
     address = models.ForeignKey(Address, blank=True, null=True, on_delete=models.CASCADE)
-    weektemplate = models.ForeignKey(WeekTemplate, verbose_name=_(u'Week template'), blank=True, null=True, on_delete=models.CASCADE)
+    weektemplate = models.ForeignKey('agenda.WeekTemplate', verbose_name=_(u'Week template'), blank=True, null=True, on_delete=models.CASCADE)
     slots = models.ManyToManyField(Slot, verbose_name=_(u'slots'), blank=True)
 
     def __str__(self):
