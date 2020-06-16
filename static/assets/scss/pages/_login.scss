@@ -1,0 +1,16 @@
+.step.login{
+  background: $dark-blue;
+  color: #fff;
+  h2{
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  .content{
+    width: 520px;
+    max-width: calc(100% - 30px);
+    margin: 72px auto;
+    @media (max-width: 2200px){
+      margin-top: 140px;
+    }
+  }
+}

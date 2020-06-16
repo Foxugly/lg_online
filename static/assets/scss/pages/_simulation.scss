@@ -1,0 +1,95 @@
+.simulation{
+  color: $blue;
+  .container{
+  }
+  &-resultat{
+    max-width: calc(100% - 30px);
+    margin: 45px 15px;
+    background: $blue;
+    color: #fff;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    text-transform: uppercase;
+    padding: 30px 30px 25px;
+    border-radius: 15px;
+    @media (max-width: $md){
+      display: block;
+      padding: 20px;
+    }
+    .price{
+      margin-left: 60px;
+      font-size: 40px;
+      font-family: "canada-type-gibson";
+      @media (max-width: $lg){
+        font-size: 30px;
+      }
+      @media (max-width: $md){
+        margin-top: 10px;
+      }
+      @media (max-width: $sm){
+        margin-left: 0px;
+      }
+      span{
+        font-weight: 800;
+      }
+    }
+  }
+  &-register{
+    margin-top: 75px;
+    background: $green;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    padding: 60px;
+    @media (max-width: $md){
+      display: block;
+      padding: 40px;
+    }
+    p{
+      color: #fff;
+      font-size: 30px;
+      width: 350px;
+      max-width: 100%;
+      margin-bottom: 0;
+      @media (max-width: $md){
+        margin-bottom: 15px;
+        font-size: 26px;
+      }
+    }
+  }
+  &-btns{
+    margin-bottom: 0;
+    .btn-round{
+      margin-right: 15px;
+      margin-bottom: 30px;
+      @media (max-width: $md){
+        margin-bottom: 45px;
+      }
+      &:first-child{
+        margin-bottom: 10px;
+      }
+    }
+  }
+  &-send{
+    #emailSendSimulation{
+      padding-left: 46px;
+      @media (max-width: $md){
+        width: 100%;
+        border-radius: 27px;
+        margin-bottom: 10px;
+      }
+    }
+    .input-group{
+      @media (max-width: $md){
+        display: block;
+      }
+    }
+    .btn-round.right{
+      @media (max-width: $md){
+        width: 100%;
+        border-radius: 27px;
+      }
+    }
+  }
+}

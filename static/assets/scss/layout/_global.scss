@@ -1,0 +1,90 @@
+body{
+  background: #F0EDED;
+  &::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: $dark-blue;
+    //z-index: -2;
+  }
+}
+main{
+  overflow: hidden;
+}
+.pad-top{
+  padding-top: 60px;
+}
+.marg-top{
+  margin-top: 72px;
+  @media (max-width: 2200px){
+    margin-top: 140px;
+  }
+}
+.step{
+min-height: 100vh;
+}
+svg{
+  left: 36px;
+  top: 35px;
+  position: absolute;
+  width: 220px;
+  display: block;
+  margin: 60px auto 30px;
+  z-index: 2;
+  @media (max-width: $sm){
+    left: 15px;
+  }
+}
+.step{
+  &-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 55px;
+    @media (max-width: $lg){
+      display: block;
+    }
+    h2, p{
+      width: 49%;
+      margin-bottom: 0;
+      @media (max-width: $lg){
+        width: 100%;
+      }
+    }
+    h2{
+      @media (max-width: $lg){
+        margin-bottom: 15px;
+      }
+    }
+    p{
+      padding-bottom: 30px;
+      border-bottom: 1px solid $blue;
+    }
+  }
+}
+
+// BOOTSTRAP BIGGER
+@media (min-width: $screen){
+  .container {
+    max-width: 1200px;
+  }
+}
+@media (min-width: $lg-screen){
+  .container {
+    max-width: 1400px;
+  }
+}
+@media (min-width: $xl-screen){
+  .container {
+    max-width: 1600px;
+  }
+}
+//@media (min-width: 2000px){
+//  .container {
+//    max-width: calc(100vw - 400px);
+//  }
+//}

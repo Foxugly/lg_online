@@ -1,0 +1,27 @@
+body{
+  font-family: "Open Sans";
+  font-size: 18px;
+}
+h2{
+  font-size: 60px;
+  font-weight: 700;
+  color: $blue;
+  font-family: "canada-type-gibson";
+  @media (max-width: $lg){
+    font-size: 40px;
+  }
+  .step-number{
+    font-size: 80px;
+    display: block;
+    color: $dark-blue;
+    @media (max-width: $lg){
+      font-size: 60px;
+    }
+    &.green{
+      color: $green;
+    }
+  }
+}
+p{
+  font-size: 18px;
+}
