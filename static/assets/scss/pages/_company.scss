@@ -1,0 +1,45 @@
+.company{
+  table{
+    margin-top: 30px;
+    a{
+      color: $dark-blue;
+    }
+  }
+  thead{
+    text-transform: uppercase;
+    font-size: 18px;
+  }
+  form{
+    color: $blue;
+  }
+  .add-row, .delete-row{
+    height: 40px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 25px;
+    border: none;
+    text-transform: uppercase;
+    font-family: "canada-type-gibson";
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .add-row{
+    background: #fff;
+    color: #18243B;
+  }
+  .delete-row{
+    background: #000;
+    color: #fff;
+  }
+  .table-iban{
+    td{
+      vertical-align: middle;
+    }
+    .form-group{
+      margin-bottom: 0;
+    }
+  }
+}

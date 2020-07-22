@@ -78,6 +78,21 @@ svg {
   border-bottom: 1px solid #3398B9;
 }
 
+#contactUsModalCenter .modal-content {
+  border-radius: 27px;
+}
+#contactUsModalCenter .modal-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #3398B9;
+  font-family: "canada-type-gibson";
+}
+#contactUsModalCenter textarea {
+  padding: 12px;
+  border-radius: 27px;
+  min-height: 200px;
+}
+
 @media (min-width: 1400px) {
   .container {
     max-width: 1200px;
@@ -204,6 +219,10 @@ nav .languages a.active::before {
   border-bottom-left-radius: 0px;
   border-top-left-radius: 0px;
 }
+.btn-round .fa-plus {
+  font-size: 18px;
+  margin: 0 5px;
+}
 
 body {
   font-family: "Open Sans";
@@ -215,6 +234,7 @@ h2 {
   font-weight: 700;
   color: #3398B9;
   font-family: "canada-type-gibson";
+  margin-bottom: 30px;
 }
 @media (max-width: 992px) {
   h2 {
@@ -235,7 +255,7 @@ h2 .step-number.green {
   color: #9BC17F;
 }
 
-p {
+contactUsModalCenter p {
   font-size: 18px;
 }
 
@@ -392,6 +412,13 @@ input[type=checkbox] {
   .form-text.text-muted {
     margin-left: 30px;
   }
+}
+
+#messages {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 400px;
 }
 
 .step-1, .step-2 {
@@ -648,6 +675,48 @@ input[type=checkbox] {
 
 .reset-password {
   color: #3398B9;
+}
+
+.company table {
+  margin-top: 30px;
+}
+.company table a {
+  color: #18243B;
+}
+.company thead {
+  text-transform: uppercase;
+  font-size: 18px;
+}
+.company form {
+  color: #3398B9;
+}
+.company .add-row, .company .delete-row {
+  height: 40px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 25px;
+  border: none;
+  text-transform: uppercase;
+  font-family: "canada-type-gibson";
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-align: center;
+}
+.company .add-row {
+  background: #fff;
+  color: #18243B;
+}
+.company .delete-row {
+  background: #000;
+  color: #fff;
+}
+.company .table-iban td {
+  vertical-align: middle;
+}
+.company .table-iban .form-group {
+  margin-bottom: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

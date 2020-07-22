@@ -63,8 +63,12 @@
     </a>
     <div class="container marg-top">
         <div class="step-head">
-            <h2><span class="step-number">04</span>{{title}}</h2>
+            {% if title %}
+                <h2><span class="step-number">04</span>{{title}}</h2>
+            {% endif %}
+            {% if detail %}
             <p>{{detail}}</p>
+            {% endif %}
         </div>
         <p class="text-success text-center"></p>
         <form method="post" enctype="multipart/form-data">

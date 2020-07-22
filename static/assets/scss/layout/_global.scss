@@ -66,6 +66,22 @@ svg{
     }
   }
 }
+#contactUsModalCenter{
+  .modal-content{
+    border-radius: 27px;
+  }
+  .modal-title{
+    font-size: 30px;
+    font-weight: 700;
+    color: #3398B9;
+    font-family: "canada-type-gibson";
+  }
+  textarea{
+    padding: 12px;
+    border-radius: 27px;
+    min-height: 200px;
+  }
+}
 
 // BOOTSTRAP BIGGER
 @media (min-width: $screen){
