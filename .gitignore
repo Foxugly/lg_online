@@ -1,12 +1,7 @@
 lg/credential_email.py
+lg/settings.py
 media/idcard/*
 media/ics/*
-company/migrations/*
-accountant/migrations/*
-customuser/migrations/*
-simulation/migrations/*
-address/migrations/*
-agenda/migrations/*
 __pycache__/*
 company/__pycache__/*
 accountant/__pycache__/*

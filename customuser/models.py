@@ -47,7 +47,7 @@ class CustomUser(AbstractUser, GenericClass):
     address_country = CountryField(_("Country"), default='BE', max_length=255, blank=True)
     accountant = models.ForeignKey('accountant.Accountant', blank=True, null=True, on_delete=models.CASCADE)
     objects = CustomUserManager()
-    simulation = models.ForeignKey(Simulation, blank=True, null=True, on_delete=models.CASCADE)
+    simulation = models.ForeignKey('simulation.Simulation', blank=True, null=True, on_delete=models.CASCADE)
     valid = models.BooleanField(default=False)
     schedule_meeting = models.BooleanField(default=True)
     timezone = TimeZoneField(default=settings.TIME_ZONE)

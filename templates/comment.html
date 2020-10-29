@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-{% load bootstrap4 static i18n %}
-
+{% load bootstrap4 i18n %}
 {% block content %}
-<div class="pad-top step step-4 register">
+<div class="pad-top step step-3 simulation">
     <a class="logo" href="/">
         <svg xmlns="http://www.w3.org/2000/svg" width="222.372" height="59.573" viewBox="0 0 222.372 59.573">
             <g id="Groupe_1" data-name="Groupe 1" transform="translate(0.096 -0.392)">
@@ -63,45 +62,14 @@
     </a>
     <div class="container marg-top">
         <div class="step-head">
-            {% if title %}
-                <h2><span class="step-number">04</span>{{title}}</h2>
-            {% endif %}
+            <h2>{{title}}</h2>
             {% if detail %}
-            <p>{{detail}}</p>
+                <p>{{detail}}</p>
             {% endif %}
         </div>
         <p class="text-success text-center"></p>
-        {% if messages %}
-        {% for message in messages %}
-        #{{message.tags }} : {{ message }}
-        {% endfor %}
-        {% endif %}
-
-        {%if form.errors %}
-        <div class="alert alert-danger">
-        {% for field, errors in form.errors.items  %}
-            {% for error in errors %}
-                <p>{{field}} : {{error}}</p>
-            {% endfor %}
-        {% endfor %}
-        </div>
-        {% endif %}
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="reset-bootstrap">
-                {% bootstrap_form form layout='horizontal' %}
-                <div class="form-group row adapt-bootstrap">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9">
-                        {% buttons %}
-                        <button name="submit" id="submit" type="submit" class="btn-round">{% trans "Valider" %}</button>
-                        {% endbuttons %}
-                    </div>
-                </div>
-            </div>
-        </form>
+        <p>Cliquez <a href="{% url 'home' %}">ici</a> pour retourner à l'accueil.</p>
     </div>
-    <img src="{% static 'assets/img/update.jpg' %}" alt="">
 </div>
 
 {% endblock %}

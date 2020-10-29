@@ -15,6 +15,7 @@ from tools.generic_views import *
 from django.contrib.messages.views import SuccessMessageMixin
 from simulation.forms import SimulationAjustedForm, ReadOnlySimulationMixin
 from django.contrib.auth.tokens import default_token_generator
+from django.shortcuts import render
 
 
 def activate(request, uidb64, token):
@@ -23,15 +24,16 @@ def activate(request, uidb64, token):
         user = CustomUser.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
         user = None
+    c = {'title': _('Activation'),
+         'detail': _('None')}
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.accountant = Accountant.objects.filter(default=True)[0]
         user.save()
-        messages.success(request, _('Thank you for your email confirmation. Now you can login your account.'))
-        return redirect('home')
+        c['detail'] = _('Thank you for your email confirmation. Now you can login your account.')
     else:
-        messages.error(request, _('Activation link is invalid!'))
-        return redirect('home')
+        c['detail'] = _('Activation link is invalid!')
+    return render(request, "comment.html", c)
 
 
 def confirm_proposal(request, uidb64, token):
@@ -44,7 +46,8 @@ def confirm_proposal(request, uidb64, token):
         # TODO
         # si on a les data, il faut lancer l'install dans Fid et Yuki (méthode dans customuser lié à une company
 
-        messages.success(request, _('Thank you for accepting our proposal ! You will receive in a few hours an email with all informations you will need !'))
+        messages.success(request, _(
+            'Thank you for accepting our proposal ! You will receive in a few hours an email with all informations you will need !'))
         return redirect('home')
     else:
         messages.error(request, _('Activation link is invalid!'))
@@ -69,14 +72,11 @@ class CustomUserCreateView(GenericCreateView):
     fields = None
     form_class = CustomUserCreateForm
     template_name = 'update.html'
-    success_url = reverse_lazy('home')
-    success_message = _('We just send you an email for validation.')
 
     def __init__(self, *args, **kwargs):
         if self.model:
             self.app_name = self.model._meta.app_label
             self.model_name = self.model._meta.model_name
-            self.success_url = reverse_lazy('home')
         super(CustomUserCreateView, self).__init__(*args, **kwargs)
 
     def form_valid(self, form):
@@ -89,12 +89,17 @@ class CustomUserCreateView(GenericCreateView):
     def get_context_data(self, **kwargs):
         context = super(CustomUserCreateView, self).get_context_data(**kwargs)
         context.update({'title': _("Je m’enregistre")})
-        context.update({'detail': _("Remplissez les champs suivants et n’oubliez pas de cliquer sur le lien de l’e-mail qui vous sera envoyé pour activer votre compte.")})
+        context.update({'detail': _(
+            "Remplissez les champs suivants et n’oubliez pas de cliquer sur le lien de l’e-mail qui vous sera envoyé pour activer votre compte.")})
         # TODO verbose_name
         return context
 
-    def get_success_message(self, cleaned_data):
-        return self.success_message % dict(cleaned_data)
+    #def get_success_message(self, cleaned_data):
+        #return self.success_message % dict(cleaned_data)
+
+    def get_success_url(self):
+        c = {'title': _('Confirmation'), 'detail': _('We just send you an email for validation.')}
+        return render(self.request, "comment.html", c)
 
 
 class ProfileUpdateView(SuccessMessageMixin, UpdateView):
@@ -141,6 +146,7 @@ class MyPasswordResetView(PasswordResetView):
 class CustomUserListView(GenericListView):
     model = CustomUser
     template_name = 'list_customer.html'
+
     def get_queryset(self):
         return CustomUser.objects.filter(is_active=True, is_superuser=False)
 

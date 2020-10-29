@@ -8,8 +8,6 @@
 # your option) any later version.
 
 from django.urls import path
-
-from django.conf.urls import url
 from customuser.views import activate, confirm_proposal
 from tools.generic_urls import add_url_from_generic_views
 from customuser.views import ProfileUpdateView
@@ -18,8 +16,6 @@ app_name = 'customuser'
 
 urlpatterns = [
     path('profile/', ProfileUpdateView.as_view(), name='profile_update'),
-    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        activate, name='activate'),
-    url(r'^confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        confirm_proposal, name='confirm_proposal'),
+    path('activate/<str:uidb64>/<str:token>/', activate, name='activate'),
+    path('confirm/<str:uidb64>/<str:token>/', confirm_proposal, name='confirm_proposal'),
 ] + add_url_from_generic_views('customuser.views')
