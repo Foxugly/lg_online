@@ -2,7 +2,7 @@
 {% load bootstrap4 static i18n %}
 
 {% block content %}
-<div class="pad-top step step-4 register">
+<div class="pad-top">
     <a class="logo" href="/">
         <svg xmlns="http://www.w3.org/2000/svg" width="222.372" height="59.573" viewBox="0 0 222.372 59.573">
             <g id="Groupe_1" data-name="Groupe 1" transform="translate(0.096 -0.392)">
@@ -70,13 +70,6 @@
             <p>{{detail}}</p>
             {% endif %}
         </div>
-        <p class="text-success text-center"></p>
-        {% if messages %}
-        {% for message in messages %}
-        #{{message.tags }} : {{ message }}
-        {% endfor %}
-        {% endif %}
-
         {%if form.errors %}
         <div class="alert alert-danger">
         {% for field, errors in form.errors.items  %}

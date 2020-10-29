@@ -15,6 +15,7 @@ class CompanyAdmin(admin.ModelAdmin):
         ('address', {'fields': ['social_address_street',
                                 'social_address_number', 'social_address_zip',
                                 'social_address_city', 'social_address_country']}),
+        ('validation', {'fields': ['valid', 'valid_user', 'sent']})
     ]
     inlines = [IbanInline]
 

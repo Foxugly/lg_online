@@ -25,14 +25,14 @@ def activate(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
         user = None
     c = {'title': _('Activation'),
-         'detail': _('None')}
+         'text': _('None')}
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.accountant = Accountant.objects.filter(default=True)[0]
         user.save()
-        c['detail'] = _('Thank you for your email confirmation. Now you can login your account.')
+        c['text'] = _('Thank you for your email confirmation. Now you can login your account.')
     else:
-        c['detail'] = _('Activation link is invalid!')
+        c['text'] = _('Activation link is invalid!')
     return render(request, "comment.html", c)
 
 
@@ -83,6 +83,8 @@ class CustomUserCreateView(GenericCreateView):
         if self.request.GET.get('simulation_id'):
             instance = form.save(commit=False)
             simulation_id = self.request.GET.get('simulation_id')
+            print("SIMULATION")
+            print(simulation_id)
             instance.simulation = Simulation.objects.get(pk=simulation_id)
         return super(CustomUserCreateView, self).form_valid(form)
 
@@ -98,8 +100,7 @@ class CustomUserCreateView(GenericCreateView):
         #return self.success_message % dict(cleaned_data)
 
     def get_success_url(self):
-        c = {'title': _('Confirmation'), 'detail': _('We just send you an email for validation.')}
-        return render(self.request, "comment.html", c)
+        return reverse("comment_creation")
 
 
 class ProfileUpdateView(SuccessMessageMixin, UpdateView):

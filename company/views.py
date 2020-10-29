@@ -90,6 +90,9 @@ class CompanyUpdateView(GenericUpdateView):
                 # ibans.instance = self.object
                 ibans.instance = inst
                 ibans.save()
+        inst = form.save()
+        if inst.get_empty_fields() == None:
+            print("FULL")
         return super(CompanyUpdateView, self).form_valid(form)
 
 

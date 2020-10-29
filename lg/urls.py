@@ -25,6 +25,7 @@ from customuser.views import CustomUserUpdateView, CustomUserLoginView, MyPasswo
 from customuser.decorators import check_lang
 from django.http import JsonResponse
 from tools.mail import send_mail_smtp
+from django.utils.translation import gettext_lazy as _
 
 
 @check_lang
@@ -40,6 +41,10 @@ def home(request):
     else:
         return render(request, "index.html", c)
 
+
+def comment_creation(request):
+    c = {'title': _('Confirmation'), 'text': _('We just send you an email for validation.')}
+    return render(request, "comment.html", c)
 
 
 def set_language(request):
@@ -66,6 +71,7 @@ def sendmail(request):
 
 urlpatterns = [
     path('', home, name='home'),
+    path('confirmation/', comment_creation, name='comment_creation'),
     path('sendmail/', sendmail, name='sendmail'),
     path('agenda/', include('agenda.urls', namespace='agenda')),
     path('customuser/', include('customuser.urls', namespace='customuser')),
