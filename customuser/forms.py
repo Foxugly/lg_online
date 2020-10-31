@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordResetForm
 from django.forms import ModelForm
 from customuser.models import CustomUser
-from company.models import Company
+
 from captcha.fields import CaptchaField
 from django.utils.http import urlsafe_base64_encode
 from customuser.tokens import account_activation_token
@@ -12,7 +12,6 @@ from tools.mail import send_mail_smtp
 from django.template import loader
 from vies.validators import VATINValidator
 from django import forms
-from tools.bce import get_data_from_bce
 from django.views.generic.edit import ModelFormMixin
 
 
@@ -57,17 +56,13 @@ class CustomUserCreateForm(UserCreationForm):
         help_texts = {'enterprise_number': "ex 'BE0123456789'", }
 
     def is_valid(self):
+        print(self)
         valid = super(CustomUserCreateForm, self).is_valid()
         if not valid:
             return valid
         user = self.save(commit=False)
         user.is_active = False
         user.save()
-
-        c = Company(enterprise_number=self.cleaned_data.get('enterprise_number'))
-        c.fill_data(get_data_from_bce(self.cleaned_data.get('enterprise_number')[2:]))
-        c.save()
-        user.companies.add(c)
 
         # current_site = Site.objects.get_current()
         subject = _('[LG & Associates] activation for your account')

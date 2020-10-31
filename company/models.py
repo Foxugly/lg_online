@@ -4,6 +4,11 @@ from django.utils.translation import gettext as _
 from vies.validators import VATINValidator
 from django_countries.fields import CountryField
 from localflavor.generic.models import IBANField
+from django.contrib.auth.tokens import default_token_generator
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from tools.mail import send_mail_smtp
 
 
 class Company(GenericClass):
@@ -34,6 +39,14 @@ class Company(GenericClass):
     valid = models.BooleanField(default=False)
     valid_user = models.BooleanField(default=False)
     sent = models.BooleanField(default=False)
+    calculated_amount = models.PositiveIntegerField(_("Mensualité calculée"), blank=True, default=0)
+    date_calculated_amount = models.DateTimeField(blank=True, null=True)
+    proposed_amount = models.PositiveIntegerField(_("Mensualité proposée"), blank=True, default=0)
+    simulation = models.ForeignKey('simulation.Simulation', blank=True, null=True, on_delete=models.CASCADE)
+    accountant = models.ForeignKey('accountant.Accountant', blank=True, null=True, on_delete=models.CASCADE)
+
+    def get_simulation_price(self):
+        return self.proposed_amount
 
     def get_empty_fields(self):
         empty_fields = []
@@ -43,7 +56,7 @@ class Company(GenericClass):
         if not ibans:
             empty_fields.append(_('an iban account'))
         if empty_fields:
-            if len(empty_fields)==1:
+            if len(empty_fields) == 1:
                 out = str(empty_fields[0])
             else:
                 out = ", ".join(str(v) for v in empty_fields[:-1]) + " %s %s" % (_('and'), str(empty_fields[-1]))
@@ -51,6 +64,28 @@ class Company(GenericClass):
         else:
             return None
 
+    def send_adjusted_proposition(self, user):
+        print("J'envoi le mail de confirmation")
+
+        subject = _('[LG&Associates] Final proposal')
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+        msg_html = render_to_string('acc_confirm_proposal.html', {
+            'user': user,
+            'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
+            'uid': uid,
+            'token': token,
+        })
+        msg_txt = render_to_string('acc_confirm_proposal.txt', {
+            'user': user,
+            'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
+            'uid': uid,
+            'token': token,
+        })
+        to = self.email
+        reply_to = "info@lieutenantguillaume.com"
+        print(msg_txt)
+        send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html, None)
 
     def save(self, *args, **kwargs):
         self.valid = not self.get_empty_fields()

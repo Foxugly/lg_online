@@ -4,13 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from company.models import Company
 from phonenumber_field.modelfields import PhoneNumberField
-from simulation.models import Simulation
 from tools.generic_class import GenericClass
-from django.contrib.auth.tokens import default_token_generator
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from tools.mail import send_mail_smtp
 from django_countries.fields import CountryField
 from timezone_field import TimeZoneField
 
@@ -77,9 +71,6 @@ class CustomUser(AbstractUser, GenericClass):
     def get_simulation_url(self):
         return self.simulation.get_absolute_url()
 
-    def get_simulation_price(self):
-        return self.simulation.proposed_amount
-
     def get_empty_fields(self):
         empty_fields = []
         if not (self.address_street and self.address_zip and self.address_city):
@@ -101,26 +92,3 @@ class CustomUser(AbstractUser, GenericClass):
             c.save()
         super(CustomUser, self).save(*args, **kwargs)
 
-
-    def send_adjusted_proposition(self, user):
-        print("J'envoi le mail de confirmation")
-
-        subject = _('[LG&Associates] Final proposal')
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        token = default_token_generator.make_token(user)
-        msg_html = render_to_string('acc_confirm_proposal.html', {
-            'user': user,
-            'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
-            'uid': uid,
-            'token': token,
-        })
-        msg_txt = render_to_string('acc_confirm_proposal.txt', {
-            'user': user,
-            'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
-            'uid': uid,
-            'token': token,
-        })
-        to = self.email
-        reply_to = "info@lieutenantguillaume.com"
-        print(msg_txt)
-        send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html, None)

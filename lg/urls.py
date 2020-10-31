@@ -35,7 +35,7 @@ def home(request):
     if request.user.is_authenticated:
         if request.user.is_active:
             if request.user.is_staff or request.user.is_superuser:
-                return redirect('customuser:customuser_list')
+                return redirect('company:company_proposal_list')
             else:
                 return redirect('company:company_list')
     else:

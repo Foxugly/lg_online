@@ -55,7 +55,7 @@ class Simulation(GenericClass):
                                      default='quarterly')
     calculated_amount = models.PositiveIntegerField(_("Mensualité calculée"), blank=True, default=0)
     date_calculated_amount = models.DateTimeField(blank=True, null=True)
-    proposed_amount = models.PositiveIntegerField(_("Mensualité proposée"), blank=True, default=0)
+    #proposed_amount = models.PositiveIntegerField(_("Mensualité proposée"), blank=True, default=0)
     created = models.DateTimeField(auto_now_add=True)
 
     def compute(self):

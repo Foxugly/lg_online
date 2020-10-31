@@ -53,6 +53,14 @@ class CompanyForm(ModelForm):
                   'legal_form', 'end_fiscal_date', ]
 
 
+class CompanyProposalForm(ModelForm):
+    model = Company
+
+    class Meta:
+        model = Company
+        fields = ['calculated_amount', 'date_calculated_amount', 'proposed_amount' ]
+
+
 class IbanUpdateForm(ModelForm):
     class Meta:
         model = Iban

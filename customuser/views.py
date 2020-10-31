@@ -16,6 +16,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from simulation.forms import SimulationAjustedForm, ReadOnlySimulationMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import render
+from company.models import Company
+from tools.bce import get_data_from_bce
 
 
 def activate(request, uidb64, token):
@@ -33,6 +35,8 @@ def activate(request, uidb64, token):
         c['text'] = _('Thank you for your email confirmation. Now you can login your account.')
     else:
         c['text'] = _('Activation link is invalid!')
+    # TODO send email to accountant to book meeting
+    print("TODO send email to accountant to book meeting")
     return render(request, "comment.html", c)
 
 
@@ -72,6 +76,7 @@ class CustomUserCreateView(GenericCreateView):
     fields = None
     form_class = CustomUserCreateForm
     template_name = 'update.html'
+    success_message = "Account created"
 
     def __init__(self, *args, **kwargs):
         if self.model:
@@ -82,10 +87,16 @@ class CustomUserCreateView(GenericCreateView):
     def form_valid(self, form):
         if self.request.GET.get('simulation_id'):
             instance = form.save(commit=False)
-            simulation_id = self.request.GET.get('simulation_id')
-            print("SIMULATION")
-            print(simulation_id)
-            instance.simulation = Simulation.objects.get(pk=simulation_id)
+            instance.simulation = Simulation.objects.get(pk=self.request.GET.get('simulation_id'))
+
+            c = Company(enterprise_number=form.cleaned_data.get('enterprise_number'), simulation=instance.simulation,
+                        calculated_amount=instance.simulation.calculated_amount,
+                        date_calculated_amount=instance.simulation.date_calculated_amount,
+                        proposed_amount=instance.simulation.calculated_amount, accountant=instance.accoutant)
+            c.fill_data(get_data_from_bce(form.cleaned_data.get('enterprise_number')[2:]))
+            c.save()
+            instance.companies.add(c)
+            instance.save()
         return super(CustomUserCreateView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -146,7 +157,7 @@ class MyPasswordResetView(PasswordResetView):
 
 class CustomUserListView(GenericListView):
     model = CustomUser
-    template_name = 'list_customer.html'
+    template_name = 'list.html'
 
     def get_queryset(self):
         return CustomUser.objects.filter(is_active=True, is_superuser=False)
@@ -154,7 +165,7 @@ class CustomUserListView(GenericListView):
 
 class CustomUserDetailView(ReadOnlySimulationMixin, GenericUpdateView):
     model = CustomUser
-    template_name = 'detail_customuser.html'
+    template_name = 'detail.html'
     fields = None
     form_class = SimulationAjustedForm
 
@@ -165,14 +176,6 @@ class CustomUserDetailView(ReadOnlySimulationMixin, GenericUpdateView):
         context = super(CustomUserDetailView, self).get_context_data(**kwargs)
         context['form'] = SimulationAjustedForm(instance=self.object.simulation)
         return context
-
-    def form_valid(self, form):
-        instance = self.object.simulation
-        instance.proposed_amount = form.cleaned_data.get('proposed_amount')
-        instance.save()
-        self.object.send_adjusted_proposition(self.object)
-        return super(CustomUserDetailView, self).form_valid(form)
-
 
 class CustomUserDeleteView(GenericDeleteView):
     model = CustomUser

@@ -77,7 +77,7 @@
             </div>
             {% if update %}
                 <div class="form-group row">
-                    <div class="col-md-12 alert alert-primary simulation-resultat" role="alert">{% trans "Résultat de la simulation" %} <div class="price"> <span>{{price}}</span> {% trans " euros par mois"%}</div></div>
+                    <div class="col-md-12 alert alert-primary simulation-resultat" role="alert">{% trans "Résultat de la simulation" %} <div class="price"> <span>{{object.calculated_amount}}</span> {% trans " euros par mois"%}</div></div>
                 </div>
                 <div class="form-group row adapt-bootstrap simulation-btns">
                     <div class="col-lg-3"></div>

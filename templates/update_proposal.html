@@ -62,22 +62,11 @@
     </a>
 
     <div class="container marg-top">
-    <h4 class="">{{object.first_name}} {{object.last_name}} {{object.simulation}}</h4>
+    <h4 class="">Proposal for {{object.enterprise_name}} ({{object.enterprise_number}})</h4>
     <hr>
     <form method="post" enctype="multipart/form-data">
         <div class="reset-bootstrap">
-            <div class="form-group row">
-                <div class="col-md-3 col-form-label">Nom : </div>
-                <div class="col-md-9">{{object.first_name}} {{object.last_name}}</div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-3 col-form-label">Mail : </div>
-                <div class="col-md-9"><a href="mailto:{{object.email}}">{{object.email}}</a> </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-3 col-form-label">Téléphone : </div>
-                <div class="col-md-9">{{object.telephone }}</div>
-            </div>
+            {% bootstrap_form SimulationForm layout='horizontal' %}
             {% csrf_token %}
             {% bootstrap_form form layout='horizontal' %}
             <div class="form-group row adapt-bootstrap">

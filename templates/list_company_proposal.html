@@ -63,29 +63,37 @@
     <div class="container">
         <div class="step-head">
             <h2>{{model|verbose_name }}</h2>
-            <h4>{{detail_name }}</h4>
-        </div>
-        <div class="row justify-content-end">
-            <a href="{{ model.get_add_url }}" class="btn btn-primary"><span class="fa fa-plus"></span> {%if add_label %}{{add_label}}{%else %}{% trans 'Add' %}{%endif %}</a>
         </div>
         <div class=" row mt-1">
             <table class="table table-striped table-bordered">
                 <thead>
-                <tr><td>Name</td><td>Company</td><td>Simulation</td><td>delete</td></tr>
+                <tr><td>Company</td><td>Name</td><td>Simulation</td><td>Status</td><td>delete</td></tr>
                 </thead>
                 <tbody>
-                {% for obj in object_list %}
+                {% for obj, users_list in object_list %}
                 <tr>
                     <td>
-                        <a href="{{obj.get_absolute_url}}">{{ obj }}</a>
+                        <a class="btn"  href="{{obj.get_absolute_url}}">{{ obj }}
                         {% if obj.get_empty_fields %}
-                        <a class="btn" href="{{obj.get_absolute_url}}" title="Missing fields : {{obj.get_empty_fields}}"><span class="fa fa-warning" style="color:red"></span></a>
+                        <span class="fa fa-warning" title="Missing fields : {{obj.get_empty_fields}}" style="color:red"></span></a>
+                        {% else %}
+                        <span class="fa fa-check" style="color:green"></span>
+                        </a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% for user in users_list %}
+                        <a class="btn" href="{{user.get_absolute_url}}">{{user.first_name}} {{user.last_name}}</a>
+                        <a href="mailto:{{user.email}}">({{user.email}})</a>
+                        {% if user.get_empty_fields %}
+                        <span class="fa fa-warning" title="Missing fields : {{user.get_empty_fields}}" style="color:red"></span>
                         {% else %}
                         <span class="fa fa-check" style="color:green"></span>
                         {% endif %}
+                        {% endfor %}
                     </td>
-                    <td><a class="btn" href="{{obj.get_company_url}}">{{obj.get_company_name}} ( {{obj.get_company_number}})</a></td>
-                    <td><a class="btn" href="{{obj.get_detail_url}}"><span class="fa fa-eye"></span> Simulation ( {{obj.get_simulation_price}} €)</a></td>
+                    <td><a class="btn btn-default" href="{% url 'company:company_proposal_change' obj.pk %}"><span class="fa fa-eye"></span> Proposal ( {{obj.get_simulation_price}} €)</a></td>
+                    <td><a class="btn btn-default" href="{% url 'company:company_proposal_send' obj.pk %}">send proposal</a></td>
                     <td><a class="btn confirmation" href="{{obj.get_delete_url}}"><span class="fa fa-trash"></span></a></td>
                 </tr>
                 {% empty %}
