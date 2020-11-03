@@ -13,10 +13,13 @@ register = template.Library()
 # def dict(h):
 #    return None
 
-
 @register.filter(name='verbose_name')
-def verbose_name(obj):
-    return obj.verbose_name
+def get_verbose_name(object):
+    return object._meta.verbose_name
+
+#@register.filter(name='verbose_name')
+#def verbose_name(obj):
+#    return obj.verbose_name
 
 
 @register.filter(name='app_name')

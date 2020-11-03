@@ -1,0 +1,114 @@
+{% load i18n common_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+    body {font-family: Arial, Helvetica, sans-serif;margin-right: 80px; margin-left: 80px;}
+.mytable, .mytable td, .mytable th {
+  border: 1px solid black;
+}
+    .mytable {
+      border-collapse: collapse;
+      width:100%;
+    }
+	.mytable td, .mytable tr{
+        padding: 8px;
+      }
+    .mytable th{
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+    .mytable tr:nth-child(even){background-color: #f2f2f2;}
+
+    .me{
+        font-size: 12px;
+        padding : 0;
+        margin : 0;
+        line-height : 20px;
+    }
+    @media print {
+  .new-page {
+    page-break-before: always;
+  }
+}
+.title{
+    text-align:center;
+    font-size: 40px;
+    margin-top:40px;
+    margin-bottom:40px;
+
+
+}
+
+    </style>
+</head>
+<body>
+<header>
+    <table width="100%;">
+        <tr>
+            <td width="60%"><img src="http://www.lieutenantguillaume.com/static/img/logo_lieutenant_guillaume.png"
+                                 style="vertical-align: top;"></td>
+            <td width="40%">
+                <p class="me">Cabinet de Comptables Fiscalistes Agréés</p>
+                <p class="me">LG & Associates</p>
+                <p class="me">Membres IPCF 70483836</p>
+                <p class="me">Av. Reine Marie-Henriette,29 à 1190 Forest</p>
+                <p class="me">info@lieutenantguillaume.com</p>
+                <p class="me">T +322 512 08 15</p>
+                <p class="me">www.lieutenantguillaume.com</p>
+                <p class="me">TVA: BE0454.784.696</p>
+            </td>
+        </tr>
+        <tr>
+            <td><p>Numéro de devis : {{name}}</p></td>
+            <td></td>
+        </tr>
+    </table>
+</header>
+<content id="content">
+    <div class="title"> Devis</div>
+    <table class="mytable">
+        <tr>
+            <th colspan="2">Client</th>
+        </tr>
+        {% for field in clientForm %}
+        <tr>
+            <td style="width:40%;">{{ field.label }}</td>
+            <td>{{field.value}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p></p>
+    <table class="mytable">
+        <tr>
+            <th colspan="2">L'entreprise</th>
+        </tr>
+        {% for field in companyForm %}
+        <tr>
+            <td style="width:40%;">{{ field.label }}</td>
+            <td>{{field.value}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p class="new-page"></p>
+    <br>
+    <br>
+    <table class="mytable">
+        <tr>
+            <th colspan="2">Les critères</th>
+        </tr>
+        {% for field in simulationForm %}
+        <tr>
+            <td style="width:40%;">{{ field.label }}</td>
+            <td>{{field.value}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div>Offre : {{object.proposed_amount}} euros</div>
+
+</content>
+</body>
+</html>

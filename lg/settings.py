@@ -25,7 +25,7 @@ SECRET_KEY = '1bjb+q*)dcd6-lwml5nn-n2v&b655^6sc@3#nqt*sg*dbjmo+0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-STATE = 'ACC'  # DEV or ACC or PROD
+STATE = 'PROD'  # DEV or ACC or PROD
 
 ALLOWED_HOSTS = ['*']
 
@@ -178,6 +178,9 @@ else:
 
 CAPTCHA_IMAGE_SIZE = 150, 80
 CAPTCHA_FONT_SIZE = 40
+
+WKHTMLTOPDF_CMD = 'xvfb-run /usr/bin/wkhtmltopdf'
+
 HIJACK_LOGIN_REDIRECT_URL = '/'
 HIJACK_LOGOUT_REDIRECT_URL = '/'
 HIJACK_DISPLAY_WARNINGS = True

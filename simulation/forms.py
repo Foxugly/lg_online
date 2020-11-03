@@ -33,3 +33,15 @@ class SimulationReadonlyForm(ReadOnlySimulationMixin, ModelForm):
         model = Simulation
         fields = "__all__"
         exclude = ('calculated_amount', 'date_calculated_amount')
+
+
+class SimulationPdfForm(ModelForm):
+    model = Simulation
+
+    def is_valid(self):
+        return False
+
+    class Meta:
+        model = Simulation
+        fields = ['turnover', 'transmission', 'nb_invoices_sale', 'nb_invoices_purchase', 'nb_managers', 'nb_employees',
+                  'nb_creditcard', 'alternatif_payments', 'sector', 'tax_liability', ]

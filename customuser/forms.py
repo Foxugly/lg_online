@@ -92,3 +92,14 @@ class MyPasswordResetForm(PasswordResetForm):
         subject = ''.join(subject.splitlines())
         body = loader.render_to_string(email_template_name, context)
         send_mail_smtp(str(subject), to_email, None, body, None, None)
+
+
+class CustomUserPdfForm(ModelForm):
+    model = CustomUser
+
+    def is_valid(self):
+        return False
+
+    class Meta:
+        model = CustomUser
+        fields = [ 'first_name', 'last_name', 'telephone', 'email', 'address_street', 'address_number', 'address_zip', 'address_city', 'address_country', 'language']

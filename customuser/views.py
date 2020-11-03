@@ -1,4 +1,3 @@
-from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from customuser.models import CustomUser
@@ -40,24 +39,6 @@ def activate(request, uidb64, token):
     return render(request, "comment.html", c)
 
 
-def confirm_proposal(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = CustomUser.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
-        user = None
-    if user is not None and default_token_generator.check_token(user, token):
-        # TODO
-        # si on a les data, il faut lancer l'install dans Fid et Yuki (méthode dans customuser lié à une company
-
-        messages.success(request, _(
-            'Thank you for accepting our proposal ! You will receive in a few hours an email with all informations you will need !'))
-        return redirect('home')
-    else:
-        messages.error(request, _('Activation link is invalid!'))
-        return redirect('home')
-
-
 class CustomUserLoginView(LoginView):
     model = CustomUser
     form_class = AuthenticationForm
@@ -92,7 +73,7 @@ class CustomUserCreateView(GenericCreateView):
             c = Company(enterprise_number=form.cleaned_data.get('enterprise_number'), simulation=instance.simulation,
                         calculated_amount=instance.simulation.calculated_amount,
                         date_calculated_amount=instance.simulation.date_calculated_amount,
-                        proposed_amount=instance.simulation.calculated_amount, accountant=instance.accoutant)
+                        proposed_amount=instance.simulation.calculated_amount, accountant=instance.accountant)
             c.fill_data(get_data_from_bce(form.cleaned_data.get('enterprise_number')[2:]))
             c.save()
             instance.companies.add(c)
@@ -176,6 +157,7 @@ class CustomUserDetailView(ReadOnlySimulationMixin, GenericUpdateView):
         context = super(CustomUserDetailView, self).get_context_data(**kwargs)
         context['form'] = SimulationAjustedForm(instance=self.object.simulation)
         return context
+
 
 class CustomUserDeleteView(GenericDeleteView):
     model = CustomUser

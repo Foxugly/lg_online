@@ -53,6 +53,18 @@ class CompanyForm(ModelForm):
                   'legal_form', 'end_fiscal_date', ]
 
 
+class CompanyPdfForm(ModelForm):
+    model = Company
+
+    def is_valid(self):
+        return False
+
+    class Meta:
+        model = Company
+        fields = ['enterprise_number', 'enterprise_name', 'legal_form', 'social_address_street',
+                  'social_address_number', 'social_address_zip', 'social_address_city', 'social_address_country', ]
+
+
 class CompanyProposalForm(ModelForm):
     model = Company
 

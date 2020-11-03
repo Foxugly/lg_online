@@ -4,15 +4,9 @@ from django.utils.translation import gettext as _
 from vies.validators import VATINValidator
 from django_countries.fields import CountryField
 from localflavor.generic.models import IBANField
-from django.contrib.auth.tokens import default_token_generator
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from tools.mail import send_mail_smtp
 
 
 class Company(GenericClass):
-
     END_FISCAL_DATE_CHOICES = [
         ("1", _('31 mars')),
         ("2", _('30 juin')),
@@ -21,7 +15,6 @@ class Company(GenericClass):
         ("0", _('autre')),
     ]
 
-
     enterprise_name = models.CharField(_("Enterprise Name"), max_length=255, blank=True)
     enterprise_number = models.CharField(_("Enterprise Number"), max_length=30, null=True,
                                          validators=[VATINValidator(verify=True)])
@@ -29,7 +22,8 @@ class Company(GenericClass):
     legal_situation = models.CharField(_("Legal Situation"), max_length=50, blank=True)
     start_date = models.DateField(_("Start date"), blank=True, null=True)
     legal_form = models.CharField(_("Legal form"), max_length=255, blank=True)
-    end_fiscal_date = models.CharField(_("End fiscal date"), max_length=50, choices=END_FISCAL_DATE_CHOICES, default=4, )
+    end_fiscal_date = models.CharField(_("End fiscal date"), max_length=50, choices=END_FISCAL_DATE_CHOICES,
+                                       default=4, )
     social_address_street = models.CharField(_("Street"), max_length=255, blank=True)
     social_address_number = models.CharField(_("Number"), max_length=20, blank=True)
     social_address_zip = models.CharField(_("Zip Code"), max_length=20, blank=True)
@@ -50,7 +44,8 @@ class Company(GenericClass):
 
     def get_empty_fields(self):
         empty_fields = []
-        if not (self.social_address_street and self.social_address_zip and self.social_address_city and self.social_address_country):
+        if not (
+                self.social_address_street and self.social_address_zip and self.social_address_city and self.social_address_country):
             empty_fields.append(_('your address'))
         ibans = Iban.objects.filter(company=self)
         if not ibans:
@@ -63,29 +58,6 @@ class Company(GenericClass):
             return out
         else:
             return None
-
-    def send_adjusted_proposition(self, user):
-        print("J'envoi le mail de confirmation")
-
-        subject = _('[LG&Associates] Final proposal')
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        token = default_token_generator.make_token(user)
-        msg_html = render_to_string('acc_confirm_proposal.html', {
-            'user': user,
-            'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
-            'uid': uid,
-            'token': token,
-        })
-        msg_txt = render_to_string('acc_confirm_proposal.txt', {
-            'user': user,
-            'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
-            'uid': uid,
-            'token': token,
-        })
-        to = self.email
-        reply_to = "info@lieutenantguillaume.com"
-        print(msg_txt)
-        send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html, None)
 
     def save(self, *args, **kwargs):
         self.valid = not self.get_empty_fields()
@@ -128,7 +100,6 @@ class Company(GenericClass):
         verbose_name_plural = _('Mes entreprises')
 
 
-
 class Iban(GenericClass):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     iban = IBANField(_("Iban"), max_length=20, blank=True, null=True, )
@@ -139,5 +110,3 @@ class Iban(GenericClass):
 
     class Meta:
         verbose_name = _('Iban')
-
-
