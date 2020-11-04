@@ -36,8 +36,10 @@ class Company(GenericClass):
     calculated_amount = models.PositiveIntegerField(_("Mensualité calculée"), blank=True, default=0)
     date_calculated_amount = models.DateTimeField(blank=True, null=True)
     proposed_amount = models.PositiveIntegerField(_("Mensualité proposée"), blank=True, default=0)
+    date_proposed_amount = models.DateTimeField(blank=True, null=True)
     simulation = models.ForeignKey('simulation.Simulation', blank=True, null=True, on_delete=models.CASCADE)
     accountant = models.ForeignKey('accountant.Accountant', blank=True, null=True, on_delete=models.CASCADE)
+    token = models.CharField(max_length=64, blank=True)
 
     def get_simulation_price(self):
         return self.proposed_amount

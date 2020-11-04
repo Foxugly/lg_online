@@ -15,7 +15,8 @@ class CompanyAdmin(admin.ModelAdmin):
         ('address', {'fields': ['social_address_street',
                                 'social_address_number', 'social_address_zip',
                                 'social_address_city', 'social_address_country']}),
-        ('validation', {'fields': ['accountant','valid', 'valid_user', 'sent']})
+        ('proposal', {'fields': ['calculated_amount', 'date_calculated_amount', 'proposed_amount', 'date_proposed_amount']}),
+        ('validation', {'fields': ['accountant', 'valid', 'valid_user', 'sent', 'token']})
     ]
     inlines = [IbanInline]
 

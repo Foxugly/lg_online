@@ -35,6 +35,11 @@ TRANSMISSION_CHOICES = (
     ('paper', _("Papier")),
 )
 
+translate_fields = {}
+for tupl in [SECTOR_CHOICES, TAX_LIABILITY_CHOICES, TRANSMISSION_CHOICES]:
+    for key , value in tupl:
+        translate_fields[key] = value
+
 coef_tax_liability = {'monthly': 1.5, 'quarterly': 1.3, 'none': 1}
 
 

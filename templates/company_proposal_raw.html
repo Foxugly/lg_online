@@ -29,6 +29,12 @@
         margin : 0;
         line-height : 20px;
     }
+
+    .price{
+        font-size: 20px;
+        margin-top: 30px;
+        margin-bottom: 12px;
+    }
     @media print {
   .new-page {
     page-break-before: always;
@@ -63,7 +69,10 @@
             </td>
         </tr>
         <tr>
-            <td><p>Numéro de devis : {{name}}</p></td>
+            <td>
+                <p>Numéro de devis : {{name}}</p>
+                <p>date : {{object.date_proposed_amount| date_format}}</p>
+            </td>
             <td></td>
         </tr>
     </table>
@@ -103,11 +112,11 @@
         {% for field in simulationForm %}
         <tr>
             <td style="width:40%;">{{ field.label }}</td>
-            <td>{{field.value}}</td>
+            <td>{{field.value | clean}}</td>
         </tr>
         {% endfor %}
     </table>
-    <div>Offre : {{object.proposed_amount}} euros</div>
+    <div class="price">Offre : {{object.proposed_amount}} euros</div>
 
 </content>
 </body>

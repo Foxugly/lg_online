@@ -56,7 +56,6 @@ class CustomUserCreateForm(UserCreationForm):
         help_texts = {'enterprise_number': "ex 'BE0123456789'", }
 
     def is_valid(self):
-        print(self)
         valid = super(CustomUserCreateForm, self).is_valid()
         if not valid:
             return valid

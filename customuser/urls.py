@@ -8,9 +8,8 @@
 # your option) any later version.
 
 from django.urls import path
-from customuser.views import activate
+from customuser.profile_views import activate, ProfileUpdateView
 from tools.generic_urls import add_url_from_generic_views
-from customuser.views import ProfileUpdateView
 
 app_name = 'customuser'
 

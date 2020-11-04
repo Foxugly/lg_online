@@ -5,7 +5,7 @@ Hi {{ user.first_name }},
 We propose a final offer  : {{company.proposed_amount}} euros.
 Here can you find the offer as a pdf file : http://{{ domain }}{% url 'company:company_proposal_pdf' pk=company.id token=token_company %}
 
-Please click on the link to confirm your registration : http://{{ domain }}{% url 'company:confirm_proposal' uidb64=uid token=token %}
+Please click on the link to confirm your registration : http://{{ domain }}{% url 'company:confirm_proposal' pk=company.pk uidb64=uid token=token %}
 
 Greetings,
 

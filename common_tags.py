@@ -1,5 +1,6 @@
 from django import template
-
+from django.utils.translation import gettext as _
+from simulation.models import translate_fields
 
 register = template.Library()
 
@@ -17,9 +18,21 @@ register = template.Library()
 def get_verbose_name(object):
     return object._meta.verbose_name
 
-#@register.filter(name='verbose_name')
-#def verbose_name(obj):
-#    return obj.verbose_name
+
+@register.filter(name='clean')
+def clean(obj):
+    out = None
+    if type(obj) == bool:
+        if obj == True:
+            out = _("Oui")
+        elif obj == False:
+            out = _("Non")
+    elif obj in translate_fields:
+        out = translate_fields[obj]
+    else:
+        out = obj
+    return out
+
 
 
 @register.filter(name='app_name')
@@ -38,27 +51,5 @@ def time_format(time):
 
 @register.filter()
 def date_format(date):
-    return date.strftime(formats.get_format('DATE_INPUT_FORMATS')[0])
+    return date.strftime("%d/%m/%Y")
 
-
-@register.filter()
-def filename(path):
-    return os.path.basename(path.name)
-
-
-@register.filter()
-def cast(s):
-    return s.replace(' ', '+')
-
-
-@register.filter()
-def after_today(date):
-    return date > datetime.today()
-
-
-@register.filter()
-def file_exists(path):
-    if path:
-        return os.path.exists(path)
-    else:
-        return False
