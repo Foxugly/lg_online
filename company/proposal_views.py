@@ -14,10 +14,21 @@ from customuser.models import CustomUser
 from simulation.forms import SimulationReadonlyForm, SimulationPdfForm
 from tools.generic_views import *
 from tools.mail import send_mail_smtp
+from django.utils.translation import gettext as _
 
 
 def get_users(c):
     return CustomUser.objects.filter(companies__id=c.pk)
+
+
+def run_config(request, pk):
+    company = Company.objects.get(pk=pk)
+    print("TODO run sync with yuki and fid")
+    #TODO yuki and fid
+    company.active = True
+    company.save()
+    context = {'title': _('Create companies in softwares'), 'text': _('Procedure started.'), }
+    return render(request, "comment.html", context)
 
 
 def send_proposal(request, pk):

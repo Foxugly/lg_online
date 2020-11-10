@@ -1,9 +1,10 @@
-from tools.generic_class import GenericClass
 from django.db import models
 from django.utils.translation import gettext as _
-from vies.validators import VATINValidator
 from django_countries.fields import CountryField
 from localflavor.generic.models import IBANField
+from vies.validators import VATINValidator
+
+from tools.generic_class import GenericClass
 
 
 class Company(GenericClass):
@@ -40,6 +41,7 @@ class Company(GenericClass):
     simulation = models.ForeignKey('simulation.Simulation', blank=True, null=True, on_delete=models.CASCADE)
     accountant = models.ForeignKey('accountant.Accountant', blank=True, null=True, on_delete=models.CASCADE)
     token = models.CharField(max_length=64, blank=True)
+    active = models.BooleanField(default=False)
 
     def get_simulation_price(self):
         return self.proposed_amount
@@ -61,14 +63,14 @@ class Company(GenericClass):
         else:
             return None
 
-    def save(self, *args, **kwargs):
-        self.valid = not self.get_empty_fields()
-        if self.valid and self.valid_user and not self.sent:
-            self.sent = True
-            print("GO TO FID YUKI CODABOX")
-            # TODO FID YUKI CODABOX
-            # TODO envoyé à contact : tu as un nouveau client
-        super(Company, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.valid = not self.get_empty_fields()
+    #     if self.valid and self.valid_user and not self.sent:
+    #         self.sent = True
+    #         print("GO TO FID YUKI CODABOX")
+    #         # TODO FID YUKI CODABOX
+    #         # TODO envoyé à contact : tu as un nouveau client
+    #     super(Company, self).save(*args, **kwargs)
 
     def fill_data(self, data):
         if len(data):

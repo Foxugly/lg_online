@@ -23,12 +23,17 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.accountant = Accountant.objects.filter(default=True)[0]
+        for comp in user.companies.all():
+            if not comp.accountant:
+                comp.accountant = user.accountant
+                comp.save()
         user.save()
         c['text'] = _('Thank you for your email confirmation. Now you can login your account.')
     else:
         c['text'] = _('Activation link is invalid!')
     # TODO send email to accountant to book meeting
     print("TODO send email to accountant to book meeting")
+    # send_mail_smtp("New client", request.user.accountant.email, request.user.email, header + content, None, None)
     return render(request, "comment.html", c)
 
 

@@ -100,17 +100,23 @@
                         Proposal ( {{obj.get_simulation_price}} €)
                         <a class="btn btn-default" style="border:solid 1px black" href="{% url 'company:company_proposal_change' obj.pk %}"><span class="fa fa-edit"></span></a>
                     </td>
-                    <td>{% if obj.valid_user %}<span class="btn fa fa-check" style="color:green"> active</span>
+                    <td>{% if obj.active %}
+                            <span class="btn fa fa-check" style="color:green"> active</span>
                         {% else %}
-                            {% if obj.sent %}
-                                <span class="btn fa fa-send" style="color:green"> sent</span>
+                            {% if obj.valid_user %}
+                                <span class="btn fa fa-cogs" style="color:blue"> ready to go</span>
                             {% else %}
-                                <span class="btn fa fa-send" style="color:red"> to send </span>
+                                {% if obj.sent == True %}
+                                    <span class="btn fa fa-send" style="color:green"> sent</span>
+                                {% else %}
+                                    <span class="btn fa fa-send" style="color:red"> to send </span>
+                                {% endif %}
                             {% endif %}
                         {% endif %}
                     </td>
                     <td>
-                        <a class="btn btn-default" href="{% url 'company:company_proposal_send' obj.pk %}" style="border:solid 1px black"><span class="fa fa-send"></span></a>
+                        <a class="btn btn-default" title="send proposal by mail" href="{% url 'company:company_proposal_send' obj.pk %}" style="border:solid 1px black"><span class="fa fa-send"></span></a>
+                        <a class="btn btn-default" title="run sync with softwares" href="{% url 'company:company_go' obj.pk %}" style="border:solid 1px black"><span class="fa fa-cogs"></span></a>
                         <a class="btn confirmation" href="{{obj.get_delete_url}}" style="border:solid 1px black"><span class="fa fa-trash"></span></a></td>
                 </tr>
                 {% empty %}

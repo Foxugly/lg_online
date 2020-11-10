@@ -25,7 +25,7 @@ SECRET_KEY = '1bjb+q*)dcd6-lwml5nn-n2v&b655^6sc@3#nqt*sg*dbjmo+0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-STATE = 'PROD'  # DEV or ACC or PROD
+STATE = 'ACC'  # DEV or ACC or PROD
 
 ALLOWED_HOSTS = ['*']
 

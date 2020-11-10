@@ -53,7 +53,7 @@ class CustomUserCreateView(GenericCreateView):
             c = Company(enterprise_number=form.cleaned_data.get('enterprise_number'), simulation=instance.simulation,
                         calculated_amount=instance.simulation.calculated_amount,
                         date_calculated_amount=instance.simulation.date_calculated_amount,
-                        proposed_amount=instance.simulation.calculated_amount, accountant=instance.accountant)
+                        proposed_amount=instance.simulation.calculated_amount)
             c.fill_data(get_data_from_bce(form.cleaned_data.get('enterprise_number')[2:]))
             c.save()
             instance.companies.add(c)
