@@ -24,3 +24,4 @@ django-countries
 icalendar
 django-timezone-field
 django-wkhtmltopdf
+django-crontab

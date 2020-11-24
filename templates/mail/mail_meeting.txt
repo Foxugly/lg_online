@@ -1,6 +1,6 @@
 {% autoescape off %}
 Hi {{ user.first_name }},
-You can  find in attachment the icalendar for the meeting.
+You can find in attachment the icalendar for the meeting.
 Regards,
 The LieutenantGuillaume Team
 {% endautoescape %}

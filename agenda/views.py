@@ -173,7 +173,7 @@ def book_slot(request, slot_id):
         s.booked = True
         s.save()
         s.icalendar()
-        msg_txt = render_to_string('mail_meeting.txt', {'user': s.customer})
+        msg_txt = render_to_string('mail/mail_meeting.txt', {'user': s.customer})
         send_mail_smtp("[LG&Associates] icalendar of meeting", [s.customer.email, s.refer_accountant.email], None, msg_txt, None, [s.path])
         # send_mail_smtp(_("[LG&Associates] icalendar of meeting"), [s.customer.email, s.refer_accountant.email], None, msg_txt, None, [s.path])
         request.user.schedule_meeting = False

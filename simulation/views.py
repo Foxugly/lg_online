@@ -87,11 +87,11 @@ def send_simulation_by_mail(request):
             url_simulation = "www.mylieutenantguillaume.com%s" % s.get_absolute_url()
             url_register = "www.mylieutenantguillaume.com%s?simulation_id=%d" % (reverse_lazy('customuser:customuser_add'), s.pk)
 
-            msg_html = render_to_string('simulation_email.html', {
+            msg_html = render_to_string('mail/simulation_email.html', {
                 'url_simulation': url_simulation,
                 'url_register' : url_register
             })
-            msg_txt = render_to_string('simulation_email.txt', {
+            msg_txt = render_to_string('mail/simulation_email.txt', {
                 'url_simulation': url_simulation,
                 'url_register' : url_register
             })

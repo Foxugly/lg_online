@@ -4,12 +4,12 @@ from django.urls import reverse_lazy
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
-
 from accountant.models import Accountant
 from customuser.forms import CustomUserForm
 from customuser.models import CustomUser
 from customuser.tokens import account_activation_token
 from tools.generic_views import *
+from django.utils import timezone
 
 
 def activate(request, uidb64, token):
@@ -25,6 +25,9 @@ def activate(request, uidb64, token):
         user.accountant = Accountant.objects.filter(default=True)[0]
         for comp in user.companies.all():
             if not comp.accountant:
+                if comp.subscription_status == 1:
+                    comp.subscription_status = 2
+                    comp.subscription_status = timezone.now()
                 comp.accountant = user.accountant
                 comp.save()
         user.save()

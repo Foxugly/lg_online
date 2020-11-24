@@ -22,11 +22,18 @@ def get_users(c):
 
 
 def run_config(request, pk):
-    company = Company.objects.get(pk=pk)
-    print("TODO run sync with yuki and fid")
-    #TODO yuki and fid
-    company.active = True
-    company.save()
+    c = Company.objects.get(pk=pk)
+    c.subscription_status = 6
+    c.save()
+    print("YUKI + FID + SEND MAIL")
+    # TODO yuki and fid
+    # TODO send credentials
+    # dict_context = {'company': c, 'user': user, 'domain': 'www.mylieutenantguillaume.com',}
+    # msg_html = render_to_string('mail/acc_confirm_proposal.html', dict_context)
+    # msg_txt = render_to_string('mail/acc_confirm_proposal.txt', dict_context)
+    # to = user.email
+    # reply_to = "info@lieutenantguillaume.com"
+    # print(msg_txt)
     context = {'title': _('Create companies in softwares'), 'text': _('Procedure started.'), }
     return render(request, "comment.html", context)
 
@@ -34,7 +41,7 @@ def run_config(request, pk):
 def send_proposal(request, pk):
     c = Company.objects.get(pk=pk)
     c.token = get_random_string(length=64)
-    c.sent = True
+    c.subscription_status = 4
     c.save()
     for user in get_users(c):
         if not c.date_proposed_amount:
@@ -45,10 +52,10 @@ def send_proposal(request, pk):
         token_company = c.token
         token = default_token_generator.make_token(user)
 
-        context = {'company': c, 'user': user, 'domain': 'www.mylieutenantguillaume.com', 'uid': uid,
+        dict_context = {'company': c, 'user': user, 'domain': 'www.mylieutenantguillaume.com', 'uid': uid,
                    'token_company': token_company, 'token': token, }
-        msg_html = render_to_string('acc_confirm_proposal.html', context)
-        msg_txt = render_to_string('acc_confirm_proposal.txt', context)
+        msg_html = render_to_string('mail/acc_confirm_proposal.html', dict_context)
+        msg_txt = render_to_string('mail/acc_confirm_proposal.txt', dict_context)
         to = user.email
         reply_to = "info@lieutenantguillaume.com"
         print(msg_txt)
@@ -66,11 +73,17 @@ def confirm_proposal(request, pk, uidb64, token):
         user = None
     if user is not None and default_token_generator.check_token(user, token):
         c = Company.objects.get(pk=pk)
-        c.valid_user = True
+        c.subscription_status = 5
         c.save()
-        print("TODO Lancer l'install dans FID et YUKI")
+        # TODO send email with to accountant
+        #dict_context = {'company': c, 'user': user, 'domain': 'www.mylieutenantguillaume.com',}
+        #msg_html = render_to_string('mail/acc_confirm_proposal.html', dict_context)
+        #msg_txt = render_to_string('mail/acc_confirm_proposal.txt', dict_context)
+        #to = user.email
+        #reply_to = "info@lieutenantguillaume.com"
+        #print(msg_txt)
+
         # si on a les data, il faut lancer l'install dans Fid et Yuki (méthode dans customuser lié à une company
-        # TODO
         messages.success(request, _(
             'Thank you for accepting our proposal ! You will receive in a few hours an email with all informations you will need !'))
         return redirect('home')

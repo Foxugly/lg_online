@@ -65,13 +65,13 @@ class CustomUserCreateForm(UserCreationForm):
 
         # current_site = Site.objects.get_current()
         subject = _('[LG & Associates] activation for your account')
-        msg_html = render_to_string('acc_active_email.html', {
+        msg_html = render_to_string('mail/acc_active_email.html', {
             'user': user,
             'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': account_activation_token.make_token(user),
         })
-        msg_txt = render_to_string('acc_active_email.txt', {
+        msg_txt = render_to_string('mail/acc_active_email.txt', {
             'user': user,
             'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),

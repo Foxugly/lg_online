@@ -3,11 +3,20 @@ from django.utils.translation import gettext as _
 from django_countries.fields import CountryField
 from localflavor.generic.models import IBANField
 from vies.validators import VATINValidator
-
 from tools.generic_class import GenericClass
 
 
 class Company(GenericClass):
+
+    SUBSCRIBE_STATUS = [
+        (1, _('subscription')),
+        (2, _('actived subscription')),
+        (3, _('completed folder')),
+        (4, _('final offer sent')),
+        (5, _('accepted folder')),
+        (6, _('actived'))
+    ]
+
     END_FISCAL_DATE_CHOICES = [
         ("1", _('31 mars')),
         ("2", _('30 juin')),
@@ -42,6 +51,8 @@ class Company(GenericClass):
     accountant = models.ForeignKey('accountant.Accountant', blank=True, null=True, on_delete=models.CASCADE)
     token = models.CharField(max_length=64, blank=True)
     active = models.BooleanField(default=False)
+    subscription_status = models.CharField(_("Subscription Status"), max_length=50, choices=SUBSCRIBE_STATUS, default=1, )
+    subscription_date = models.DateField(_("Subscription date"), blank=True, null=True)
 
     def get_simulation_price(self):
         return self.proposed_amount
@@ -63,14 +74,18 @@ class Company(GenericClass):
         else:
             return None
 
-    # def save(self, *args, **kwargs):
-    #     self.valid = not self.get_empty_fields()
-    #     if self.valid and self.valid_user and not self.sent:
-    #         self.sent = True
-    #         print("GO TO FID YUKI CODABOX")
-    #         # TODO FID YUKI CODABOX
-    #         # TODO envoyé à contact : tu as un nouveau client
-    #     super(Company, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        if len(self.get_empty_fields()) == 0:
+            if self.subscription_status == 2:
+                self.subscription_status = 3
+                # TODO send mail to accountant : "completed folder"
+                # dict_context = {'company': c, 'user': user, 'domain': 'www.mylieutenantguillaume.com',}
+                # msg_html = render_to_string('mail/acc_confirm_proposal.html', dict_context)
+                # msg_txt = render_to_string('mail/acc_confirm_proposal.txt', dict_context)
+                # to = user.email
+                # reply_to = "info@lieutenantguillaume.com"
+                # print(msg_txt)
+        super(Company, self).save(*args, **kwargs)
 
     def fill_data(self, data):
         if len(data):

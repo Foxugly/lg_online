@@ -29,10 +29,16 @@ STATE = 'ACC'  # DEV or ACC or PROD
 
 ALLOWED_HOSTS = ['*']
 
+
+CRONJOBS = [
+    ('* * * * *', 'company.cron.my_scheduled_test')
+]
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -54,6 +60,8 @@ INSTALLED_APPS = [
     'simulation',
     'django_countries',
     'address',
+    #'chroniker',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
