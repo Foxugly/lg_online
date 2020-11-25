@@ -7,14 +7,16 @@
 # the Free Software Foundation, either version 3 of the License, or (at
 # your option) any later version.
 
-from django.db import models
-from django.conf import settings
-from django.utils.translation import ugettext_lazy as _
-from datetime import datetime, timedelta
-from django.utils import formats
-from icalendar import vText, Event, Calendar
-import pytz
 import os
+from datetime import datetime, timedelta
+
+import pytz
+from django.conf import settings
+from django.db import models
+from django.utils import formats
+from django.utils.translation import ugettext_lazy as _
+from icalendar import vText, Event, Calendar
+
 from tools.toolbox import string_random
 
 
@@ -109,16 +111,18 @@ class WeekTemplate(models.Model):
             self.add_daytemplate(daytmp)
         return daytmp
 
-
     def __str__(self):
         return u"WeekTemplate %d" % self.id
 
 
 class Slot(models.Model):
     date = models.DateField(verbose_name=_(u'Date'))
-    st = models.ForeignKey(SlotTemplate, verbose_name=_(u'Slot template'), blank=True, null=True, on_delete=models.CASCADE)
-    customer = models.ForeignKey('customuser.CustomUser', verbose_name=_(u'Customer'), related_name='back_customuser', blank=True, null=True, on_delete=models.CASCADE)
-    refer_accountant = models.ForeignKey('accountant.Accountant', verbose_name=_('refer_accountant'), related_name='back_accountant', null=True, on_delete=models.CASCADE)
+    st = models.ForeignKey(SlotTemplate, verbose_name=_(u'Slot template'), blank=True, null=True,
+                           on_delete=models.CASCADE)
+    customer = models.ForeignKey('customuser.CustomUser', verbose_name=_(u'Customer'), related_name='back_customuser',
+                                 blank=True, null=True, on_delete=models.CASCADE)
+    refer_accountant = models.ForeignKey('accountant.Accountant', verbose_name=_('refer_accountant'),
+                                         related_name='back_accountant', null=True, on_delete=models.CASCADE)
     informations = models.TextField(verbose_name=_(u'Usefull informations'), blank=True, null=True)
     booked = models.BooleanField(verbose_name=_(u'Booked'), default=False)
     random = models.CharField(verbose_name=_(u'random character'), max_length=16, blank=True, null=True)
@@ -139,7 +143,7 @@ class Slot(models.Model):
     def start_dt(self):
         tz = pytz.timezone(str(self.refer_accountant.timezone))
         return tz.localize(
-                datetime(self.date.year, self.date.month, self.date.day, self.st.start.hour, self.st.start.minute, 0))
+            datetime(self.date.year, self.date.month, self.date.day, self.st.start.hour, self.st.start.minute, 0))
 
     def start_t(self):
         return self.date.strftime('%Y-%m-%d') + "T" + self.hour_t(self.st.start)
@@ -147,7 +151,7 @@ class Slot(models.Model):
     def end_dt(self):
         tz = pytz.timezone(str(self.refer_accountant.timezone))
         return tz.localize(
-                datetime(self.date.year, self.date.month, self.date.day, self.st.end.hour, self.st.end.minute, 0))
+            datetime(self.date.year, self.date.month, self.date.day, self.st.end.hour, self.st.end.minute, 0))
 
     def end_t(self):
         return self.date.strftime('%Y-%m-%d') + "T" + self.hour_t(self.st.end)
@@ -163,7 +167,8 @@ class Slot(models.Model):
         if self.booked:
             if self.refer_accountant.view_busy_slot:
                 d = {'id': self.id, 'date': self.date_t(), 'start': self.hour_t(self.st.start),
-                     'title': str(_('Booked')), 'color': self.refer_accountant.get_color(self.st.slot_type, self.booked),
+                     'title': str(_('Booked')),
+                     'color': self.refer_accountant.get_color(self.st.slot_type, self.booked),
                      'booked': self.booked, 'informations': self.informations}
                 if self.customuser:
                     d_customuser = self.customuser.as_json()
@@ -180,15 +185,15 @@ class Slot(models.Model):
         return u"Slot %d" % self.pk
 
     def save(self, *args, **kwargs):
-        super(Slot, self).save(*args, **kwargs)          
+        super(Slot, self).save(*args, **kwargs)
         if not self.random:
             self.random = string_random(16)
         if self.refer_accountant:
-            self.path = os.path.join(settings.ICS_ROOT, 
+            self.path = os.path.join(settings.ICS_ROOT,
                                      '%s_%s_%s.ics' % (self.random, self.refer_accountant, self.id))
             if self not in self.refer_accountant.slots.all():
                 self.refer_accountant.slots.add(self)
-        super(Slot, self).save(*args, **kwargs)   
+        super(Slot, self).save(*args, **kwargs)
 
     def icalendar(self):
         cal = Calendar()

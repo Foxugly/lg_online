@@ -1,6 +1,7 @@
 from django.forms import ModelForm
-from company.models import Company, Iban
 from django.forms import inlineformset_factory
+
+from company.models import Company, Iban
 
 
 class CompanyCreateForm(ModelForm):
@@ -12,7 +13,6 @@ class CompanyCreateForm(ModelForm):
         help_texts = {'enterprise_number': "ex 'BE0123456789", }
 
 
-
 class CompanyAdminForm(ModelForm):
     model = Company
 
@@ -21,7 +21,6 @@ class CompanyAdminForm(ModelForm):
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
             self.fields['enterprise_number'].widget.attrs['readonly'] = True
-
 
     class Meta:
         model = Company
@@ -41,8 +40,6 @@ class CompanyForm(ModelForm):
         if instance and instance.pk:
             self.fields['enterprise_number'].widget.attrs['readonly'] = True
         self.fields['start_date'].widget.attrs['class'] = 'date'
-
-
 
     class Meta:
         model = Company
@@ -70,7 +67,7 @@ class CompanyProposalForm(ModelForm):
 
     class Meta:
         model = Company
-        fields = ['calculated_amount', 'date_calculated_amount', 'proposed_amount' ]
+        fields = ['calculated_amount', 'date_calculated_amount', 'proposed_amount']
 
 
 class IbanUpdateForm(ModelForm):
@@ -79,4 +76,4 @@ class IbanUpdateForm(ModelForm):
         exclude = ()
 
 
-CompanyIbanFormSet = inlineformset_factory(Company, Iban, form=IbanUpdateForm, extra=1,)
+CompanyIbanFormSet = inlineformset_factory(Company, Iban, form=IbanUpdateForm, extra=1, )

@@ -1,5 +1,6 @@
 from django import template
 from django.utils.translation import gettext as _
+
 from simulation.models import translate_fields
 
 register = template.Library()
@@ -34,10 +35,10 @@ def clean(obj):
     return out
 
 
-
 @register.filter(name='app_name')
 def app_name(obj):
     return obj.app_label
+
 
 @register.filter()
 def index(d, value):
@@ -52,4 +53,3 @@ def time_format(time):
 @register.filter()
 def date_format(date):
     return date.strftime("%d/%m/%Y")
-

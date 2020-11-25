@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -16,18 +15,35 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('turnover', models.PositiveIntegerField(default=50000, verbose_name="Chiffre d'affaires")),
-                ('transmission', models.CharField(choices=[('online', 'En ligne'), ('paper', 'Papier')], default='online', max_length=20, verbose_name='Mode de transmission des documents')),
-                ('nb_invoices_sale', models.PositiveIntegerField(default=200, verbose_name='Nombre de factures de vente annuels')),
-                ('nb_invoices_purchase', models.PositiveIntegerField(default=200, verbose_name="Nombre de factures d'achat et tickets annuels")),
+                ('transmission',
+                 models.CharField(choices=[('online', 'En ligne'), ('paper', 'Papier')], default='online',
+                                  max_length=20, verbose_name='Mode de transmission des documents')),
+                ('nb_invoices_sale',
+                 models.PositiveIntegerField(default=200, verbose_name='Nombre de factures de vente annuels')),
+                ('nb_invoices_purchase', models.PositiveIntegerField(default=200,
+                                                                     verbose_name="Nombre de factures d'achat et tickets annuels")),
                 ('nb_managers', models.PositiveIntegerField(default=1, verbose_name='Nombre de dirigeants')),
                 ('nb_employees', models.PositiveIntegerField(default=0, verbose_name="Nombre d'employers")),
                 ('nb_creditcard', models.PositiveIntegerField(default=1, verbose_name='Nombre de carte de credits')),
-                ('alternatif_payments', models.BooleanField(verbose_name='Système de paiements alternatifs (Paypal, Sumup, Stripe, ...)')),
-                ('sector', models.CharField(choices=[('horeca', 'Horeca'), ('management', 'Société de management'), ('liberal', 'Profession libérale'), ('construction', 'Construction'), ('immo', 'Immobilière / Patrimoniale'), ('assurances', 'Assurances'), ('informatique', 'Informatique'), ('retails', 'Retails'), ('avocat', 'Avocat'), ('design', 'Design'), ('architecte', 'Architecte'), ('marketing', 'Marketing')], default='horeca', max_length=20, verbose_name="Secteur d'activité")),
-                ('tax_liability', models.CharField(choices=[('monthly', 'mensuellement'), ('quarterly', 'trimestriellement'), ('none', 'Non déposant')], default='quarterly', max_length=20, verbose_name='Fréquence de déclaration TVA')),
-                ('calculated_amount', models.PositiveIntegerField(blank=True, default=0, verbose_name='Mensualité calculée')),
+                ('alternatif_payments',
+                 models.BooleanField(verbose_name='Système de paiements alternatifs (Paypal, Sumup, Stripe, ...)')),
+                ('sector', models.CharField(choices=[('horeca', 'Horeca'), ('management', 'Société de management'),
+                                                     ('liberal', 'Profession libérale'),
+                                                     ('construction', 'Construction'),
+                                                     ('immo', 'Immobilière / Patrimoniale'),
+                                                     ('assurances', 'Assurances'), ('informatique', 'Informatique'),
+                                                     ('retails', 'Retails'), ('avocat', 'Avocat'), ('design', 'Design'),
+                                                     ('architecte', 'Architecte'), ('marketing', 'Marketing')],
+                                            default='horeca', max_length=20, verbose_name="Secteur d'activité")),
+                ('tax_liability', models.CharField(
+                    choices=[('monthly', 'mensuellement'), ('quarterly', 'trimestriellement'),
+                             ('none', 'Non déposant')], default='quarterly', max_length=20,
+                    verbose_name='Fréquence de déclaration TVA')),
+                ('calculated_amount',
+                 models.PositiveIntegerField(blank=True, default=0, verbose_name='Mensualité calculée')),
                 ('date_calculated_amount', models.DateTimeField(blank=True, null=True)),
-                ('proposed_amount', models.PositiveIntegerField(blank=True, default=0, verbose_name='Mensualité proposée')),
+                ('proposed_amount',
+                 models.PositiveIntegerField(blank=True, default=0, verbose_name='Mensualité proposée')),
                 ('created', models.DateTimeField(auto_now_add=True)),
             ],
             options={

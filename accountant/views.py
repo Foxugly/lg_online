@@ -1,5 +1,5 @@
-from tools.generic_views import *
 from accountant.models import Accountant
+from tools.generic_views import *
 
 
 class ContactCreateView(GenericCreateView):
@@ -8,7 +8,7 @@ class ContactCreateView(GenericCreateView):
 
 class ContactListView(GenericListView):
     model = Accountant
-    
+
 
 class ContactUpdateView(GenericUpdateView):
     model = Accountant

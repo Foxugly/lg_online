@@ -1,9 +1,10 @@
-from tools.generic_class import GenericClass
-from django.db import models
-from django.utils.translation import gettext as _
 import math
-from django.utils import timezone
 
+from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext as _
+
+from tools.generic_class import GenericClass
 
 SECTOR_CHOICES = (
     ('horeca', _("Horeca")),
@@ -37,7 +38,7 @@ TRANSMISSION_CHOICES = (
 
 translate_fields = {}
 for tupl in [SECTOR_CHOICES, TAX_LIABILITY_CHOICES, TRANSMISSION_CHOICES]:
-    for key , value in tupl:
+    for key, value in tupl:
         translate_fields[key] = value
 
 coef_tax_liability = {'monthly': 1.5, 'quarterly': 1.3, 'none': 1}
@@ -60,7 +61,7 @@ class Simulation(GenericClass):
                                      default='quarterly')
     calculated_amount = models.PositiveIntegerField(_("Mensualité calculée"), blank=True, default=0)
     date_calculated_amount = models.DateTimeField(blank=True, null=True)
-    #proposed_amount = models.PositiveIntegerField(_("Mensualité proposée"), blank=True, default=0)
+    # proposed_amount = models.PositiveIntegerField(_("Mensualité proposée"), blank=True, default=0)
     created = models.DateTimeField(auto_now_add=True)
 
     def compute(self):
@@ -82,7 +83,7 @@ class Simulation(GenericClass):
         v_alternatif_payments = 0 if not self.alternatif_payments else 300
         s = v_nb_invoices_sale + v_nb_invoices_purchase + v_transmission + v_nb_managers + v_nb_employees + \
             v_nb_creditcard + v_alternatif_payments
-        max_calulated = (s * v_ca * coef_sector[self.sector] * coef_tax_liability[self.tax_liability])/12
+        max_calulated = (s * v_ca * coef_sector[self.sector] * coef_tax_liability[self.tax_liability]) / 12
         return max_calulated
 
     def compute_with_max(self):

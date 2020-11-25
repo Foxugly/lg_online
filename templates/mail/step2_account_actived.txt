@@ -1,0 +1,10 @@
+{% load i18n %}{% autoescape off %}
+{% trans "Bonjour" %} {{ user.first_name }},
+
+{% blocktrans %}Bravo vous venez d'activer votre compte{% endblocktrans %}.
+{% blocktrans %}Vous avez quelqus jours pour compléter les informations manquantes{% endblocktrans %}.
+
+http://{{ domain }}
+
+{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}
+{% endautoescape %}

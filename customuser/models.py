@@ -1,12 +1,13 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-from company.models import Company
-from phonenumber_field.modelfields import PhoneNumberField
-from tools.generic_class import GenericClass
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
+from phonenumber_field.modelfields import PhoneNumberField
 from timezone_field import TimeZoneField
+
+from company.models import Company
+from tools.generic_class import GenericClass
 
 
 class CustomUserManager(BaseUserManager):
@@ -46,7 +47,6 @@ class CustomUser(AbstractUser, GenericClass):
     schedule_meeting = models.BooleanField(default=True)
     timezone = TimeZoneField(default=settings.TIME_ZONE)
 
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -79,7 +79,7 @@ class CustomUser(AbstractUser, GenericClass):
             empty_fields.append(_('votre numéro de téléphone'))
         if not self.id_card:
             empty_fields.append(_("une copie de votre carte d'identité"))
-        if empty_fields :
+        if empty_fields:
             return empty_fields
         else:
             return None
@@ -91,4 +91,3 @@ class CustomUser(AbstractUser, GenericClass):
             c.valid_user = not self.get_empty_fields()
             c.save()
         super(CustomUser, self).save(*args, **kwargs)
-

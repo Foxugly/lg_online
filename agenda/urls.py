@@ -7,14 +7,16 @@
 # the Free Software Foundation, either version 3 of the License, or (at
 # your option) any later version.
 
-from django.urls import path
-from agenda.views import st_add, st_remove, st_apply, st_clean, get_slot, book_slot, remove_slot, clean_slot, CalendarListView
 from django.contrib.auth.decorators import login_required
+from django.urls import path
+
+from agenda.views import st_add, st_remove, st_apply, st_clean, get_slot, book_slot, remove_slot, clean_slot, \
+    CalendarListView
 
 app_name = 'agenda'
 urlpatterns = (
-	path('', CalendarListView.as_view(), name='slot_list'),
-	#path('<int:accountant_id>/', calendar, name='calendar'),
+    path('', CalendarListView.as_view(), name='slot_list'),
+    # path('<int:accountant_id>/', calendar, name='calendar'),
     path('ajax/s/get/<int:slot_id>/', get_slot, name='get_slot'),
     path('ajax/st/add/', login_required(st_add), name='st_add'),
     path('ajax/st/clean/', login_required(st_clean), name='st_clean'),

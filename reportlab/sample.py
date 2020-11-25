@@ -1,12 +1,11 @@
-
 # -*- coding: utf-8 -*-
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, PageBreak, ListFlowable, ListItem
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle, ListStyle
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import mm, cm
-from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
+from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 
 
 class LGCanvas(canvas.Canvas):
@@ -37,12 +36,12 @@ class LGCanvas(canvas.Canvas):
 
     def header(self):
         # self.drawRightString(195*mm, 272*mm, "HEADER1")
-        p, x0, y0, x1, y1 = self.get_image('logo_lieutenant_guillaume.png', 20*mm, 262*mm, 8*cm)
+        p, x0, y0, x1, y1 = self.get_image('logo_lieutenant_guillaume.png', 20 * mm, 262 * mm, 8 * cm)
         self.drawImage(p, x0, y0, x1, y1, mask="auto")
         # self.drawString(195*mm, 252*mm, "HEADER2")
 
     def footer(self):
-        self.drawRightString(200*mm, 20*mm, "FOOTER")
+        self.drawRightString(200 * mm, 20 * mm, "FOOTER")
 
 
 class Procuration:

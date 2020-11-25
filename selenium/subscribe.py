@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-import time
 import random
 import string
+import time
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 
 def rand(size):
-    return''.join(random.sample(string.ascii_lowercase + string.digits, size))
+    return ''.join(random.sample(string.ascii_lowercase + string.digits, size))
 
 
 def subscribe(driver, user, password):

@@ -10,12 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
+
 import os
+
 from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -25,10 +26,9 @@ SECRET_KEY = '1bjb+q*)dcd6-lwml5nn-n2v&b655^6sc@3#nqt*sg*dbjmo+0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-STATE = 'ACC'  # DEV or ACC or PROD
+STATE = 'PROD'  # DEV or ACC or PROD
 
 ALLOWED_HOSTS = ['*']
-
 
 CRONJOBS = [
     ('* * * * *', 'company.cron.my_scheduled_test')
@@ -38,7 +38,6 @@ CRONJOBS = [
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -60,7 +59,7 @@ INSTALLED_APPS = [
     'simulation',
     'django_countries',
     'address',
-    #'chroniker',
+    # 'chroniker',
     'django_crontab',
 ]
 
@@ -145,7 +144,6 @@ DAY_CHOICES = (
     (7, _(u'Dimanche')),
 )
 
-
 TITLE_CHOICES = (
     (1, _(u'Professeur')),
     (2, _(u'Docteur')),
@@ -164,8 +162,6 @@ TYPE_OFFER = (
 )
 
 SLOT_COLOR = ['#73B5EB', '#94F7CE', '#D798E2', '#FFE68F', ]
-
-
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'), ]
 # Static files (CSS, JavaScript, Images)

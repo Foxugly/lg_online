@@ -1,22 +1,15 @@
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView, PasswordResetView
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from customuser.models import CustomUser
-from django.contrib.auth.views import LoginView, PasswordResetView
-from django.contrib import messages
-from customuser.forms import CustomUserCreateForm, CustomUserForm, MyPasswordResetForm
-from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode
-from customuser.tokens import account_activation_token
-from django.contrib.auth.forms import AuthenticationForm
-from accountant.models import Accountant
-from simulation.models import Simulation
-from tools.generic_views import *
-from django.contrib.messages.views import SuccessMessageMixin
-from simulation.forms import SimulationAjustedForm, ReadOnlySimulationMixin
-from django.contrib.auth.tokens import default_token_generator
-from django.shortcuts import render
+
 from company.models import Company
+from customuser.forms import CustomUserCreateForm, CustomUserForm, MyPasswordResetForm
+from customuser.models import CustomUser
+from simulation.forms import SimulationAjustedForm, ReadOnlySimulationMixin
+from simulation.models import Simulation
 from tools.bce import get_data_from_bce
+from tools.generic_views import *
 
 
 class CustomUserLoginView(LoginView):
@@ -67,7 +60,6 @@ class CustomUserCreateView(GenericCreateView):
             "Remplissez les champs suivants et n’oubliez pas de cliquer sur le lien de l’e-mail qui vous sera envoyé pour activer votre compte.")})
         # TODO verbose_name
         return context
-
 
     def get_success_url(self):
         return reverse("comment_creation")

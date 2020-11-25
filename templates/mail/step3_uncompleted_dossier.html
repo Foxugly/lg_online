@@ -1,0 +1,18 @@
+{% load i18n %}{% autoescape off %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<p>{% trans "Bonjour" %},</p>
+<p></p>
+<p>{% blocktrans %}Le dossier {{c}} de {{user}} n'est pas encore complété{% endblocktrans %}.</p>
+<p>{% blocktrans %}Prenez contact avec la personne pour une réunion{% endblocktrans %}.</p>
+<p></p>
+<p><a href="http://{{ domain }}">http://{{ domain }}</a></p>
+<p></p>
+<p>{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}</p>
+</body>
+</html>
+{% endautoescape %}

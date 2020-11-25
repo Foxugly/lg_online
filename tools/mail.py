@@ -1,9 +1,10 @@
-from lg.credential_email import EMAIL_USE_TLS, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, \
-    EMAIL_FROM, EMAIL_REPLY
+import mimetypes
+import os
 import smtplib
 from email.message import EmailMessage
-import os
-import mimetypes
+
+from lg.credential_email import EMAIL_USE_TLS, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, \
+    EMAIL_FROM, EMAIL_REPLY
 
 
 def send_mail_smtp(subject, to, reply_to, text, html, attachments):
@@ -14,12 +15,12 @@ def send_mail_smtp(subject, to, reply_to, text, html, attachments):
         msg['To'] = ', '.join(to)
     else:
         msg['To'] = to
-    if reply_to :
+    if reply_to:
         msg.add_header('reply-to', reply_to)
     else:
-       msg.add_header('reply-to', EMAIL_REPLY) 
+        msg.add_header('reply-to', EMAIL_REPLY)
 
-    # msg.attach(MIMEText(text, 'plain'))
+        # msg.attach(MIMEText(text, 'plain'))
     msg.set_content(text)
     if html:
         msg.add_alternative(html, subtype='html')

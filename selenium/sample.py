@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from selenium import webdriver
-from .subscribe import subscribe, rand
 
+from .subscribe import subscribe, rand
 
 if __name__ == "__main__":
     driver = webdriver.Chrome()

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
+import getpass
+import time
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import time
-import getpass
 
 
 def fid(driver, user, password):
@@ -17,7 +18,7 @@ def fid(driver, user, password):
     time.sleep(5)
     col1 = '/html/body/div[5]/div[2]/div/div[2]/div[1]/div/table/tbody'
     driver_col1 = driver.find_element_by_xpath(col1)
-    for i in range(1,10):
+    for i in range(1, 10):
         path_label = '%s/tr[%s]/td[1]/div' % (col1, i)
         print(path_label)
         e = driver.find_element_by_xpath(path_label).text
@@ -64,9 +65,9 @@ def fid(driver, user, password):
     addr_postal_code.send_keys("1050")
 
     elem_job = driver_col1.find_elements_by_class_name("job")
-    for i in range(0, int(len(elem_job)/2)):
-        div_label = elem_job[2*i]
-        div_ratio = elem_job[(2*i)+1]
+    for i in range(0, int(len(elem_job) / 2)):
+        div_label = elem_job[2 * i]
+        div_ratio = elem_job[(2 * i) + 1]
         print("--------------- %s" % div_label.text)
         div_ratio.location_once_scrolled_into_view
         ratio = div_ratio.find_element_by_class_name('select-box')
@@ -125,8 +126,8 @@ def fid(driver, user, password):
             time.sleep(5)
             inputt = div_offset.find_element_by_tag_name('input')
             time.sleep(5)
-            #div_offset.find_element_by_class_name("selectedList").click()
-            #time.sleep(5)
+            # div_offset.find_element_by_class_name("selectedList").click()
+            # time.sleep(5)
             inputt.send_keys('March')
             time.sleep(1)
             inputt.send_keys(Keys.ENTER)

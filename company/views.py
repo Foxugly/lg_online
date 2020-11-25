@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.db import transaction
 from django.urls import reverse
 from django.utils.translation import gettext as _
+
 from company.forms import CompanyCreateForm, CompanyForm, CompanyAdminForm, CompanyIbanFormSet
 from company.models import Company
 from tools.bce import get_data_from_bce
@@ -35,8 +36,8 @@ class CompanyListView(GenericListView):
             else:
                 fields = ", ".join(str(v) for v in empty_fields[:-1]) + " %s %s" % (_('and'), str(empty_fields[-1]))
             msg = '%s %s %s <a href=%s>%s</a>' % (
-            _('Pour compléter votre profil, veuillez renseigner'), fields, _("cliquez"),
-            reverse('customuser:profile_update'), _("ici"))
+                _('Pour compléter votre profil, veuillez renseigner'), fields, _("cliquez"),
+                reverse('customuser:profile_update'), _("ici"))
             messages.info(self.request, msg, extra_tags='safe')
             if self.request.user.schedule_meeting:
                 # msg_calendar = "%s <a href=%s>%s</a>" % (_("Prenez un rendez-vous dès maintenant avec un membre de notre équipe cliquez"), reverse('agenda:slot_list'), _("ici"))
@@ -88,7 +89,9 @@ class CompanyUpdateView(GenericUpdateView):
         with transaction.atomic():
             inst = form.save()
             if ibans.is_valid:
+                print("ibans", ibans)
                 ibans.instance = inst
+                print("inst", inst)
                 ibans.save()
         form.save()
         return super(CompanyUpdateView, self).form_valid(form)
@@ -100,4 +103,3 @@ class CompanyDetailView(GenericDetailView):
 
 class CompanyDeleteView(GenericDeleteView):
     model = Company
-

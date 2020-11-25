@@ -1,10 +1,11 @@
-from tools.generic_class import GenericClass
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext as _
 from phonenumber_field.modelfields import PhoneNumberField
-from django.conf import settings
 from timezone_field import TimeZoneField
+
 from address.models import Address
+from tools.generic_class import GenericClass
 
 
 class ColorSlot(models.Model):
@@ -19,14 +20,14 @@ class ColorSlot(models.Model):
 
 class Accountant(GenericClass):
     name = models.CharField(_("name"), max_length=50, blank=True)
-    email = models.CharField(_("email"), max_length=50, blank=True, null=True,)
+    email = models.CharField(_("email"), max_length=50, blank=True, null=True, )
     telephone = PhoneNumberField(_("Phone number"), blank=True, null=True, help_text='format : +3221234567')
     default = models.BooleanField()
     view_busy_slot = models.BooleanField(default="False")
     colorslots = models.ManyToManyField(ColorSlot, verbose_name=_(u'ColorSlot'), blank=True)
     timezone = TimeZoneField(default=settings.TIME_ZONE)
     address = models.ForeignKey(Address, blank=True, null=True, on_delete=models.CASCADE)
-    #weektemplate = models.ForeignKey('agenda.WeekTemplate', verbose_name=_(u'Week template'), blank=True, null=True, on_delete=models.CASCADE)
+    # weektemplate = models.ForeignKey('agenda.WeekTemplate', verbose_name=_(u'Week template'), blank=True, null=True, on_delete=models.CASCADE)
     slots = models.ManyToManyField('agenda.Slot', verbose_name=_(u'slots'), blank=True)
 
     def __str__(self):
@@ -34,7 +35,6 @@ class Accountant(GenericClass):
 
     class Meta:
         verbose_name = _('Comptable')
-
 
     def get_colorslot(self, i):
         ret = None
@@ -51,7 +51,7 @@ class Accountant(GenericClass):
 
     def get_n_colorslots(self):
         return len(self.colorslots.all())
-        
+
     def get_color(self, i, booked):
         slot = self.get_colorslot(i)
         return str(slot.booked_slot_color) if booked else str(slot.free_slot_color)

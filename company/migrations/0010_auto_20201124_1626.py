@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('company', '0009_auto_20201124_1555'),
     ]
@@ -18,6 +17,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='company',
             name='subscription_status',
-            field=models.CharField(choices=[(1, 'subscription'), (2, 'actived subscription'), (3, 'completed folder'), (4, 'final offer sent'), (5, 'accepted folder'), (6, 'actived')], default=1, max_length=50, verbose_name='Subscription Status'),
+            field=models.CharField(choices=[(1, 'subscription'), (2, 'actived subscription'), (3, 'completed folder'),
+                                            (4, 'final offer sent'), (5, 'accepted folder'), (6, 'actived')], default=1,
+                                   max_length=50, verbose_name='Subscription Status'),
         ),
     ]

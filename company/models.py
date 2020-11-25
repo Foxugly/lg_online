@@ -1,20 +1,23 @@
 from django.db import models
+from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 from django_countries.fields import CountryField
 from localflavor.generic.models import IBANField
 from vies.validators import VATINValidator
+
+from config_process import *
 from tools.generic_class import GenericClass
+from tools.mail import send_mail_smtp
 
 
 class Company(GenericClass):
-
     SUBSCRIBE_STATUS = [
-        (1, _('subscription')),
-        (2, _('actived subscription')),
-        (3, _('completed folder')),
-        (4, _('final offer sent')),
-        (5, _('accepted folder')),
-        (6, _('actived'))
+        ('1', _('subscription')),
+        ('2', _('actived subscription')),
+        ('3', _('completed folder')),
+        ('4', _('final offer sent')),
+        ('5', _('final offer accepted')),
+        ('6', _('actived'))
     ]
 
     END_FISCAL_DATE_CHOICES = [
@@ -51,7 +54,8 @@ class Company(GenericClass):
     accountant = models.ForeignKey('accountant.Accountant', blank=True, null=True, on_delete=models.CASCADE)
     token = models.CharField(max_length=64, blank=True)
     active = models.BooleanField(default=False)
-    subscription_status = models.CharField(_("Subscription Status"), max_length=50, choices=SUBSCRIBE_STATUS, default=1, )
+    subscription_status = models.CharField(_("Subscription Status"), max_length=50, choices=SUBSCRIBE_STATUS,
+                                           default='1', )
     subscription_date = models.DateField(_("Subscription date"), blank=True, null=True)
 
     def get_simulation_price(self):
@@ -75,16 +79,16 @@ class Company(GenericClass):
             return None
 
     def save(self, *args, **kwargs):
-        if len(self.get_empty_fields()) == 0:
-            if self.subscription_status == 2:
-                self.subscription_status = 3
-                # TODO send mail to accountant : "completed folder"
-                # dict_context = {'company': c, 'user': user, 'domain': 'www.mylieutenantguillaume.com',}
-                # msg_html = render_to_string('mail/acc_confirm_proposal.html', dict_context)
-                # msg_txt = render_to_string('mail/acc_confirm_proposal.txt', dict_context)
-                # to = user.email
-                # reply_to = "info@lieutenantguillaume.com"
-                # print(msg_txt)
+        if self.get_empty_fields() is None:
+            if self.subscription_status == '2':
+                self.subscription_status = '3'
+                dict_context = {'company': self, 'domain': domain}
+                msg_html = render_to_string('mail/step4_dossier_complet.html', dict_context)
+                msg_txt = render_to_string('mail/step4_dossier_complet.txt', dict_context)
+                subject = '%s %s' % (tag, subject_step4)
+                send_mail_smtp(subject, self.accountant.email, reply_to, msg_txt, msg_html, None)
+                if show_msg:
+                    print(msg_txt)
         super(Company, self).save(*args, **kwargs)
 
     def fill_data(self, data):

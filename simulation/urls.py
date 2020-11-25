@@ -8,8 +8,8 @@
 # your option) any later version.
 
 from django.urls import path
-from .views import SimulationCreateView, SimulationUpdateView, send_simulation_by_mail
 
+from .views import SimulationCreateView, SimulationUpdateView, send_simulation_by_mail
 
 app_name = 'simulation'
 

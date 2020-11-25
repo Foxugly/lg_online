@@ -4,11 +4,12 @@
 <body>
 <p>{% trans "Bonjour" %} {{ user.first_name }},</p>
 <p></p>
-<p>{% blocktrans %}Bravo vous venez de vous Enregistrer{% endblocktrans %} ! </p>
+<p>{% blocktrans %}Bravo vous venez de vous Enregistrer{% endblocktrans %}! </p>
 <p>{% blocktrans %}Encore une dernière étape et vous pourrez accéder à votre compte{% endblocktrans %}. </p>
-<p>{% blocktrans %}Activez votre compte en cliquant sur le lien suivant{% endblocktrans %} : </p> 
+<p>{% blocktrans %}Activez votre compte en cliquant sur le lien suivant{% endblocktrans %} : </p>
 <p></p>
-<p><a href ="http://{{ domain }}{% url 'customuser:activate' uidb64=uid token=token %}">http://{{ domain }}{% url 'customuser:activate' uidb64=uid token=token %}</a></p>
+<p><a href="http://{{ domain }}{% url 'customuser:activate' uidb64=uid token=token %}">http://{{ domain }}{% url
+    'customuser:activate' uidb64=uid token=token %}</a></p>
 <p></p>
 <p>{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}</p>
 </body>

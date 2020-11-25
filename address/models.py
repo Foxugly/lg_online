@@ -1,6 +1,6 @@
 from django.db import models
-from django_countries.fields import CountryField
 from django.utils.translation import gettext as _
+from django_countries.fields import CountryField
 
 
 class Address(models.Model):
@@ -12,7 +12,7 @@ class Address(models.Model):
     country = CountryField(_("Country"), default='BE', max_length=255, blank=True)
 
     def __str__(self):
-    	return self.name
+        return self.name
 
     def formatted(self):
-    	return "%s %s, %s %s, %s" % (self.street, self.number, self.zipcode, self.city, self.country)
+        return "%s %s, %s %s, %s" % (self.street, self.number, self.zipcode, self.city, self.country)

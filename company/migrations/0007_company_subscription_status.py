@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('company', '0006_company_active'),
     ]
@@ -13,6 +12,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='company',
             name='subscription_status',
-            field=models.CharField(choices=[('1', 'subscription'), ('2', 'actived subscription'), ('3', 'completed folder'), ('4', 'final offer sent'), ('5', 'accepted folder')], default=1, max_length=50, verbose_name='Status'),
+            field=models.CharField(
+                choices=[('1', 'subscription'), ('2', 'actived subscription'), ('3', 'completed folder'),
+                         ('4', 'final offer sent'), ('5', 'accepted folder')], default=1, max_length=50,
+                verbose_name='Status'),
         ),
     ]

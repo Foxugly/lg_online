@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-from selenium import webdriver
 import time
+
+from selenium import webdriver
 
 
 def yuki(driver, user, password):

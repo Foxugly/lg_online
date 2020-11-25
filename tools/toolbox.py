@@ -12,9 +12,7 @@ import random
 import string
 # import tempfile
 
-from datetime import datetime
-import pytz
-from django.utils.translation import ugettext_lazy as _
+
 # from django.conf import settings
 
 

@@ -13,24 +13,25 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 # from django.conf.urls import handler400, handler403, handler404, handler500
 from django.contrib import admin
-from django.urls import path, include, reverse
-from django.conf.urls.static import static
-from django.conf import settings
-from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from django.utils import translation
-from customuser.views import CustomUserUpdateView, CustomUserLoginView, MyPasswordResetView
-from customuser.decorators import check_lang
 from django.http import JsonResponse
-from tools.mail import send_mail_smtp
+from django.shortcuts import render, redirect
+from django.urls import path, include, reverse
+from django.utils import translation
 from django.utils.translation import gettext_lazy as _
+
+from customuser.decorators import check_lang
+from customuser.views import CustomUserUpdateView, CustomUserLoginView, MyPasswordResetView
+from tools.mail import send_mail_smtp
 
 
 @check_lang
 def home(request):
-    #return calendar(request, request.user.accountant.pk)
+    # return calendar(request, request.user.accountant.pk)
     c = {}
     if request.user.is_authenticated:
         if request.user.is_active:
@@ -92,6 +93,7 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar
+
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls))]
 if not settings.DEBUG:

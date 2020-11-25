@@ -1,20 +1,22 @@
 import datetime
-from django.contrib import messages
+
 from django.contrib.auth.tokens import default_token_generator
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.translation import gettext as _
 from wkhtmltopdf.views import PDFTemplateResponse
+
 from company.forms import CompanyProposalForm, CompanyPdfForm
 from company.models import Company
+from config_process import *
 from customuser.forms import CustomUserPdfForm
 from customuser.models import CustomUser
 from simulation.forms import SimulationReadonlyForm, SimulationPdfForm
 from tools.generic_views import *
 from tools.mail import send_mail_smtp
-from django.utils.translation import gettext as _
 
 
 def get_users(c):
@@ -23,17 +25,17 @@ def get_users(c):
 
 def run_config(request, pk):
     c = Company.objects.get(pk=pk)
-    c.subscription_status = 6
+    c.subscription_status = '6'
     c.save()
-    print("YUKI + FID + SEND MAIL")
+    user = get_users(c)[0]
     # TODO yuki and fid
-    # TODO send credentials
-    # dict_context = {'company': c, 'user': user, 'domain': 'www.mylieutenantguillaume.com',}
-    # msg_html = render_to_string('mail/acc_confirm_proposal.html', dict_context)
-    # msg_txt = render_to_string('mail/acc_confirm_proposal.txt', dict_context)
-    # to = user.email
-    # reply_to = "info@lieutenantguillaume.com"
-    # print(msg_txt)
+    dict_context = {'company': c, 'user': user, 'domain': domain}
+    msg_html = render_to_string('mail/step7_send_credentials.html', dict_context)
+    msg_txt = render_to_string('mail/step7_send_credentials.txt', dict_context)
+    subject = '%s %s' % (tag, subject_step7)
+    send_mail_smtp(subject, user.email, reply_to, msg_txt, msg_html, None)
+    if show_msg:
+        print(msg_txt)
     context = {'title': _('Create companies in softwares'), 'text': _('Procedure started.'), }
     return render(request, "comment.html", context)
 
@@ -41,27 +43,26 @@ def run_config(request, pk):
 def send_proposal(request, pk):
     c = Company.objects.get(pk=pk)
     c.token = get_random_string(length=64)
-    c.subscription_status = 4
+    c.subscription_status = '4'
     c.save()
     for user in get_users(c):
         if not c.date_proposed_amount:
             c.date_proposed_amount = datetime.datetime.today()
             c.save()
-        subject = _('[LG&Associates] Final proposal')
+        subject = '%s %s' % (tag, subject_step5)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token_company = c.token
         token = default_token_generator.make_token(user)
 
-        dict_context = {'company': c, 'user': user, 'domain': 'www.mylieutenantguillaume.com', 'uid': uid,
-                   'token_company': token_company, 'token': token, }
-        msg_html = render_to_string('mail/acc_confirm_proposal.html', dict_context)
-        msg_txt = render_to_string('mail/acc_confirm_proposal.txt', dict_context)
-        to = user.email
+        dict_context = {'company': c, 'user': user, 'domain': domain, 'uid': uid,
+                        'token_company': token_company, 'token': token, }
+        msg_html = render_to_string('mail/step5_send_final_proposal.html', dict_context)
+        msg_txt = render_to_string('mail/step5_send_final_proposal.txt', dict_context)
         reply_to = "info@lieutenantguillaume.com"
-        print(msg_txt)
-        # TODO create pdf with simulation
-        send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html, None)
-    context = {'title': _('Activation'), 'text': _('La proposition finale a été envoyée.'), }
+        if show_msg:
+            print(msg_txt)
+        send_mail_smtp(subject, user.email, reply_to, msg_txt, msg_html, None)
+    context = {'title': _('Offre finale envoyée'), 'text': _('La proposition finale a été envoyée.'), }
     return render(request, "comment.html", context)
 
 
@@ -71,25 +72,24 @@ def confirm_proposal(request, pk, uidb64, token):
         user = CustomUser.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
         user = None
+    context = {'title': _('Offre finale acceptée')}
     if user is not None and default_token_generator.check_token(user, token):
         c = Company.objects.get(pk=pk)
-        c.subscription_status = 5
+        c.subscription_status = '5'
         c.save()
-        # TODO send email with to accountant
-        #dict_context = {'company': c, 'user': user, 'domain': 'www.mylieutenantguillaume.com',}
-        #msg_html = render_to_string('mail/acc_confirm_proposal.html', dict_context)
-        #msg_txt = render_to_string('mail/acc_confirm_proposal.txt', dict_context)
-        #to = user.email
-        #reply_to = "info@lieutenantguillaume.com"
-        #print(msg_txt)
-
-        # si on a les data, il faut lancer l'install dans Fid et Yuki (méthode dans customuser lié à une company
-        messages.success(request, _(
-            'Thank you for accepting our proposal ! You will receive in a few hours an email with all informations you will need !'))
-        return redirect('home')
+        dict_context = {'company': c, 'user': user, 'domain': domain, 'token_company': c.token}
+        msg_html = render_to_string('mail/step6_final_proposal_accepted.html', dict_context)
+        msg_txt = render_to_string('mail/step6_final_proposal_accepted.txt', dict_context)
+        subject = '%s %s' % (tag, subject_step6)
+        send_mail_smtp(subject, user.email, reply_to, msg_txt, msg_html, None)
+        send_mail_smtp(subject, c.accountant.email, reply_to, msg_txt, msg_html, None)
+        if show_msg:
+            print(msg_txt)
+        context['text'] = _(
+            " Merci d'avoir accepté notre proposition. Nous vous contacterons rapidement pour vous communiquer vos accès")
     else:
-        messages.error(request, _('Activation link is invalid!'))
-        return redirect('home')
+        context['text'] = _("Une erreur est survenue avec le lien")
+    return render(request, "comment.html", context)
 
 
 class CompanyProposalListView(GenericListView):

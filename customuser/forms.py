@@ -1,18 +1,18 @@
+from captcha.fields import CaptchaField
+from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordResetForm
 from django.forms import ModelForm
-from customuser.models import CustomUser
-
-from captcha.fields import CaptchaField
-from django.utils.http import urlsafe_base64_encode
-from customuser.tokens import account_activation_token
+from django.template import loader
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
-from tools.mail import send_mail_smtp
-from django.template import loader
 from vies.validators import VATINValidator
-from django import forms
-from django.views.generic.edit import ModelFormMixin
+
+from config_process import *
+from customuser.models import CustomUser
+from customuser.tokens import account_activation_token
+from tools.mail import send_mail_smtp
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -40,7 +40,8 @@ class CustomUserForm(ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ['email', 'first_name', 'last_name', 'telephone', 'address_street', 'address_number', 'address_zip', 'address_city', 'address_country', 'id_card', 'language']
+        fields = ['email', 'first_name', 'last_name', 'telephone', 'address_street', 'address_number', 'address_zip',
+                  'address_city', 'address_country', 'id_card', 'language']
 
 
 class CustomUserCreateForm(UserCreationForm):
@@ -62,24 +63,15 @@ class CustomUserCreateForm(UserCreationForm):
         user = self.save(commit=False)
         user.is_active = False
         user.save()
-
-        # current_site = Site.objects.get_current()
-        subject = _('[LG & Associates] activation for your account')
-        msg_html = render_to_string('mail/acc_active_email.html', {
-            'user': user,
-            'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user),
-        })
-        msg_txt = render_to_string('mail/acc_active_email.txt', {
-            'user': user,
-            'domain': 'www.mylieutenantguillaume.com',  # current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user),
-        })
+        subject = '%s %s' % (tag, subject_step1)
+        dict_context = {'user': user, 'domain': domain, 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                        'token': account_activation_token.make_token(user), }
+        msg_html = render_to_string('mail/step1_subscribe.html', dict_context)
+        msg_txt = render_to_string('mail/step1_subscribe.txt', dict_context)
         to = self.cleaned_data.get('email')
-        print(msg_txt)
-        send_mail_smtp(str(subject), to, None, msg_txt, msg_html, None)
+        send_mail_smtp(str(subject), to, reply_to, msg_txt, msg_html, None)
+        if show_msg:
+            print(msg_txt)
         return valid
 
 
@@ -87,7 +79,7 @@ class MyPasswordResetForm(PasswordResetForm):
 
     def send_mail(self, subject_template_name, email_template_name,
                   context, from_email, to_email, html_email_template_name=None):
-        subject = '[mylieutenantguillaume] ' + loader.render_to_string(subject_template_name, context)
+        subject = '[%s] ' % domain + loader.render_to_string(subject_template_name, context)
         subject = ''.join(subject.splitlines())
         body = loader.render_to_string(email_template_name, context)
         send_mail_smtp(str(subject), to_email, None, body, None, None)
@@ -101,4 +93,5 @@ class CustomUserPdfForm(ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = [ 'first_name', 'last_name', 'telephone', 'email', 'address_street', 'address_number', 'address_zip', 'address_city', 'address_country', 'language']
+        fields = ['first_name', 'last_name', 'telephone', 'email', 'address_street', 'address_number', 'address_zip',
+                  'address_city', 'address_country', 'language']

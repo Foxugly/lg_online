@@ -7,23 +7,20 @@
 # the Free Software Foundation, either version 3 of the License, or (at
 # your option) any later version.
 
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from datetime import datetime, timedelta
-from django.conf import settings
-from agenda.models import SlotTemplate, Slot
-from accountant.models import Accountant
 import json
-from tools.toolbox import string_random
-from multiprocessing import Process
+from datetime import datetime, timedelta
 from threading import Thread
+
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.db import connection
+from django.http import HttpResponse
 from django.template.loader import render_to_string
-from django.shortcuts import render
-from tools.generic_views import GenericListView
 from django.urls import reverse_lazy
+
+from agenda.models import SlotTemplate, Slot
+from tools.generic_views import GenericListView
 from tools.mail import send_mail_smtp
-from django.utils.translation import gettext_lazy as _
 
 
 class CalendarListView(GenericListView):
@@ -36,7 +33,7 @@ class CalendarListView(GenericListView):
         accountant = self.request.user.accountant
         today = datetime.now().date()
         l_slots = []
-        if accountant.view_busy_slot :
+        if accountant.view_busy_slot:
             slots = slot.objects.filter(date__gte=today, refer_accountant=accountant)
         else:
             slots = Slot.objects.filter(date__gte=today, refer_accountant=accountant, customer__isnull=True)
@@ -94,23 +91,26 @@ class ApplySlots(Thread):
         self.accountant = accountant
 
     def run(self):
-        #apply_slots(start_date, end_date, accountant):
+        # apply_slots(start_date, end_date, accountant):
         for i in range(0, 7):
             current_day = self.start_date + timedelta(days=i)
             while current_day <= self.end_date:
                 sts = self.accountant.get_daytemplate(
-                        1 + (int(self.start_date.weekday()) + i) % 7).get_slottemplates()
+                    1 + (int(self.start_date.weekday()) + i) % 7).get_slottemplates()
                 if sts:
                     for st in sts:
                         current_day = current_day.replace(hour=st.start.hour, minute=st.start.minute)
-                        for s in self.accountant.slots.filter(date=datetime.date(current_day), st__start__lte=current_day,
-                                                  st__end__gt=current_day):
+                        for s in self.accountant.slots.filter(date=datetime.date(current_day),
+                                                              st__start__lte=current_day,
+                                                              st__end__gt=current_day):
                             self.accountant.slots.remove(s)
                         current_day = current_day.replace(hour=st.end.hour, minute=st.end.minute)
-                        for s in self.accountant.slots.filter(date=datetime.date(current_day), st__start__lt=current_day,
-                                                  st__end__gte=current_day):
+                        for s in self.accountant.slots.filter(date=datetime.date(current_day),
+                                                              st__start__lt=current_day,
+                                                              st__end__gte=current_day):
                             self.accountant.slots.remove(s)
-                        new_slot = Slot(date=datetime.date(current_day), st=st, refer_accountant=self.accountant, booked=st.booked)
+                        new_slot = Slot(date=datetime.date(current_day), st=st, refer_accountant=self.accountant,
+                                        booked=st.booked)
                         new_slot.save()
                         self.accountant.slots.add(new_slot)
                 current_day += timedelta(days=7)
@@ -120,7 +120,8 @@ class ApplySlots(Thread):
 def st_apply(request):
     results = {}
     if request.is_ajax():
-        if 'start_date' in request.POST and 'end_date' in request.POST and request.POST['start_date'] and request.POST['end_date']:
+        if 'start_date' in request.POST and 'end_date' in request.POST and request.POST['start_date'] and request.POST[
+            'end_date']:
             start_date = datetime.strptime(request.POST['start_date'], '%Y-%m-%d')
             end_date = datetime.strptime(request.POST['end_date'], '%Y-%m-%d')
             connection.close()
@@ -174,7 +175,8 @@ def book_slot(request, slot_id):
         s.save()
         s.icalendar()
         msg_txt = render_to_string('mail/mail_meeting.txt', {'user': s.customer})
-        send_mail_smtp("[LG&Associates] icalendar of meeting", [s.customer.email, s.refer_accountant.email], None, msg_txt, None, [s.path])
+        send_mail_smtp("[LG&Associates] icalendar of meeting", [s.customer.email, s.refer_accountant.email], None,
+                       msg_txt, None, [s.path])
         # send_mail_smtp(_("[LG&Associates] icalendar of meeting"), [s.customer.email, s.refer_accountant.email], None, msg_txt, None, [s.path])
         request.user.schedule_meeting = False
         request.user.save()
@@ -197,7 +199,7 @@ def remove_slot(request, slot_id):
 def clean_slot(request, slot_id):
     if request.is_ajax():
         slot = Slot.objects.get(id=slot_id)
-        #if slot.customer:
+        # if slot.customer:
         #   mail_customer_cancel_appointment_from_accountanttor(request, slot)
         #   TODO
         slot.clean_slot()

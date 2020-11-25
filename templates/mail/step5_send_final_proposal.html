@@ -1,0 +1,17 @@
+{% load i18n %}
+{% autoescape off %}
+<html>
+<head></head>
+<body>
+<p>Hi {{ user.first_name }},</p>
+<p> We propose a final offer : {{company.proposed_amount}} euros. </p>
+<p>Here can you find the offer as a pdf file : http://{{ domain }}{% url 'company:company_proposal_pdf' pk=company.pk
+    token=token_company %}</p>
+<p></p>
+<p>Please click on the link to confirm your registration : http://{{ domain }}{% url 'company:confirm_proposal'
+    pk=company.pk uidb64=uid token=token %}</p>
+<p>regards</p>
+<p>The Lieutenantguillaume team</p>
+</body>
+</html>
+{% endautoescape %}
