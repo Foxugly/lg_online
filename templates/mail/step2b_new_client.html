@@ -1,10 +1,21 @@
+{% load i18n %}
+{% autoescape off %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
-
+<p>{% trans "Bonjour" %},</p>
+<p></p>
+<p>{% blocktrans %}Un nouveau client s'est enregistré{% endblocktrans %}.</p>
+<p></p>
+<p>http://{{ domain }}</p>
+<p></p>
+<p>{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}</p>
 </body>
 </html>
+
+
+
+{% endautoescape %}

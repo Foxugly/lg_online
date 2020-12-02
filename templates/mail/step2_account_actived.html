@@ -1,15 +1,16 @@
-{% load i18n %}{% autoescape off %}
+{% load i18n %}
+{% autoescape off %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
 </head>
 <body>
-<p>{% trans "Bonjour" %} {{ user.first_name }},</p>
+<p>{% trans "Cher/Chère" %} {{ user.first_name }},</p>
 <p></p>
-<p>{% blocktrans %}Bravo vous venez d'activer votre compte'{% endblocktrans %} </p>
-<p>{% blocktrans %}Vous avez quelqus jours pour compléter les informations manquantes. {% endblocktrans %}. </p>
+<p>{% blocktrans %}Votre compte est maintenant activé{% endblocktrans %}.</p>
 <p></p>
+<p>{% blocktrans %}Complétez les informations manquantes dans votre dossier{% endblocktrans %}.</p>
 <p><a href="http://{{ domain }}">http://{{ domain }}</a></p>
 <p></p>
 <p>{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}</p>

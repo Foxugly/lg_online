@@ -1,0 +1,10 @@
+{% load i18n %}
+{% autoescape off %}
+{% trans "Cher/Chère" %}{{ user.first_name }},
+
+{% blocktrans %}Un nouveau client s'est enregistré{% endblocktrans %}.
+
+http://{{ domain }}
+
+{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}
+{% endautoescape %}

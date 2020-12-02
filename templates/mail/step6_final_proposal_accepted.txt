@@ -1,12 +1,12 @@
 {% load i18n %}
 {% autoescape off %}
-Hi {{ user.first_name }},
+{% trans "Cher/Chère" %} {{ user.first_name }},
 
-You accept our final offer  : {{company.proposed_amount}} euros.
-Here can you find the offer as a pdf file : http://{{ domain }}{% url 'company:company_proposal_pdf' pk=company.id token=token_company %}
+{% blocktrans %}Vous avez accepté l'offre finale et nous vous en remercions{% endblocktrans %}.
 
-Greetings,
+{% blocktrans %}Avant de commencer notre mission, il ne vous reste plus qu'à signer nos différents documents administratifs pour être en ordre avec la législation.{% endblocktrans %}.
 
-The Lieutenantguillaume team
+http://{{ domain }}
 
+{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}
 {% endautoescape %}

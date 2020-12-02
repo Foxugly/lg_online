@@ -1,1 +1,19 @@
-<p>Mail 4 : dossier complet</p>
+{% load i18n %}{% autoescape off %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<p>{% trans "Bonjour" %},</p>
+<p></p>
+<p>{% blocktrans %}Le compte de {{c}} est entièrement complété{% endblocktrans %}.</p>
+<p></p>
+<p>{% blocktrans %}Prendre contact avec lui pour la suite de la procédure{% endblocktrans %}.</p>
+<p></p>
+<p><a href="http://{{ domain }}">http://{{ domain }}</a></p>
+<p></p>
+<p>{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}</p>
+</body>
+</html>
+{% endautoescape %}

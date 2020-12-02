@@ -1,14 +1,12 @@
 {% load i18n %}
 {% autoescape off %}
-Hi {{ user.first_name }},
+{% trans "Cher/Chère" %} {{ user.first_name }},
 
-We propose a final offer  : {{company.proposed_amount}} euros.
-Here can you find the offer as a pdf file : http://{{ domain }}{% url 'company:company_proposal_pdf' pk=company.id token=token_company %}
+{% blocktrans %}Veuillez trouver ici notre offre finale en cliquan sur le lien{% endblocktrans %} : http://{{ domain }}{% url 'company:company_proposal_pdf' pk=company.id token=token_company %}
 
-Please click on the link to confirm your registration : http://{{ domain }}{% url 'company:confirm_proposal' pk=company.pk uidb64=uid token=token %}
+{% blocktrans %}Cliquez sur le lien pour donner votre accord et terminer votre enregistrement{% endblocktrans %} : http://{{ domain }}{% url 'company:confirm_proposal' pk=company.pk uidb64=uid token=token %}
 
-Greetings,
+http://{{ domain }}
 
-The Lieutenantguillaume team
-
+{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}
 {% endautoescape %}

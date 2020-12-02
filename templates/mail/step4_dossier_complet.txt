@@ -1,1 +1,11 @@
-Mail 4 : dossier complet
+{% load i18n %}{% autoescape off %}
+{% trans "Bonjour" %},
+
+{% blocktrans %}Le compte de {{c}} est entièrement complété{% endblocktrans %}.
+
+{% blocktrans %}Prendre contact avec lui pour la suite de la procédure{% endblocktrans %}.
+
+http://{{ domain }}
+
+{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}
+{% endautoescape %}

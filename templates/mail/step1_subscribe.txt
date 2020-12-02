@@ -1,14 +1,14 @@
 {% load i18n %}
 {% autoescape off %}
-{% trans "Bonjour" %} {{ user.first_name }},
+{% trans "Cher/Chère" %} {{ user.first_name }},
 
-{% blocktrans %}Bravo vous venez de vous enregistrer{% endblocktrans %}
+{% blocktrans %}Votre enregistrement est maintenant terminé{% endblocktrans %}
 
-{% blocktrans %}Encore une dernière étape et vous pourrez accéder à votre compte{% endblocktrans %}.
+{% blocktrans %}Il reste une dernière étape à compléter avant de pouvoir accéder à votre compte{% endblocktrans %}.
 
-{% blocktrans %}Activez votre compte en cliquant sur le lien suivant{% endblocktrans %}:
+{% blocktrans %}Cliquez sur le lien suivant{% endblocktrans %}:
 
 http://{{ domain }}{% url 'customuser:activate' uidb64=uid token=token %}
 
-{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %} {{USER.NAME}}
+{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}
 {% endautoescape %}

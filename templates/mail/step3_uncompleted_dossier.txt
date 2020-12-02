@@ -2,8 +2,8 @@
 {% trans "Bonjour" %},
 
 {% blocktrans %}Le dossier {{c}} de {{user}} n'est pas encore complété{% endblocktrans %}.
-{% blocktrans %}Prenez contact avec la personne pour une réunion{% endblocktrans %}.
 
+{% blocktrans %}A relancer{% endblocktrans %}.
 http://{{ domain }}
 
 {% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}

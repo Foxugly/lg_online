@@ -3,15 +3,16 @@
 <html>
 <head></head>
 <body>
-<p>Hi {{ user.first_name }},</p>
-<p> We propose a final offer : {{company.proposed_amount}} euros. </p>
-<p>Here can you find the offer as a pdf file : http://{{ domain }}{% url 'company:company_proposal_pdf' pk=company.pk
-    token=token_company %}</p>
+<p>{% trans "Cher/Chère" %} {{ user.first_name }},</p>
+
+<p>{% blocktrans %}Veuillez trouver ici notre offre finale en cliquan sur le lien{% endblocktrans %} : http://{{ domain }}{% url 'company:company_proposal_pdf' pk=company.id token=token_company %}
+</p>
 <p></p>
-<p>Please click on the link to confirm your registration : http://{{ domain }}{% url 'company:confirm_proposal'
+<p>{% blocktrans %}Cliquez sur le lien pour donner votre accord et terminer votre enregistrement{% endblocktrans %} : http://{{ domain }}{% url 'company:confirm_proposal'
     pk=company.pk uidb64=uid token=token %}</p>
-<p>regards</p>
-<p>The Lieutenantguillaume team</p>
+<p></p>
+<p>http://{{ domain }}</p>
+<p></p>
+<p>{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}</p>
 </body>
 </html>
-{% endautoescape %}
