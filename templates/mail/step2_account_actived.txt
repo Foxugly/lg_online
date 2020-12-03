@@ -1,6 +1,5 @@
-{% load i18n %}
-{% autoescape off %}
-{% trans "Cher/Chère" %}{{ user.first_name }},
+{% load i18n %}{% autoescape off %}
+{% trans "Cher/Chère" %} {{ user.first_name }},
 
 {% blocktrans %}Votre compte est maintenant activé{% endblocktrans %}.
 

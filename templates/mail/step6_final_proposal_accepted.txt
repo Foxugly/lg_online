@@ -1,5 +1,4 @@
-{% load i18n %}
-{% autoescape off %}
+{% load i18n %}{% autoescape off %}
 {% trans "Cher/Chère" %} {{ user.first_name }},
 
 {% blocktrans %}Vous avez accepté l'offre finale et nous vous en remercions{% endblocktrans %}.

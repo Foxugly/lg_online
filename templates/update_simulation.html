@@ -180,18 +180,17 @@
             </div>
             {% if update %}
             <div class="form-group row">
-                <div class="col-md-12 alert alert-primary simulation-resultat" role="alert">{% trans "Résultat de la
-                    simulation" %}
-                    <div class="price"><span>{{object.calculated_amount}}</span> {% trans " euros par mois"%}</div>
+                <div class="col-md-12 alert alert-primary simulation-resultat" role="alert">{% trans "Résultat de la simulation" %}
+                    <div class="price"><span>{{object.calculated_amount}}</span> {% trans "euros par mois" %}</div>
                 </div>
             </div>
             <div class="form-group row adapt-bootstrap simulation-btns">
                 <div class="col-lg-3"></div>
                 <div class="col-lg-9">
-                    <a class="btn-round" href="{% url 'simulation:simulation_add' %}">{% trans "Lancer une nouvelle
-                        simulation" %}</a>
-                    <a class="btn-round blue" href="{% url 'simulation:simulation_add' %}?simulation_id={{object.pk}}">{%
-                        trans "Modifier la simulation" %}</a>
+                    <a class="btn-round" href="{% url 'simulation:simulation_add' %}">{% trans "Lancer une nouvelle simulation" %}</a>
+                    <a class="btn-round blue" href="{% url 'simulation:simulation_add' %}?simulation_id={{object.pk}}">
+                        {% trans "Modifier la simulation" %}
+                    </a>
                 </div>
             </div>
             <div class="form-group row adapt-bootstrap simulation-send">
@@ -203,8 +202,8 @@
                                    placeholder="{% trans 'mon adresse email' %}"
                                    aria-label="{% trans 'mon adresse email' %}">
                             <div class="input-group-append">
-                                <button class="btn-round blue right" type="button" onclick="sendSimulationMail();">{%
-                                    trans "Recevoir ma simulation par email" %}
+                                <button class="btn-round blue right" type="button" onclick="sendSimulationMail();">
+                                    {% trans "Recevoir ma simulation par email" %}
                                 </button>
                             </div>
                         </div>
@@ -243,8 +242,9 @@
                 <p>
                     {% trans "Je m’enregistre pour pouvoir prendre rendez-vous" %}
                 </p>
-                <a class="btn-round black" href="{% url 'customuser:customuser_add' %}?simulation_id={{object.pk}}">{%
-                    trans "Je m’enregistre" %}</a>
+                <a class="btn-round black" href="{% url 'customuser:customuser_add' %}?simulation_id={{object.pk}}">
+                    {% trans "Je m’enregistre" %}
+                </a>
             </div>
             {% else %}
             <div class="form-group row simulation-send adapt-bootstrap">

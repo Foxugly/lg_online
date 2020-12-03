@@ -1,4 +1,4 @@
-{% autoescape off %}
+{% load i18n %}{% autoescape off %}
 Hi {{ user.first_name }},
 You can find in attachment the icalendar for the meeting.
 Regards,

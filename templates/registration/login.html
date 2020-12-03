@@ -166,17 +166,14 @@
     </a>
     <div class="content">
         {% if form.errors %}
-        <div class="alert alert-danger" role="alert">{% trans "Your username and password didn't match. Please try
-            again" %}.
+        <div class="alert alert-danger" role="alert">{% trans "Your username and password didn't match. Please try again" %}.
         </div>
         <p></p>
         {% endif %}
 
         {% if next %}
         {% if user.is_authenticated %}
-        <div class="alert alert-danger" role="alert">{% trans "Your account doesn't have access to this page. To
-            proceed,
-            please login with an account that has access"%}.
+        <div class="alert alert-danger" role="alert">{% trans "Your account doesn't have access to this page. To proceed, please login with an account that has access" %}.
         </div>
         {% endif %}
         {% endif %}

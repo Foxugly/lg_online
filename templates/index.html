@@ -168,13 +168,10 @@
         <div class="col-lg-6 pad-top step step-1">
             <div class="content">
                 <h2><span class="step-number">01</span>{% trans "Je réalise ma simulation" %}</h2>
-                <p class="intro">{% trans "En 1 minute estimez le prix personnalisé de votre abonnement au sein de notre
-                    cabinet. Pour réaliser votre simulation rien de plus simple ! il suffit de cliquer sur le bouton
-                    ci-dessous, puis laissez-vous guider par les champs à remplir." %}</p>
-                <p>{% trans "Une fois votre simulation effectuée connectez-vous pour pouvoir prendre un RDV avec notre
-                    équipe." %}</p>
-                <a id="subscribe" name="subscribe" class="btn-round" href="{% url 'simulation:simulation_add' %}">{%
-                    trans "Simulation" %} <span class="fa fa-arrow-right"></span></a>
+                <p class="intro">{% trans "En 1 minute estimez le prix personnalisé de votre abonnement au sein de notre cabinet. Pour réaliser votre simulation rien de plus simple ! il suffit de cliquer sur le bouton ci-dessous, puis laissez-vous guider par les champs à remplir." %}</p>
+                <p>{% trans "Une fois votre simulation effectuée connectez-vous pour pouvoir prendre un RDV avec notre équipe." %}</p>
+                <a id="subscribe" name="subscribe" class="btn-round" href="{% url 'simulation:simulation_add' %}">
+                    {% trans "Simulation" %} <span class="fa fa-arrow-right"></span></a>
             </div>
         </div>
 
@@ -199,9 +196,8 @@
                         </div>
 
                         <div class="row-submit">
-                            <a href="{% url 'password_reset' %}" class="">{% trans "Forgot password" %}?</a>
-                            <input id="submit" name="submit" type="submit" class="btn-round green" value="{% trans "
-                                   CONNEXION" %}" />
+                            <a href="{% url 'password_reset' %}" class="">{% trans "mot de passe oublié" %}?</a>
+                            <input id="submit" name="submit" type="submit" class="btn-round green" value="{% trans "Connexion" %}" />
                             <input type="hidden" name="next" value="/"/>
                         </div> <!-- form-group// -->
                     </form>
