@@ -1,14 +1,13 @@
 import datetime
 
 from django.contrib.auth.tokens import default_token_generator
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext as _
 from wkhtmltopdf.views import PDFTemplateResponse
-
 from company.forms import CompanyProposalForm, CompanyPdfForm
 from company.models import Company
 from config_process import *
@@ -114,10 +113,13 @@ class CompanyProposalUpdateView(GenericUpdateView):
         context.update({'SimulationForm': SimulationReadonlyForm(instance=self.object.simulation)})
         return context
 
+    def get_success_url(self):
+        return reverse('company:company_proposal_list')
+
 
 class CompanyProposalPdfView(DetailView):
     model = Company
-    template_name = 'company_proposal_raw.html'
+    template_name = 'pdf/company_proposal_raw.html'
     context = {}
 
     def get(self, request, pk, token):

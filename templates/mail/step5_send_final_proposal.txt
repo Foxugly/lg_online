@@ -1,7 +1,7 @@
 {% load i18n %}{% autoescape off %}
 {% trans "Cher/Chère" %} {{ user.first_name }},
 
-{% blocktrans %}Veuillez trouver ici notre offre finale en cliquan sur le lien{% endblocktrans %} : http://{{ domain }}{% url 'company:company_proposal_pdf' pk=company.id token=token_company %}
+{% blocktrans %}Veuillez trouver ici notre offre finale en cliquant sur le lien{% endblocktrans %} : http://{{ domain }}{% url 'company:company_proposal_pdf' pk=company.id token=token_company %}
 
 {% blocktrans %}Cliquez sur le lien pour donner votre accord et terminer votre enregistrement{% endblocktrans %} : http://{{ domain }}{% url 'company:confirm_proposal' pk=company.pk uidb64=uid token=token %}
 

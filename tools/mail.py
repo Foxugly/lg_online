@@ -41,8 +41,9 @@ def send_mail_smtp(subject, to, reply_to, text, html, attachments):
 
     print(msg)
     if EMAIL_HOST:
-        s = smtplib.SMTP()
-        s.connect(EMAIL_HOST, EMAIL_PORT)
+        #s = smtplib.SMTP()
+        #s.connect(EMAIL_HOST, EMAIL_PORT)
+        s = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
         if EMAIL_USE_TLS:
             s.starttls()
         s.login(EMAIL_HOST_USER, EMAIL_HOST_PASSWORD)
