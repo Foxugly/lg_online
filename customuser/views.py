@@ -20,7 +20,7 @@ class CustomUserLoginView(LoginView):
     def get_success_url(self):
         if self.request.user.is_active:
             if self.request.user.is_staff or self.request.user.is_superuser:
-                return reverse_lazy('customuser:customuser_list')
+                return reverse_lazy('home')
             else:
                 return reverse_lazy('company:company_list')
 
