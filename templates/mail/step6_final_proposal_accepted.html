@@ -1,25 +1,7 @@
-{% load i18n %}{% autoescape off %}
-<html>
-<head></head>
-<body>
-<header>
-    <table width="100%;">
-        <tr>
-            <td width="60%"><img src="http://www.lieutenantguillaume.com/static/img/logo_lieutenant_guillaume.png"
-                                 style="vertical-align: top;"></td>
-            <td width="40%">
-                <p class="me">Cabinet de Comptables Fiscalistes Agréés</p>
-                <p class="me">LG & Associates</p>
-                <p class="me">Membres IPCF 70483836</p>
-                <p class="me">Av. Reine Marie-Henriette,29 à 1190 Forest</p>
-                <p class="me">info@lieutenantguillaume.com</p>
-                <p class="me">T +322 512 08 15</p>
-                <p class="me">www.lieutenantguillaume.com</p>
-                <p class="me">TVA: BE0454.784.696</p>
-            </td>
-        </tr>
-    </table>
-</header>
+{% extends "mail/canvas.html" %}
+{% load i18n %}
+{% block content %}
+{% autoescape off %}
 <p>{% trans "Cher/Chère" %} {{ user.first_name }},</p>
 <p></p>
 <p>{% blocktrans %}Vous avez accepté l'offre finale et nous vous en remercions{% endblocktrans %}.</p>
@@ -27,8 +9,5 @@
 <p>{% blocktrans %}Avant de commencer notre mission, il ne vous reste plus qu'à signer nos différents documents administratifs pour être en ordre avec la législation.{% endblocktrans %}.</p>
 <p></p>
 <p>http://{{ domain }}</p>
-<p></p>
-<p>{% blocktrans %}A bientôt chez LG et Associates{% endblocktrans %}</p>
-</body>
-</html>
 {% endautoescape %}
+{% endblock %}
