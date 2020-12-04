@@ -16,10 +16,17 @@ from customuser.models import CustomUser
 from simulation.forms import SimulationReadonlyForm, SimulationPdfForm
 from tools.generic_views import *
 from tools.mail import send_mail_smtp
+from company.cron import my_scheduled_test
 
 
 def get_users(c):
     return CustomUser.objects.filter(companies__id=c.pk)
+
+
+def run_cron(request, pk):
+    my_scheduled_test()
+    context = {'title': _('Run cron'), 'text': _('scripts executed.'), }
+    return render(request, "comment.html", context)
 
 
 def run_config(request, pk):

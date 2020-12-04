@@ -4,7 +4,6 @@ from django.urls import reverse_lazy
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.utils.translation import gettext_lazy as _
-
 from accountant.models import Accountant
 from config_process import *
 from customuser.forms import CustomUserForm
@@ -30,8 +29,7 @@ def activate(request, uidb64, token):
                 if comp.subscription_status == '1':
                     comp.subscription_status = '2'
                     comp.subscription_date = timezone.now() + time_to_complete_subscription
-                    # send mail
-                    dict_context = {'company': c, 'user': user, 'domain': domain, }
+                    dict_context = {'company': comp, 'user': user, 'domain': domain, }
                     msg_html = render_to_string('mail/step2_account_actived.html', dict_context)
                     msg_txt = render_to_string('mail/step2_account_actived.txt', dict_context)
                     subject = '%s %s' % (tag, subject_step2)

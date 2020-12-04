@@ -183,6 +183,7 @@
                 <thead>
                 <tr>
                     <td>Name</td>
+                    <td>Status</td>
                     <td>delete</td>
                 </tr>
                 </thead>
@@ -199,6 +200,7 @@
                             <span class="fa fa-check" style="color:green"></span>
                         {% endif %}
                     </td>
+                    <td>{{ obj.get_subscription_status_display}}</td>
                     <td>
                         <a class="btn confirmation" href="{{obj.get_delete_url}}">
                             <span class="fa fa-trash"></span>
