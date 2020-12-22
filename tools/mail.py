@@ -39,7 +39,7 @@ def send_mail_smtp(subject, to, reply_to, text, html, attachments):
                                    subtype=subtype,
                                    filename=os.path.basename(path))
 
-    print(msg)
+    #print(msg)
     if EMAIL_HOST:
         #s = smtplib.SMTP()
         #s.connect(EMAIL_HOST, EMAIL_PORT)

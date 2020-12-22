@@ -65,8 +65,8 @@ def send_proposal(request, pk):
         msg_html = render_to_string('mail/step5_send_final_proposal.html', dict_context)
         msg_txt = render_to_string('mail/step5_send_final_proposal.txt', dict_context)
         reply_to = "info@lieutenantguillaume.com"
-        if show_msg:
-            print(msg_txt)
+        #if show_msg:
+        #    print(msg_txt)
         send_mail_smtp(subject, user.email, reply_to, msg_txt, msg_html, None)
     context = {'title': _('Offre finale envoyée'), 'text': _('La proposition finale a été envoyée.'), }
     return render(request, "comment.html", context)

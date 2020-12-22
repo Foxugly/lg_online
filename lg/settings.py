@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 from lg.credential_email import SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 STATE = 'PROD'  # DEV or ACC or PROD
 
 ALLOWED_HOSTS = ['*']
@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django_countries',
     'address',
     'django_crontab',
+    'wkhtmltopdf', # apt install wkhtmltopdf xvfb
 ]
 
 MIDDLEWARE = [
