@@ -13,3 +13,5 @@ lg/__pycache__/*
 simulation/__pycache__/*
 tools/__pycache__/*
 
+lg/credential_email.py
+config_process.py
