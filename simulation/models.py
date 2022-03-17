@@ -83,7 +83,7 @@ class Simulation(GenericClass):
         v_alternatif_payments = 0 if not self.alternatif_payments else 300
         s = v_nb_invoices_sale + v_nb_invoices_purchase + v_transmission + v_nb_managers + v_nb_employees + \
             v_nb_creditcard + v_alternatif_payments
-        max_calulated = (s * v_ca * coef_sector[self.sector] * coef_tax_liability[self.tax_liability]) / 12
+        max_calulated = max(270, (s * v_ca * coef_sector[self.sector] * coef_tax_liability[self.tax_liability]) / 12)
         return max_calulated
 
     def compute_with_max(self):
