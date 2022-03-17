@@ -95,9 +95,8 @@ class Simulation(GenericClass):
 
     def save(self, *args, **kwargs):
         if self.calculated_amount == 0:
-            self.calculated_amount = max(200, self.compute_with_max())
+            self.proposed_amount = self.calculated_amount = self.compute_with_max()
             self.date_calculated_amount = timezone.now()
-            self.proposed_amount = self.calculated_amount
         super().save(*args, **kwargs)
 
     def __str__(self):
